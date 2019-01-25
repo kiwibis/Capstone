@@ -65,10 +65,21 @@ const createApp = () => {
 
   // auth and api routes
   app.use('/auth', require('./auth'))
-  app.use('/api', require('./api'))
+  //app.use('/api', require('./api'))
+
+  // connect to create-react-app
+  app.get('/api/hello', (req, res) => {
+    res.send({express: 'Hello From Express'})
+  })
+  app.post('/api/world', (req, res) => {
+    console.log(req.body)
+    res.send(
+      `I received your POST request. This is what you sent me: ${req.body.post}`
+    )
+  })
 
   // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')))
+  // app.use(express.static(path.join(__dirname, '..', 'public')))
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -82,9 +93,9 @@ const createApp = () => {
   })
 
   // sends index.html
-  app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-  })
+  // app.use('*', (req, res) => {
+  //   res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+  // })
 
   // error handling endware
   app.use((err, req, res, next) => {
