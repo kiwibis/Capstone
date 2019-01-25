@@ -8,9 +8,6 @@ import App from './App'
 import './index.css'
 import * as serviceWorker from './serviceWorker'
 
-// establishes socket connection
-import './socket'
-
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>

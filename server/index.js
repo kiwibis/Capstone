@@ -9,7 +9,6 @@ const db = require('./db')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
-const socketio = require('socket.io')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -65,21 +64,7 @@ const createApp = () => {
 
   // auth and api routes
   app.use('/auth', require('./auth'))
-  //app.use('/api', require('./api'))
-
-  // connect to create-react-app
-  app.get('/api/hello', (req, res) => {
-    res.send({express: 'Hello From Express'})
-  })
-  app.post('/api/world', (req, res) => {
-    console.log(req.body)
-    res.send(
-      `I received your POST request. This is what you sent me: ${req.body.post}`
-    )
-  })
-
-  // static file-serving middleware
-  // app.use(express.static(path.join(__dirname, '..', 'public')))
+  app.use('/api', require('./api'))
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -91,11 +76,6 @@ const createApp = () => {
       next()
     }
   })
-
-  // sends index.html
-  // app.use('*', (req, res) => {
-  //   res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-  // })
 
   // error handling endware
   app.use((err, req, res, next) => {
@@ -110,10 +90,6 @@ const startListening = () => {
   const server = app.listen(PORT, () =>
     console.log(`Mixing it up on port ${PORT}`)
   )
-
-  // set up our socket control center
-  const io = socketio(server)
-  require('./socket')(io)
 }
 
 const syncDb = () => db.sync()
