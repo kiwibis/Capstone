@@ -1,18 +1,39 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {sendImage} from '../store'
 
-const PhotoCapture = props => {
-  const {buttonText} = props
+class PhotoCapture extends React.Component {
+  constructor() {
+    super()
+    this.handleChange = this.handleChange.bind(this)
+  }
 
-  return (
-    <div className="image-upload">
-      <label htmlFor="file-input">
-        <img src="http://goo.gl/pB9rpQ" />
-      </label>
+  handleChange(event) {
+    const file = event.target.files[0]
+    this.props.sendImage(file)
+  }
 
-      <input id="file-input" accept="image/*" type="file" />
-    </div>
-  )
+  render() {
+    const {buttonText} = this.props
+    return (
+      <div className="image-upload">
+        <label htmlFor="file-input">
+          <img src="http://goo.gl/pB9rpQ" />
+        </label>
+
+        <input
+          id="file-input"
+          accept="image/*"
+          type="file"
+          onChange={this.handleChange}
+        />
+      </div>
+    )
+  }
 }
 
-export default PhotoCapture
+const mapDispatch = dispatch => ({
+  sendImage: image => dispatch(sendImage(image))
+})
+
+export default connect(null, mapDispatch)(PhotoCapture)
