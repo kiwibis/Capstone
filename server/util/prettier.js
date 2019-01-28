@@ -1,10 +1,26 @@
-import prettier from 'prettier'
+const prettier = require('prettier')
 
-export default function prettify(string) {
+module.exports = function prettify(textArray) {
+  let textString = ''
+  textArray.forEach(word => {
+    word.symbols.forEach(symbol => {
+      textString += symbol.char
+    })
+    textString += ' '
+  })
   try {
-    return prettier.format(string)
+    return prettier.format('function hey() {const hey = "hey"; return hey}')
+    // return prettier.format(textString)
   } catch (err) {
-    console.log('Error: ', err.toString())
+    return textString
     //this will give us the attempted prettier formatting (even with error detected)
   }
 }
+// module.exports = function prettify(string) {
+//   try {
+//     return prettier.format(string)
+//   } catch (err) {
+//     console.log('Error: ', err.toString())
+//     //this will give us the attempted prettier formatting (even with error detected)
+//   }
+// }

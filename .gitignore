@@ -1,7 +1,6 @@
 node_modules
-public/bundle.js
-public/bundle.js.map
 secrets.js
 .DS_Store
 npm-debug.log
 yarn-error.log
+kiwibis-ac1bff4f7691.json
