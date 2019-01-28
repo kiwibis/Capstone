@@ -19,7 +19,17 @@ function parser(json, checker) {
         word.symbols.forEach(symbol => {
           const symbolObj = {
             char: symbol.text,
-            confidence: symbol.confidence
+            confidence: symbol.confidence,
+            endOfLine: false
+          }
+          const {detectedBreak} = symbol.property
+          if (detectedBreak) {
+            if (
+              detectedBreak.type === 'EOL_SURE_SPACE' ||
+              detectedBreak.type === 'LINE_BREAK'
+            ) {
+              symbolObj.endOfLine = true
+            }
           }
           if (checker) {
             symbol.property.detectedLanguages.forEach(lang => {

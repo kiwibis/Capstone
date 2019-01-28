@@ -1,3 +1,4 @@
 const parser = require('./parser')
 const prettier = require('./prettier')
-module.exports = {parser, prettier}
+const bracketBalancer = require('./bracketBalancer')
+module.exports = {parser, prettier, bracketBalancer}

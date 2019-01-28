@@ -8,18 +8,15 @@ const vision = require('@google-cloud/vision')
 const client = new vision.ImageAnnotatorClient()
 
 const {parser, prettier} = require('../util')
+let imgData = 'path/to/testImg.jpg'
 
-router.get('/read', async (req, res, next) => {
+router.post('/read', async (req, res, next) => {
   try {
     // Read a local image as a text document
-    const [result] = await client.documentTextDetection(
-      '/Users/aidanmurray/Desktop/grace-hopper/capstone/server/api/testImg.jpg'
-    )
+    const [result] = await client.documentTextDetection(imgData)
     const textArray = parser(result)
     const prettifiedString = prettier(textArray)
-    console.log(prettifiedString)
-    res.json({prettifiedString})
-    // res.json(result.fullTextAnnotation.text)
+    res.json(prettifiedString)
   } catch (err) {
     next(err)
   }
