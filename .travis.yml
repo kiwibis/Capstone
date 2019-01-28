@@ -16,12 +16,12 @@ install:
 before_script:
   - psql -c 'create database "kiwibis-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: kiwibis # see README
+  api_key:
+    secure: yBYQAdl+AabpAjkfyzw9IauLgqLNdqFQZfdzmSlx0ViytKNjqLHl5Ij7EI1QOJtW7SnDM/MZsBnm1aVHd7WHk+2jdDFYaiOad27D50zrSIKy5orSlF3tymXM7XYhN64QGoJbK1U0gl6Lo1/1das3sxT6P5aEC2ufnrC1zo7QsaatWJ7L4cIMbaDudfQBIki9yvqPztlR0/BOMM617YQi13plEu5fLAGDhlmDzGm/eIsjcU9biHl8tcTd330FjScFQRzss8izGGVdJy+RpyF9fL8sVdHRwP5t43FoAZuhPwmJCQbkl/zqBSb1etwk+8+doJoKAXWQvYlrFxYhIE83eQfjUwnGk5DxXu6HBhUq5KbxSnCt3Xs13U8aXXOYkm0MorS8nJgQs2eFe4KyjXf57rbCB9/UdHRBs/LLrYY/BvHP+hJlGC2brdDEuOR7JF3u1L/yOjgWB227X0UV1m0+nbla2afuR17TkCAvoOC5d42GpQ9qGmUodOOh+wDGsqgEATAVCaWHF0N9RpG6SIW79S6+ThQ6Rp+bjEFjuN6Xznquv+BEl8/Z6D1vZb8uMsdUT3W6uoVGt6+maNIDMq2F0MmYPyaXlVMqkxiVANgrJdN/rM4OQxZsiBNe2KNHy6DhE02Ikz6a0mjSiBRpwAvoCl+5kzX39y4jv+X4PnFhuRU= # see README
