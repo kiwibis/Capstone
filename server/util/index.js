@@ -1,2 +1,4 @@
-export {default as parser} from './parser'
-export {default as prettier} from './prettier'
+const parser = require('./parser')
+const prettier = require('./prettier')
+const bracketBalancer = require('./bracketBalancer')
+module.exports = {parser, prettier, bracketBalancer}

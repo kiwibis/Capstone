@@ -1,10 +1,11 @@
-import prettier from 'prettier'
+const prettier = require('prettier')
+const bracketBalancer = require('./bracketBalancer')
 
-export default function prettify(string) {
+module.exports = function prettify(textArray) {
+  const textString = bracketBalancer(textArray)
   try {
-    return prettier.format(string)
+    return prettier.format(textString)
   } catch (err) {
-    console.log('Error: ', err.toString())
-    //this will give us the attempted prettier formatting (even with error detected)
+    return textString
   }
 }
