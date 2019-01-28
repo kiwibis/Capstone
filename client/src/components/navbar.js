@@ -38,6 +38,7 @@ const Navbar = ({isLoggedIn, logout, openMenu, handleMenu}) => {
     </nav>
   )
 }
+=======
 
 /**
  * CONTAINER
