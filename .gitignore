@@ -4,4 +4,5 @@ secrets.js
 npm-debug.log
 yarn-error.log
 kiwibis-ac1bff4f7691.json
+public/bundle.js*
 
