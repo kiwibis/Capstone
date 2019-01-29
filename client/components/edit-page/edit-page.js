@@ -8,6 +8,7 @@ class EditPage extends Component {
     super()
     this.state = {
       editedText: '',
+      testCases: '',
       output: null,
       image: null
     }
@@ -19,7 +20,7 @@ class EditPage extends Component {
   }
 
   handleChange(event) {
-    this.setState({editedText: event.target.innerHTML})
+    this.setState({[event.target.name]: event.target.value})
   }
 
   readFile() {
@@ -44,7 +45,6 @@ class EditPage extends Component {
   render() {
     const {editedText, output, image} = this.state
     const {text} = this.props
-    console.log(image)
     return (
       <div id="EditPage">
         <div>
@@ -56,7 +56,8 @@ class EditPage extends Component {
               autoFocus="true"
               rows="20"
               cols="50"
-              onChange={event => this.handleChange(event)}
+              name="editedText"
+              onChange={this.handleChange}
               value={editedText}
             />
             <div>
