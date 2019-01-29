@@ -46,9 +46,10 @@ function simplifyVisionResponse(visionAPIResponse, languageCheckNeeded) {
               symbolObject.isEndOfLine = true
             }
           }
+
           if (languageCheckNeeded) {
             symbol.property.detectedLanguages.forEach(lang => {
-              if (lang !== 'en' && lang !== 'la') {
+              if (lang.languageCode !== 'en' && lang.languageCode !== 'la') {
                 symbolObject.confidence = 0
               }
             })
