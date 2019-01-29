@@ -1,7 +1,15 @@
 import React from 'react'
 
-export default class TestCases extends React.Component {
-  render() {
-    return <div>TEST CASES</div>
-  }
+const TestCases = ({onChange, value}) => {
+  return (
+    <textarea
+      rows="20"
+      cols="50"
+      name="testCases"
+      onChange={onChange}
+      value={value}
+    />
+  )
 }
+
+export default TestCases

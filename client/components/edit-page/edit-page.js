@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {PhotoCapture} from '../../components'
 import {connect} from 'react-redux'
 import {submitEditedText} from '../../store'
+import TestCases from './test-cases'
 
 class EditPage extends Component {
   constructor() {
@@ -43,7 +44,7 @@ class EditPage extends Component {
   }
 
   render() {
-    const {editedText, output, image} = this.state
+    const {editedText, testCases, output, image} = this.state
     const {text} = this.props
     return (
       <div id="EditPage">
@@ -60,10 +61,8 @@ class EditPage extends Component {
               onChange={this.handleChange}
               value={editedText}
             />
-            <div>
-              <input type="text" />
-              <input type="submit" />
-            </div>
+            <TestCases value={testCases} onChange={this.handleChange} />
+            <input type="submit" />
           </form>
           <PhotoCapture buttonImage="Retake Image" />
         </div>
