@@ -40,3 +40,8 @@ form div {
   width: 80px;
   cursor: pointer;
 }
+
+#edit-image {
+  max-width: 90vw;
+  max-height: 20vh;
+}
