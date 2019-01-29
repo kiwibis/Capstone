@@ -18,7 +18,7 @@ export const sendImage = imageFile => async dispatch => {
   try {
     const data = new FormData()
     data.append('file', imageFile, 'image')
-    const res = await axios.post('/api/images/read', data)
+    const res = await axios.post('/api/images', data)
     dispatch(getCode({text: res.data, image: imageFile}))
   } catch (err) {
     console.error(err)
