@@ -5,12 +5,12 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import HamburgerMenu from 'react-hamburger-menu'
 
-const Navbar = ({isLoggedIn, logout, openMenu, handleMenu}) => {
+const Navbar = ({isLoggedIn, logout, menuOpen, toggleMenu}) => {
   return (
     <nav>
       <HamburgerMenu
-        isOpen={openMenu}
-        menuClicked={handleMenu}
+        isOpen={menuOpen}
+        menuClicked={toggleMenu}
         width={18}
         height={15}
         strokeWidth={1}
@@ -62,6 +62,6 @@ export default connect(mapState, mapDispatch)(Navbar)
  * PROP TYPES
  */
 Navbar.propTypes = {
-  handleMenu: PropTypes.func.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }

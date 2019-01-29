@@ -7,21 +7,21 @@ export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      openMenu: false
+      menuOpen: false
     }
-    this.handleMenu = this.handleMenu.bind(this)
+    this.toggleMenu = this.toggleMenu.bind(this)
   }
 
-  handleMenu() {
+  toggleMenu() {
     this.setState(state => ({
-      openMenu: !state.openMenu
+      menuOpen: !state.menuOpen
     }))
   }
 
   render() {
     return (
       <div>
-        <Navbar openMenu={this.state.openMenu} handleMenu={this.handleMenu} />
+        <Navbar menuOpen={this.state.menuOpen} toggleMenu={this.toggleMenu} />
         <Routes />
       </div>
     )
