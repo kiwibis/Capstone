@@ -7,6 +7,7 @@ const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
+const fileUpload = require('express-fileupload')
 const PORT = process.env.PORT || 8080
 const app = express()
 module.exports = app
@@ -46,6 +47,7 @@ const createApp = () => {
   // body parsing middleware
   app.use(express.json())
   app.use(express.urlencoded({extended: true}))
+  app.use(fileUpload())
 
   // compression middleware
   app.use(compression())
