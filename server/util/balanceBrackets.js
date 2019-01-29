@@ -1,9 +1,13 @@
-module.exports = function bracketBalancer(parsedJson) {
+// The balanceBrackets function takes an array of words checks to see whether
+// or not it contains unbalanced curly brackets.
+// If the brackets are unbalanced, it inserts the necessary curly brackets.
+
+function balanceBrackets(wordsArray) {
   let textString = ''
-  parsedJson.forEach(word => {
+  wordsArray.forEach(word => {
     word.symbols.forEach(symbol => {
-      textString += symbol.char
-      if (symbol.endOfLine) {
+      textString += symbol.character
+      if (symbol.isEndOfLine) {
         textString += '\n'
       }
     })
@@ -20,10 +24,11 @@ module.exports = function bracketBalancer(parsedJson) {
     if (openingBracket === textString[i]) {
       stack.push(textString[i])
     } else if (closingBracket === textString[i]) {
-      if (stack[stack.length - 1] === matchingBrackets[textString[i]]) {
+      if (stack[stack.length - 1] === openingBracket) {
         stack.pop()
-      } else if (stack.length === 0) {
-        stack.push(openingBracket)
+      } else {
+        textString = textString.slice(0, i) + '{' + textString.slice(i + 1)
+        stack.push('{')
       }
     }
   }
@@ -33,3 +38,5 @@ module.exports = function bracketBalancer(parsedJson) {
   }
   return textString
 }
+
+module.exports = balanceBrackets
