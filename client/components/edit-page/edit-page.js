@@ -3,6 +3,7 @@ import {PhotoCapture} from '../../components'
 import {connect} from 'react-redux'
 import {submitEditedText} from '../../store'
 import TestCases from './test-cases'
+import Results from './results'
 
 class EditPage extends Component {
   constructor() {
@@ -62,6 +63,7 @@ class EditPage extends Component {
               value={editedText}
             />
             <TestCases value={testCases} onChange={this.handleChange} />
+            <Results testCases={testCases} output={output} />
             <input type="submit" />
           </form>
           <PhotoCapture buttonImage="Retake Image" />

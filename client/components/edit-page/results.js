@@ -1,7 +1,23 @@
 import React from 'react'
 
-export default class Results extends React.Component {
-  render() {
-    return <div>Results</div>
-  }
+const Results = ({testCases, output}) => {
+  testCases = testCases.split('\n')
+  output = output.split('\n')
+  return (
+    <ul>
+      {testCases.map((input, i) => (
+        <li key={i}>
+          <div>
+            <bold>Input: </bold> {input}
+          </div>
+          <div>
+            <bold>Your Output: </bold>
+            {output[i]}
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
 }
+
+export default Results
