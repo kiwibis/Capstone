@@ -9,10 +9,11 @@ class EditPage extends Component {
     super()
     this.state = {
       editedText: '',
-      output: null,
+      outputs: [],
       image: null
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -20,7 +21,29 @@ class EditPage extends Component {
   }
 
   handleChange(event) {
-    this.setState({editedText: event.target.innerHTML})
+    this.setState({editedText: event.target.value})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const code = event.target.code.value
+    const input = event.target.input.value
+    this.setState({outputs: this.getResult(code, [input])})
+  }
+
+  getResult(code, inputArray) {
+    if (code.slice(0, 8) === 'function') {
+      return inputArray.map(input => {
+        const codeString = `(${code})(${input})`
+        return eval(codeString)
+      })
+    } else {
+      const index = code.indexOf('=')
+      const tempFunc = eval(code.slice(index + 1))
+      return inputArray.map(input => {
+        return tempFunc(input)
+      })
+    }
   }
 
   readFile() {
@@ -43,25 +66,24 @@ class EditPage extends Component {
   }
 
   render() {
-    const {editedText, output, image} = this.state
-    const {text} = this.props
-    console.log(image)
+    const {editedText, outputs, image} = this.state
     return (
       <div id="EditPage">
         <div>
           <img id="edit-image" src={image} />
         </div>
         <div>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <textarea
               autoFocus={true}
               rows="20"
               cols="50"
               onChange={event => this.handleChange(event)}
               value={editedText}
+              name="code"
             />
             <div>
-              <input type="text" />
+              <input name="input" type="text" />
               <input type="submit" />
             </div>
           </form>
