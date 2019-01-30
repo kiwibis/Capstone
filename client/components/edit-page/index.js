@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PhotoCapture from '../photo-capture'
 import {connect} from 'react-redux'
 import {submitEditedText} from '../../store'
+import history from '../../history'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
 import jBeautify from 'js-beautify'
@@ -20,6 +21,7 @@ class EditPage extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.image) history.push('/')
     this.readFile()
   }
 
@@ -113,4 +115,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPage)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditPage)
