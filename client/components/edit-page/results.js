@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Results = ({testCases, outputs}) => {
-  testCases = testCases.split('\n')
+  testCases = testCases.trim().split('\n')
   return (
     <ul>
       {testCases.map((input, i) => (
