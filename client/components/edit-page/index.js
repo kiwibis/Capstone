@@ -6,6 +6,7 @@ import history from '../../history'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
 import jBeautify from 'js-beautify'
+import findOrientation from 'exif-orientation'
 import Loader from 'react-loader-spinner'
 
 class EditPage extends Component {
@@ -15,10 +16,12 @@ class EditPage extends Component {
       editedText: '',
       testCases: '',
       outputs: [],
-      image: null
+      image: null,
+      imageClass: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.readFile = this.readFile.bind(this)
   }
 
   componentDidMount() {
@@ -68,6 +71,20 @@ class EditPage extends Component {
         this.setState({image: fileReader.result, editedText: jBeautify(text)})
       }
       fileReader.readAsDataURL(this.props.image)
+      findOrientation(this.props.image, (err, orientation) => {
+        if (!err) {
+          if (orientation.rotate === 90) {
+            this.setState({
+              imageClass: 'rotate'
+            })
+          } else {
+            this.setState({
+              imageClass: ''
+            })
+          }
+        }
+      })
+      console.log(this.props.image)
     } catch (err) {
       console.error(err)
     }
@@ -80,18 +97,18 @@ class EditPage extends Component {
   }
 
   render() {
+    const {editedText, testCases, outputs, image, imageClass} = this.state
     if (this.props.loading)
       return (
         <center>
           <Loader type="Puff" color="#00BFFF" height="100" width="100" />
         </center>
       )
-    const {editedText, testCases, outputs, image} = this.state
     return (
       <div id="EditPage">
         <div>
           <center>
-            <img id="edit-image" src={image} />
+            <img className={imageClass} id="edit-image" src={image} />
           </center>
         </div>
         <div>

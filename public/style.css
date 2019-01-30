@@ -20,6 +20,10 @@ form div {
   display: inline-block;
 }
 
+.rotate {
+  transform: rotate(90deg);
+}
+
 @import '../node_modules/codemirror/lib/codemirror.css';
 @import '../node_modules/codemirror/theme/material.css';
 @import '../node_modules/codemirror/theme/xq-light.css';
