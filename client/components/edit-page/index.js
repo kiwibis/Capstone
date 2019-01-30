@@ -31,7 +31,7 @@ class EditPage extends Component {
     event.preventDefault()
     const {editedText, testCases} = this.state
     const code = editedText
-    const inputs = testCases.split('\n')
+    const inputs = testCases.trim().split('\n')
     this.setState({outputs: this.getResult(code, inputs)})
   }
 
@@ -42,10 +42,16 @@ class EditPage extends Component {
         return eval(codeString)
       })
     } else {
-      const index = code.indexOf('=')
-      const tempFunc = eval(code.slice(index + 1))
+      const arrowIndex = code.indexOf('=>')
+      const firstHalf = code.slice(0, arrowIndex)
+      const constIndex = firstHalf.lastIndexOf('const')
+      const noConstSlice = firstHalf.slice(constIndex + 5)
+      const endOfWordIndex = noConstSlice.lastIndexOf('=')
+      const endOfWord = noConstSlice.slice(0, endOfWordIndex)
       return inputArray.map(input => {
-        return tempFunc(input)
+        const funcCall = endOfWord + '(' + input + ')'
+        const codeString = code + '\n' + funcCall
+        return eval(codeString)
       })
     }
   }
