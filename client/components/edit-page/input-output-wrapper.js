@@ -1,5 +1,6 @@
 import React from 'react'
-import {TestCases, Results} from './index'
+import TestCases from './test-cases'
+import Results from './results'
 
 export default class InputOutputWrapper extends React.Component {
   constructor(props) {

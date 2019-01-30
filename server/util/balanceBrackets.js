@@ -7,9 +7,9 @@ function balanceBrackets(wordsArray) {
   wordsArray.forEach(word => {
     word.symbols.forEach(symbol => {
       textString += symbol.character
-      if (symbol.isEndOfLine) {
-        textString += '\n'
-      }
+      // if (symbol.isEndOfLine) {
+      //   textString += '\n'
+      // }
     })
     textString += ' '
   })

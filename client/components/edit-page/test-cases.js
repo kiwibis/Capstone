@@ -6,7 +6,10 @@ const TestCases = ({onChange, testCases}) => {
       rows="20"
       cols="50"
       name="testCases"
-      onChange={onChange}
+      onChange={event => {
+        const {target} = event
+        onChange(target.name, target.value)
+      }}
       value={testCases}
     />
   )
