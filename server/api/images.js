@@ -14,6 +14,7 @@ router.post('/read', async (req, res, next) => {
     const [result] = await client.documentTextDetection(req.files.file.data)
     const textArray = simplifyVisionResponse(result)
     const prettifiedString = prettify(textArray)
+
     res.json(prettifiedString)
   } catch (err) {
     next(err)
