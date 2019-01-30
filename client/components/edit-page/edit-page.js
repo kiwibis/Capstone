@@ -5,40 +5,10 @@ import {submitEditedText} from '../../store'
 import 'codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/mdn-like.css'
-
 import 'codemirror/mode/javascript/javascript.js'
 import {Controlled as CodeMirror} from 'react-codemirror2'
 
 let jBeautify = require('js-beautify').js
-
-// let sampleMode = () => {
-//   return {
-//     startState: function() {
-//       return {inString: false}
-//     },
-//     token: function(stream, state) {
-//       // If a string starts here
-//       if (!state.inString && stream.peek() === '"') {
-//         stream.next() // Skip quote
-//         state.inString = true // Update state
-//       }
-
-//       if (state.inString) {
-//         if (stream.skipTo('"')) {
-//           // Quote found on this line
-//           stream.next() // Skip quote
-//           state.inString = false // Clear flag
-//         } else {
-//           stream.skipToEnd() // Rest of line is string
-//         }
-//         return 'string' // Token style
-//       } else {
-//         stream.skipTo('"') || stream.skipToEnd()
-//         return null // Unstyled token
-//       }
-//     }
-//   }
-// }
 
 class EditPage extends Component {
   constructor() {
@@ -114,9 +84,7 @@ class EditPage extends Component {
           <div>
             <CodeMirror
               value={editedText}
-              // defineMode={{name: 'strings', fn: sampleMode}}
               onBeforeChange={(editor, data, value) => {
-                console.log(value)
                 this.handleChange(value)
               }}
               name="code"
