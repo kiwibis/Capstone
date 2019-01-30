@@ -71,7 +71,6 @@ class EditPage extends Component {
 
   render() {
     const {editedText, testCases, outputs, image} = this.state
-    const {text} = this.props
     return (
       <div id="EditPage">
         <div>
