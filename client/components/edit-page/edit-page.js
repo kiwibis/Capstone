@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {PhotoCapture} from '../../components'
 import {connect} from 'react-redux'
 import {submitEditedText} from '../../store'
+import {InputOutputWrapper} from './index'
 
 class EditPage extends Component {
   constructor() {
@@ -53,7 +54,7 @@ class EditPage extends Component {
         <div>
           <form>
             <textarea
-              autoFocus="true"
+              autoFocus={true}
               rows="20"
               cols="50"
               onChange={event => this.handleChange(event)}
@@ -67,7 +68,7 @@ class EditPage extends Component {
           <PhotoCapture buttonImage="Retake Image" />
         </div>
         <div>
-          <p>{output}</p>
+          <InputOutputWrapper />
         </div>
       </div>
     )
