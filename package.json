@@ -40,8 +40,11 @@
     "@google-cloud/vision": "^0.24.0",
     "axios": "^0.15.3",
     "babel-eslint": "^9.0.0",
+    "babel-plugin-react-css-modules": "^5.0.0",
+    "codemirror": "^5.43.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^4.1.0",
+    "css-loader": "^2.1.0",
     "eslint-config-react-app": "^3.0.6",
     "eslint-plugin-flowtype": "^2.50.1",
     "eslint-plugin-jsx-a11y": "^6.1.2",
@@ -49,6 +52,7 @@
     "express-fileupload": "^1.1.1-alpha.1",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
+    "js-beautify": "^1.8.9",
     "morgan": "^1.9.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
@@ -56,6 +60,8 @@
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
+    "react-codemirror": "^1.0.0",
+    "react-codemirror2": "^5.1.0",
     "react-dom": "^16.4.2",
     "react-hamburger-menu": "^1.1.1",
     "react-redux": "^5.0.2",
@@ -64,7 +70,8 @@
     "redux-logger": "^2.8.1",
     "redux-thunk": "^2.3.0",
     "sequelize": "^4.38.0",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "style-loader": "^0.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.55",

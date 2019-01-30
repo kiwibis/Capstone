@@ -13,6 +13,6 @@ describe('Balance Brackets', () => {
     expect(typeof textString).to.equal('string')
   })
   it('adds missing brackets at the end of the string', () => {
-    expect(textString).to.equal('hi\n {\n guys !\n }')
+    expect(textString).to.equal('hi { guys ! }')
   })
 })
