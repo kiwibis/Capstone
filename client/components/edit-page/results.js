@@ -1,8 +1,7 @@
 import React from 'react'
 
-const Results = ({testCases, output}) => {
+const Results = ({testCases, outputs}) => {
   testCases = testCases.split('\n')
-  output = output.split('\n')
   return (
     <ul>
       {testCases.map((input, i) => (
@@ -11,8 +10,8 @@ const Results = ({testCases, output}) => {
             <bold>Input: </bold> {input}
           </div>
           <div>
-            <bold>Your Output: </bold>
-            {output[i]}
+            <bold>Your Outputs: </bold>
+            {outputs[i]}
           </div>
         </li>
       ))}

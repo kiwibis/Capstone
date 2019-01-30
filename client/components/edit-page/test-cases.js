@@ -1,13 +1,13 @@
 import React from 'react'
 
-const TestCases = ({onChange, value}) => {
+const TestCases = ({onChange, testCases}) => {
   return (
     <textarea
       rows="20"
       cols="50"
       name="testCases"
       onChange={onChange}
-      value={value}
+      value={testCases}
     />
   )
 }

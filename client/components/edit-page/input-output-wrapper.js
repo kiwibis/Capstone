@@ -25,6 +25,7 @@ export default class InputOutputWrapper extends React.Component {
 
   render() {
     const {showResults} = this.state
+    const {testCases, outputs, onChange} = this.props
     let testCasesClassName = ''
     let resultsClassName = ''
     if (showResults) {
@@ -50,11 +51,11 @@ export default class InputOutputWrapper extends React.Component {
         </div>
 
         <div id="input" className={`tabcontent ${testCasesClassName}`}>
-          <TestCases handleChange={this.props.handleChange} />
+          <TestCases testCases={testCases} onChange={onChange} />
         </div>
 
         <div id="results" className={`tabcontent ${resultsClassName}`}>
-          <Results />
+          <Results testCases={testCases} outputs={outputs} />
         </div>
       </div>
     )

@@ -10,7 +10,7 @@ class EditPage extends Component {
     this.state = {
       editedText: '',
       testCases: '',
-      output: null,
+      outputs: [],
       image: null
     }
     this.handleChange = this.handleChange.bind(this)
@@ -22,20 +22,26 @@ class EditPage extends Component {
   }
 
   handleChange(event) {
-    this.setState({editedText: event.target.value})
+    this.setState({[event.target.name]: event.target.value})
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    const code = event.target.code.value
-    const input = event.target.input.value
-    this.setState({outputs: this.getResult(code, [input])})
+    const {editedText, testCases} = this.state
+    const code = editedText
+    console.log(code)
+    console.log(typeof code)
+    // const input = event.target.input.value
+    const input = testCases.split('\n')
+    console.log(input)
+    this.setState({outputs: this.getResult(code, input)})
   }
 
   getResult(code, inputArray) {
     if (code.slice(0, 8) === 'function') {
       return inputArray.map(input => {
         const codeString = `(${code})(${input})`
+        console.log('codestring', codestring)
         return eval(codeString)
       })
     } else {
@@ -67,7 +73,7 @@ class EditPage extends Component {
   }
 
   render() {
-    const {editedText, testCases, output, image} = this.state
+    const {editedText, testCases, outputs, image} = this.state
     const {text} = this.props
     return (
       <div id="EditPage">
@@ -83,11 +89,10 @@ class EditPage extends Component {
               name="editedText"
               onChange={this.handleChange}
               value={editedText}
-              name="code"
             />
             <InputOutputWrapper
               testCases={testCases}
-              output={output}
+              outputs={outputs}
               onChange={this.handleChange}
             />
             <input type="submit" />
