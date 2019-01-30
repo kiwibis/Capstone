@@ -34,19 +34,8 @@ function simplifyVisionResponse(visionAPIResponse, languageCheckNeeded) {
         word.symbols.forEach(symbol => {
           const symbolObject = {
             character: symbol.text,
-            confidence: symbol.confidence,
-            isEndOfLine: false
+            confidence: symbol.confidence
           }
-          const {detectedBreak} = symbol.property
-          if (detectedBreak) {
-            if (
-              detectedBreak.type === 'EOL_SURE_SPACE' ||
-              detectedBreak.type === 'LINE_BREAK'
-            ) {
-              symbolObject.isEndOfLine = true
-            }
-          }
-
           if (languageCheckNeeded) {
             symbol.property.detectedLanguages.forEach(lang => {
               if (lang.languageCode !== 'en' && lang.languageCode !== 'la') {

@@ -7,6 +7,9 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/mdn-like.css'
 import 'codemirror/mode/javascript/javascript.js'
 import {Controlled as CodeMirror} from 'react-codemirror2'
+import 'codemirror/addon/fold/foldgutter'
+import 'codemirror/addon/edit/matchbrackets'
+import 'codemirror/addon/lint/javascript-lint'
 
 let jBeautify = require('js-beautify').js
 
@@ -94,7 +97,9 @@ class EditPage extends Component {
                 mode: 'javascript',
                 theme: 'mdn-like',
                 lineSeparator: '\n',
-                gutters: ['note-gutter', 'CodeMirror-linenumbers']
+                matchingBrackets: true,
+                lint: true,
+                gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
               }}
             />
           </div>
