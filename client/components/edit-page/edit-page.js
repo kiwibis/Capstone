@@ -111,26 +111,26 @@ class EditPage extends Component {
           </center>
         </div>
         <div>
+          <div>
+            <CodeMirror
+              value={editedText}
+              // defineMode={{name: 'strings', fn: sampleMode}}
+              onBeforeChange={(editor, data, value) => {
+                console.log(value)
+                this.handleChange(value)
+              }}
+              name="code"
+              options={{
+                autoFocus: true,
+                lineNumbers: true,
+                mode: 'javascript',
+                theme: 'mdn-like',
+                lineSeparator: '\n',
+                gutters: ['note-gutter', 'CodeMirror-linenumbers']
+              }}
+            />
+          </div>
           <form onSubmit={this.handleSubmit}>
-            <div>
-              <CodeMirror
-                value={editedText}
-                // defineMode={{name: 'strings', fn: sampleMode}}
-                onBeforeChange={(editor, data, value) => {
-                  console.log(value)
-                  this.handleChange(value)
-                }}
-                name="code"
-                options={{
-                  autoFocus: true,
-                  lineNumbers: true,
-                  mode: 'javascript',
-                  theme: 'mdn-like',
-                  lineSeparator: '\n'
-                }}
-              />
-            </div>
-
             <div>
               <input name="input" type="text" />
               <input type="submit" />
