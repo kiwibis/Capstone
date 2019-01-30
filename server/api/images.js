@@ -1,6 +1,10 @@
 const router = require('express').Router()
 require('../../secrets')
-const {simplifyVisionResponse, balanceBrackets} = require('../util')
+const {
+  simplifyVisionResponse,
+  balanceBrackets,
+  correctErrors
+} = require('../util')
 
 // Imports the Google Cloud client library
 const vision = require('@google-cloud/vision')
@@ -14,7 +18,8 @@ router.post('/', async (req, res, next) => {
     const [result] = await client.documentTextDetection(req.files.file.data)
 
     const textArray = simplifyVisionResponse(result)
-    const textString = balanceBrackets(textArray)
+    const correctedTextArray = correctErrors(textArray)
+    const textString = balanceBrackets(correctedTextArray)
 
     res.json(textString)
   } catch (err) {
