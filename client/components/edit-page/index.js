@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {submitEditedText} from '../../store'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
+import jBeautify from 'js-beautify'
 
 class EditPage extends Component {
   constructor() {
@@ -30,12 +31,12 @@ class EditPage extends Component {
     event.preventDefault()
     const {editedText, testCases} = this.state
     const code = editedText
-    const input = testCases.split('\n')
-    this.setState({outputs: this.getResult(code, input)})
+    const inputs = testCases.split('\n')
+    this.setState({outputs: this.getResult(code, inputs)})
   }
 
   getResult(code, inputArray) {
-    if (code.startsWtith('function')) {
+    if (code.startsWith('function')) {
       return inputArray.map(input => {
         const codeString = `(${code})(${input})`
         return eval(codeString)
@@ -54,7 +55,7 @@ class EditPage extends Component {
       const {text} = this.props
       const fileReader = new FileReader()
       fileReader.onloadend = () => {
-        this.setState({image: fileReader.result, editedText: text})
+        this.setState({image: fileReader.result, editedText: jBeautify(text)})
       }
       fileReader.readAsDataURL(this.props.image)
     } catch (err) {

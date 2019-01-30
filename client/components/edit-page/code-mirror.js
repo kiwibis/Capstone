@@ -9,11 +9,10 @@ import 'codemirror/addon/edit/matchbrackets'
 import 'codemirror/addon/lint/javascript-lint'
 
 const CodeMirrorWrapper = ({editedText, handleChange}) => {
-  const jBeautify = require('js-beautify').js
   return (
     <div>
       <CodeMirror
-        value={jBeautify(editedText)}
+        value={editedText}
         onBeforeChange={(editor, data, value) => {
           handleChange('editedText', value)
         }}
