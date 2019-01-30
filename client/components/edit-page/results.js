@@ -6,11 +6,9 @@ const Results = ({testCases, outputs}) => {
     <ul>
       {testCases.map((input, i) => (
         <li key={i}>
+          <div>Input: {input}</div>
           <div>
-            <bold>Input: </bold> {input}
-          </div>
-          <div>
-            <bold>Your Outputs: </bold>
+            Your Outputs:
             {outputs[i]}
           </div>
         </li>

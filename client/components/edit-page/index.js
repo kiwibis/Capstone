@@ -2,9 +2,11 @@ import React, {Component} from 'react'
 import PhotoCapture from '../photo-capture'
 import {connect} from 'react-redux'
 import {submitEditedText} from '../../store'
+import history from '../../history'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
 import jBeautify from 'js-beautify'
+import Loader from 'react-loader-spinner'
 
 class EditPage extends Component {
   constructor() {
@@ -20,6 +22,7 @@ class EditPage extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.loading && !this.props.image) return history.push('/')
     this.readFile()
   }
 
@@ -57,6 +60,7 @@ class EditPage extends Component {
   }
 
   readFile() {
+    if (!this.props.image) return
     try {
       const {text} = this.props
       const fileReader = new FileReader()
@@ -76,6 +80,12 @@ class EditPage extends Component {
   }
 
   render() {
+    if (this.props.loading)
+      return (
+        <center>
+          <Loader type="Puff" color="#00BFFF" height="100" width="100" />
+        </center>
+      )
     const {editedText, testCases, outputs, image} = this.state
     return (
       <div id="EditPage">
@@ -109,7 +119,8 @@ const mapStateToProps = state => {
   return {
     text,
     editedText,
-    image
+    image,
+    loading: state.loading
   }
 }
 
@@ -119,4 +130,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPage)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditPage)

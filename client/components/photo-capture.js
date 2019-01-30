@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {sendImage} from '../store'
+import {sendImage, setLoadingTrue} from '../store'
+import history from '../history'
 
 class PhotoCapture extends React.Component {
   constructor() {
@@ -10,7 +11,9 @@ class PhotoCapture extends React.Component {
 
   handleChange(event) {
     const file = event.target.files[0]
+    this.props.setLoadingTrue()
     this.props.sendImage(file)
+    history.push('/editPage')
   }
 
   render() {
@@ -33,7 +36,11 @@ class PhotoCapture extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
+  setLoadingTrue: () => dispatch(setLoadingTrue()),
   sendImage: image => dispatch(sendImage(image))
 })
 
-export default connect(null, mapDispatch)(PhotoCapture)
+export default connect(
+  null,
+  mapDispatch
+)(PhotoCapture)
