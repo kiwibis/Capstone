@@ -9,7 +9,8 @@ class EditPage extends Component {
     super()
     this.state = {
       editedText: '',
-      outputs: [],
+      testCases: '',
+      output: null,
       image: null
     }
     this.handleChange = this.handleChange.bind(this)
@@ -66,7 +67,8 @@ class EditPage extends Component {
   }
 
   render() {
-    const {editedText, outputs, image} = this.state
+    const {editedText, testCases, output, image} = this.state
+    const {text} = this.props
     return (
       <div id="EditPage">
         <div>
@@ -78,19 +80,19 @@ class EditPage extends Component {
               autoFocus={true}
               rows="20"
               cols="50"
-              onChange={event => this.handleChange(event)}
+              name="editedText"
+              onChange={this.handleChange}
               value={editedText}
               name="code"
             />
-            <div>
-              <input name="input" type="text" />
-              <input type="submit" />
-            </div>
+            <InputOutputWrapper
+              testCases={testCases}
+              output={output}
+              onChange={this.handleChange}
+            />
+            <input type="submit" />
           </form>
           <PhotoCapture buttonImage="Retake Image" />
-        </div>
-        <div>
-          <InputOutputWrapper />
         </div>
       </div>
     )
