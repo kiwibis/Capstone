@@ -10,6 +10,7 @@ class PhotoCapture extends React.Component {
 
   handleChange(event) {
     const file = event.target.files[0]
+
     this.props.sendImage(file)
   }
 
@@ -36,4 +37,7 @@ const mapDispatch = dispatch => ({
   sendImage: image => dispatch(sendImage(image))
 })
 
-export default connect(null, mapDispatch)(PhotoCapture)
+export default connect(
+  null,
+  mapDispatch
+)(PhotoCapture)

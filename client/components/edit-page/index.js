@@ -5,6 +5,7 @@ import {submitEditedText} from '../../store'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
 import jBeautify from 'js-beautify'
+import findOrientation from 'exif-orientation'
 
 class EditPage extends Component {
   constructor() {
@@ -13,10 +14,12 @@ class EditPage extends Component {
       editedText: '',
       testCases: '',
       outputs: [],
-      image: null
+      image: null,
+      imageClass: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.readFile = this.readFile.bind(this)
   }
 
   componentDidMount() {
@@ -58,6 +61,20 @@ class EditPage extends Component {
         this.setState({image: fileReader.result, editedText: jBeautify(text)})
       }
       fileReader.readAsDataURL(this.props.image)
+      findOrientation(this.props.image, (err, orientation) => {
+        if (!err) {
+          if (orientation.rotate === 90) {
+            this.setState({
+              imageClass: 'rotate'
+            })
+          } else {
+            this.setState({
+              imageClass: ''
+            })
+          }
+        }
+      })
+      console.log(this.props.image)
     } catch (err) {
       console.error(err)
     }
@@ -70,12 +87,12 @@ class EditPage extends Component {
   }
 
   render() {
-    const {editedText, testCases, outputs, image} = this.state
+    const {editedText, testCases, outputs, image, imageClass} = this.state
     return (
       <div id="EditPage">
         <div>
           <center>
-            <img id="edit-image" src={image} />
+            <img className={imageClass} id="edit-image" src={image} />
           </center>
         </div>
         <div>
@@ -113,4 +130,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPage)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditPage)
