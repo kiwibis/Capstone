@@ -1,5 +1,5 @@
 import React from 'react'
-import {PhotoCapture} from '.'
+import PhotoCapture from './photo-capture'
 
 const HomePage = () => {
   return (
