@@ -1,16 +1,14 @@
 import React from 'react'
 
 const Results = ({testCases, outputs}) => {
-  testCases = testCases.split('\n')
+  testCases = testCases.trim().split('\n')
   return (
     <ul>
       {testCases.map((input, i) => (
         <li key={i}>
+          <div>Input: {input}</div>
           <div>
-            <bold>Input: </bold> {input}
-          </div>
-          <div>
-            <bold>Your Outputs: </bold>
+            Your Outputs:
             {outputs[i]}
           </div>
         </li>
