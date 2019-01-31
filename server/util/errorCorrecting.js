@@ -1,5 +1,5 @@
 function correctErrors(simplifiedArray) {
-  const troubleChars = [')']
+  const troubleChars = [')', '>']
   const correctedArray = []
   simplifiedArray.forEach(originalWord => {
     console.log('*** NEW WORD ***')
@@ -73,6 +73,18 @@ function wordCorrector(word, correctedArray) {
 function charCorrector(char, correctedArray) {
   if (char.character === ')') {
     console.log('***IN CHANGE PARENS***')
+    if (
+      correctedArray[correctedArray.length - 1].symbols[0].character === '='
+    ) {
+      correctedArray[
+        correctedArray.length - 1
+      ].symbols[0].character = correctedArray[
+        correctedArray.length - 1
+      ].symbols[0].character.concat('>')
+      char.character = ''
+    }
+  }
+  if (char.character === '>') {
     if (
       correctedArray[correctedArray.length - 1].symbols[0].character === '='
     ) {
