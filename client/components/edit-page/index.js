@@ -8,6 +8,7 @@ import CodeMirror from './code-mirror'
 import jBeautify from 'js-beautify'
 import findOrientation from 'exif-orientation'
 import Loader from 'react-loader-spinner'
+import Evaluator from './evaluator'
 
 class EditPage extends Component {
   constructor() {
@@ -22,6 +23,7 @@ class EditPage extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.readFile = this.readFile.bind(this)
+    this.evaluator = new Evaluator()
   }
 
   componentDidMount() {
@@ -38,28 +40,7 @@ class EditPage extends Component {
     const {editedText, testCases} = this.state
     const code = editedText
     const inputs = testCases.trim().split('\n')
-    this.setState({outputs: this.getResult(code, inputs)})
-  }
-
-  getResult(code, inputArray) {
-    if (code.startsWith('function')) {
-      return inputArray.map(input => {
-        const codeString = `(${code})(${input})`
-        return eval(codeString)
-      })
-    } else {
-      const arrowIndex = code.indexOf('=>')
-      const firstHalf = code.slice(0, arrowIndex)
-      const constIndex = firstHalf.lastIndexOf('const')
-      const noConstSlice = firstHalf.slice(constIndex + 5)
-      const endOfWordIndex = noConstSlice.lastIndexOf('=')
-      const endOfWord = noConstSlice.slice(0, endOfWordIndex)
-      return inputArray.map(input => {
-        const funcCall = endOfWord + '(' + input + ')'
-        const codeString = code + '\n' + funcCall
-        return eval(codeString)
-      })
-    }
+    this.setState({outputs: this.evaluator.getResult(code, inputs)})
   }
 
   readFile() {
