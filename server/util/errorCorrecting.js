@@ -1,5 +1,5 @@
 function correctErrors(simplifiedArray) {
-  const troubleChars = [')', '>']
+  const troubleChars = [')', '>', '+', '=', '-']
   const correctedArray = []
   simplifiedArray.forEach(originalWord => {
     console.log('*** NEW WORD ***')
@@ -60,6 +60,7 @@ function correctErrors(simplifiedArray) {
           correctedChar.symbols.push(char)
         }
       })
+
       correctedArray.push(correctedChar)
     }
   })
@@ -94,6 +95,22 @@ function charCorrector(char, correctedArray) {
         correctedArray.length - 1
       ].symbols[0].character.concat('>')
       char.character = ''
+    }
+  }
+  if (['+', '-', '='].includes(char.character)) {
+    if (correctedArray.length) {
+      if (
+        ['+', '-', '='].includes(
+          correctedArray[correctedArray.length - 1].symbols[0].character
+        )
+      ) {
+        correctedArray[
+          correctedArray.length - 1
+        ].symbols[0].character = correctedArray[
+          correctedArray.length - 1
+        ].symbols[0].character.concat(char.character)
+        char.character = ''
+      }
     }
   }
   return char
