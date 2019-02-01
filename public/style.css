@@ -36,6 +36,14 @@ form div {
   position: relative;
 }
 
+#form-area {
+  max-width: 90%;
+}
+
+textarea {
+  width: 100%;
+}
+
 .CodeMirror {
   position: absolute;
   top: 0;
@@ -49,12 +57,36 @@ form div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+
+  height: 80vh;
 }
 
 #brand-info {
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-content: center;
+}
+
+#title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 10vh;
+}
+
+#brand-description {
+  margin-top: 20%;
+  margin-bottom: 30%;
+  text-align: center;
+}
+
+#title {
+  color: rgba(139, 201, 0);
+  font-size: 40px;
+  font-family: 'Baloo Thambi', cursive;
+  margin-top: 0;
 }
 
 .image-upload > input {
@@ -69,6 +101,11 @@ form div {
 #edit-image {
   max-width: 90vw;
   max-height: 20vh;
+}
+
+#edit-page {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Style the tab */
@@ -91,12 +128,12 @@ form div {
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  background-color: rgba(221, 221, 221, 0.342);
+  background-color: rgba(221, 221, 221, 0.904);
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: rgba(204, 204, 204, 0.329);
+  background-color: rgba(221, 221, 221, 0.904);
 }
 
 /* Style the tab content */
@@ -113,4 +150,139 @@ form div {
 
 .cm-s-mdn-like.CodeMirror {
   height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: #232323;
+
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: rgba(139, 201, 0);
+}
+
+#menuToggle {
+  display: block;
+  position: relative;
+  top: 50px;
+  left: 50px;
+
+  z-index: 1;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle input {
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+
+  cursor: pointer;
+
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+
+  background: #cdcdcd;
+  border-radius: 3px;
+
+  z-index: 1;
+
+  transform-origin: 4px 0px;
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+
+/*
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked ~ span {
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle input:checked ~ span:nth-last-child(3) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle input:checked ~ span:nth-last-child(2) {
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+#menu {
+  position: absolute;
+  width: 80px;
+  margin: -100px 0 0 -50px;
+  padding: 30px;
+  padding-top: 125px;
+  display: flex;
+  flex-direction: column;
+
+  background: #ededed;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+}
+
+#menu-link-list {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+}
+
+#menu li {
+  padding: 10px 0;
+  font-size: 16px;
+}
+
+/*
+ * And let's slide it in from the left
+ */
+#menuToggle input:checked ~ ul {
+  transform: none;
 }
