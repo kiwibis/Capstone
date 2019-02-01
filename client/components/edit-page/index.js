@@ -40,6 +40,7 @@ class EditPage extends Component {
     const {editedText, testCases} = this.state
     const code = editedText
     const inputs = testCases.trim().split('\n')
+    this.props.submitEditedText(editedText)
     this.setState({outputs: this.evaluator.getResult(code, inputs)})
   }
 
@@ -65,7 +66,6 @@ class EditPage extends Component {
           }
         }
       })
-      console.log(this.props.image)
     } catch (err) {
       console.error(err)
     }

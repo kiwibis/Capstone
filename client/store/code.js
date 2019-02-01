@@ -4,15 +4,15 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_CODE = 'GET_CODE'
-const SUBMIT_EDITED_TEXT = 'SUBMIT_EDITED_TEXT'
+const GOT_EDITED_TEXT = 'GOT_EDITED_TEXT'
 
 /**
  * ACTION CREATORS
  */
 const getCode = imageInfo => ({type: GET_CODE, payload: imageInfo})
 
-export const submitEditedText = editedText => ({
-  type: SUBMIT_EDITED_TEXT,
+const gotEditedText = editedText => ({
+  type: GOT_EDITED_TEXT,
   payload: editedText
 })
 
@@ -30,6 +30,15 @@ export const sendImage = imageFile => async dispatch => {
   }
 }
 
+export const submitEditedText = editedText => async (dispatch, getState) => {
+  try {
+    const {text} = getState().code
+    await axios.post('/api/trainingData', {initialText: text, editedText})
+    dispatch(gotEditedText(editedText))
+  } catch (err) {
+    console.error(err)
+  }
+}
 /**
  * INITIAL STATE
  */
@@ -46,8 +55,8 @@ export default function(state = defaultImage, action) {
   switch (action.type) {
     case GET_CODE:
       return {...action.payload, editedText: ''}
-    case SUBMIT_EDITED_TEXT:
-      return {...this.state, editedText: action.payload}
+    case GOT_EDITED_TEXT:
+      return {...state, editedText: action.payload}
     default:
       return state
   }
