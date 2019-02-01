@@ -3,10 +3,16 @@ const {TrainingData} = require('../db/models')
 
 router.post('/', async (req, res, next) => {
   try {
-    const {initialText, editedText} = req.body
+    let userId = null
+    if (req.user) {
+      userId = user.id
+    }
+    const {initialText, editedText, imageDataURI} = req.body
     await TrainingData.create({
       algoResultText: initialText,
-      userEditedText: editedText
+      userEditedText: editedText,
+      imageDataURI,
+      userId
     })
     res.sendStatus(201)
   } catch (err) {

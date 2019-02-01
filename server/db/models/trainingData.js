@@ -3,11 +3,15 @@ const db = require('../db')
 
 const TrainingData = db.define('trainingData', {
   algoResultText: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false
   },
   userEditedText: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
+    allowNull: false
+  },
+  imageDataURI: {
+    type: Sequelize.TEXT,
     allowNull: false
   }
 })
