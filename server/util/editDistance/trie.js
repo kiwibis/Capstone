@@ -1,15 +1,15 @@
 class Trie {
-  constructor(character = '', size = 0) {
+  constructor(character = '') {
     this.data = character
     this.children = {}
-    this.size = size
+    this.size = 0
     this.isTerminal = false
   }
 
   insert(word) {
     let node = this
     for (let i = 0; i < word.length; ++i) {
-      const newNode = node.children[word[i]] || new Trie(word[i], 1)
+      const newNode = node.children[word[i]] || new Trie(word[i])
       node.children[word[i]] = newNode
       node.size++
 

@@ -36,8 +36,10 @@ describe('Trie', function() {
         trie.insert('hinder')
       })
       it('updates the size at the prefixes', function() {
-        expect(trie.children.h.children.i.size).to.equal(3)
-        expect(trie.children.h.children.i.children.n.size).to.equal(3)
+        expect(trie.children.h.size).to.equal(3)
+        expect(trie.children.h.children.i.size).to.equal(2)
+
+        expect(trie.children.h.children.i.children.n.size).to.equal(2)
       })
       it('the last character is made a terminal node', function() {
         expect(
