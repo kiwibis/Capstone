@@ -1,5 +1,4 @@
 // The editDistance function uses dynamic programming to return the minimum number of operations (insertions, deletions, swaps) needed to transform the source string into the target
-
 function editDistance(source, target) {
   const lengthSource = source.length
   const lengthTarget = target.length
@@ -17,9 +16,7 @@ function editDistance(source, target) {
     prefixDistances.push(Array(lengthSource + 1).fill(0))
   }
   for (let row = 0; row <= lengthTarget; row++) {
-    //row = i
     for (let column = 0; column <= lengthSource; column++) {
-      //column = j
       let operationCost = 0
       if (row === 0) {
         if (column !== 0) {
