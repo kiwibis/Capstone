@@ -3,7 +3,6 @@ function correctErrors(simplifiedArray) {
   const correctedArray = []
 
   //Characters that need to be checked regardless of GV confidence level
-  const troubleChars = [')', '>']
 
   simplifiedArray.forEach(originalWord => {
     console.log('*** NEW WORD ***')
@@ -67,8 +66,9 @@ function correctErrors(simplifiedArray) {
           correctedChar.symbols.push(char)
         }
       })
-
-      correctedArray.push(correctedChar)
+      if (correctedChar.symbols.length) {
+        correctedArray.push(correctedChar)
+      }
     }
   })
   return correctedArray
@@ -105,21 +105,24 @@ function charCorrector(char, correctedArray) {
     }
   }
   if (['+', '-', '='].includes(char.character)) {
-    if (
-      correctedArray.length &&
-      ['+', '-', '='].includes(
-        correctedArray[correctedArray.length - 1].symbols[0].character
-      )
-    ) {
-      correctedArray[
-        correctedArray.length - 1
-      ].symbols[0].character = correctedArray[
-        correctedArray.length - 1
-      ].symbols[0].character.concat(char.character)
-      char.character = ''
+    console.log(correctedArray)
+    if (correctedArray.length) {
+      console.log(correctedArray.length)
+      console.log(correctedArray[correctedArray.length - 1])
+      if (
+        ['+', '-', '='].includes(
+          correctedArray[correctedArray.length - 1].symbols[0].character
+        )
+      ) {
+        correctedArray[
+          correctedArray.length - 1
+        ].symbols[0].character = correctedArray[
+          correctedArray.length - 1
+        ].symbols[0].character.concat(char.character)
+        char.character = ''
+      }
     }
   }
-
   return char
 }
 
