@@ -12,17 +12,22 @@ const Results = ({testCases, outputs}) => {
       .call(elem)
       .slice(8, -1)
       .toLowerCase()
+  const getOutput = output => {
+    const outputType = type(output)
+    if (outputType === 'null' || outputType === 'undefined') {
+      return outputType
+    } else if (outputType === 'boolean') {
+      return output ? 'true' : 'false'
+    } else {
+      return output
+    }
+  }
   return (
     <ul>
       {testCases.map((input, i) => (
         <li key={i}>
           <div>Input: {input}</div>
-          <div>
-            Your Output:{' '}
-            {['null', 'undefined'].includes(type(outputs[i]))
-              ? type(outputs[i])
-              : outputs[i]}
-          </div>
+          <div>Your Output: {getOutput(outputs[i])}</div>
         </li>
       ))}
     </ul>
