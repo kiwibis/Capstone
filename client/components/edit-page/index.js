@@ -40,7 +40,11 @@ class EditPage extends Component {
     const {editedText, testCases} = this.state
     const code = editedText
     const inputs = testCases.trim().split('\n')
-    this.setState({outputs: this.evaluator.getResult(code, inputs)})
+    try {
+      this.setState({outputs: this.evaluator.getResult(code, inputs)})
+    } catch (error) {
+      this.setState({outputs: `${error.name}: ${error.message}`})
+    }
   }
 
   readFile() {
