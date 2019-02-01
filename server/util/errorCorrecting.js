@@ -1,4 +1,5 @@
 function correctErrors(simplifiedArray) {
+  const troubleChars = [')', '>', '+', '=', '-']
   const correctedArray = []
 
   //Characters that need to be checked regardless of GV confidence level
@@ -66,6 +67,7 @@ function correctErrors(simplifiedArray) {
           correctedChar.symbols.push(char)
         }
       })
+
       correctedArray.push(correctedChar)
     }
   })
@@ -102,6 +104,22 @@ function charCorrector(char, correctedArray) {
       char.character = ''
     }
   }
+  if (['+', '-', '='].includes(char.character)) {
+    if (
+      correctedArray.length &&
+      ['+', '-', '='].includes(
+        correctedArray[correctedArray.length - 1].symbols[0].character
+      )
+    ) {
+      correctedArray[
+        correctedArray.length - 1
+      ].symbols[0].character = correctedArray[
+        correctedArray.length - 1
+      ].symbols[0].character.concat(char.character)
+      char.character = ''
+    }
+  }
+
   return char
 }
 

@@ -3,6 +3,7 @@
   "extends": ["fullstack", "prettier", "prettier/react"],
   "rules": {
     "semi": 0,
-    "complexity": 0
+    "complexity": 0,
+    "react/button-has-type": 0
   }
 }

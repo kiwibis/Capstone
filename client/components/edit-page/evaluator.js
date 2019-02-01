@@ -14,7 +14,9 @@ export default class Evaluator {
   getResult(code, inputArray) {
     if (code.startsWith('function')) {
       return inputArray.map(input => {
-        const codeString = `(${code})(...${this.getArgs(input)})`
+        const codeString = `(${code})(...[${this.getArgs(input)}])`
+        // console.log(...[this.getArgs(input)])
+        // console.log(eval(codeString))
         return eval(codeString)
       })
     } else {
