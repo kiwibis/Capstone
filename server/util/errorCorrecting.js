@@ -98,21 +98,21 @@ function charCorrector(char, correctedArray) {
     }
   }
   if (['+', '-', '='].includes(char.character)) {
-    if (correctedArray.length) {
-      if (
-        ['+', '-', '='].includes(
-          correctedArray[correctedArray.length - 1].symbols[0].character
-        )
-      ) {
-        correctedArray[
-          correctedArray.length - 1
-        ].symbols[0].character = correctedArray[
-          correctedArray.length - 1
-        ].symbols[0].character.concat(char.character)
-        char.character = ''
-      }
+    if (
+      correctedArray.length &&
+      ['+', '-', '='].includes(
+        correctedArray[correctedArray.length - 1].symbols[0].character
+      )
+    ) {
+      correctedArray[
+        correctedArray.length - 1
+      ].symbols[0].character = correctedArray[
+        correctedArray.length - 1
+      ].symbols[0].character.concat(char.character)
+      char.character = ''
     }
   }
+
   return char
 }
 
