@@ -37,10 +37,10 @@ class EditPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    const {editedText, testCases, image} = this.state
+    const {editedText, testCases} = this.state
     const code = editedText
     const inputs = testCases.trim().split('\n')
-    this.props.submitEditedText(editedText, image)
+    this.props.submitEditedText(editedText)
     try {
       this.setState({outputs: this.evaluator.getResult(code, inputs)})
     } catch (error) {

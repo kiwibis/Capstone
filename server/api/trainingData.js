@@ -5,13 +5,12 @@ router.post('/', async (req, res, next) => {
   try {
     let userId = null
     if (req.user) {
-      userId = user.id
+      userId = req.user.id
     }
-    const {initialText, editedText, imageDataURI} = req.body
+    const {initialText, editedText} = req.body
     await TrainingData.create({
       algoResultText: initialText,
       userEditedText: editedText,
-      imageDataURI,
       userId
     })
     res.sendStatus(201)

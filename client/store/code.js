@@ -30,16 +30,12 @@ export const sendImage = imageFile => async dispatch => {
   }
 }
 
-export const submitEditedText = (editedText, image) => async (
-  dispatch,
-  getState
-) => {
+export const submitEditedText = editedText => async (dispatch, getState) => {
   try {
     const {text} = getState().code
     await axios.post('/api/trainingData', {
       initialText: text,
-      editedText,
-      imageDataURI: image
+      editedText
     })
     dispatch(gotEditedText(editedText))
   } catch (err) {

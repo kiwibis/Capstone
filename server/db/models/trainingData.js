@@ -9,11 +9,11 @@ const TrainingData = db.define('trainingData', {
   userEditedText: {
     type: Sequelize.TEXT,
     allowNull: false
-  },
-  imageDataURI: {
-    type: Sequelize.TEXT,
-    allowNull: false
   }
+  // imageDataURI: {
+  //   type: Sequelize.TEXT,
+  //   allowNull: false
+  // }
 })
 
 module.exports = TrainingData
