@@ -9,14 +9,17 @@ const {
 // Imports the Google Cloud client library
 const vision = require('@google-cloud/vision')
 
+const privateKey = process.env.GOOGLE_APPLICATION_CREDENTIALS_PRIVATE_KEY
+let formattedPrivateKey
+if (privateKey) {
+  formattedPrivateKey = privateKey.replace(/\\n/g, '\n')
+}
+
 // Creates a client
 const client = new vision.ImageAnnotatorClient({
   credentials: {
     client_email: process.env.GOOGLE_APPLICATION_CREDENTIALS_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_APPLICATION_CREDENTIALS_PRIVATE_KEY.replace(
-      /\\n/g,
-      '\n'
-    )
+    private_key: formattedPrivateKey
   }
 })
 
