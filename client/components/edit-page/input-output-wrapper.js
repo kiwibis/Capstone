@@ -35,7 +35,7 @@ export default class InputOutputWrapper extends React.Component {
       testCasesClassName = 'active'
     }
     return (
-      <div>
+      <div id="form-area">
         <div className="tab">
           <button
             className={`tablinks ${testCasesClassName}`}
