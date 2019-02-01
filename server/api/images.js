@@ -13,7 +13,10 @@ const vision = require('@google-cloud/vision')
 const client = new vision.ImageAnnotatorClient({
   credentials: {
     client_email: process.env.GOOGLE_APPLICATION_CREDENTIALS_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_APPLICATION_CREDENTIALS_PRIVATE_KEY
+    private_key: process.env.GOOGLE_APPLICATION_CREDENTIALS_PRIVATE_KEY.replace(
+      /\\n/g,
+      '\n'
+    )
   }
 })
 
