@@ -30,21 +30,13 @@ export default class Evaluator {
     return new Promise((resolve, reject) => {
       try {
         const code = `
-        const console = {
-          log: function() {
-            let str = arguments.map(arg => JSON.stringify(arg)).join(' ')
-
-            // send the message back to the main thread
-            self.postMessage(str + '\\n')
-          }
-        }
         self.onmessage = () => {
           self.postMessage((${fn})(...[${input}]))
         }`
 
         const blob = new Blob([code], {type: 'text/javascript'})
         const blobUrl = window.URL.createObjectURL(blob)
-        const worker = new Worker(blobUrl)
+        let worker = new Worker(blobUrl)
         window.URL.revokeObjectURL(blobUrl)
 
         worker.onmessage = result => {
@@ -59,6 +51,13 @@ export default class Evaluator {
         }
 
         worker.postMessage('')
+        setTimeout(function() {
+          worker.terminate()
+          worker = null
+          resolve(
+            'This is taking longer than expected! Check out our FAQs to learn what the issue could be.'
+          )
+        }, 10000)
       } catch (error) {
         reject(error)
       }

@@ -14,11 +14,8 @@ const Results = ({testCases, outputs}) => {
       .slice(8, -1)
       .toLowerCase()
   const renderText = output => {
-    const outputType = type(output)
-    if (outputType === 'null' || outputType === 'undefined') {
-      return outputType
-    } else if (outputType === 'boolean') {
-      return output ? 'true' : 'false'
+    if (['null', 'undefined', 'boolean'].includes(type(output))) {
+      return JSON.parse(output)
     } else {
       return output
     }
