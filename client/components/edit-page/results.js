@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Results = ({testCases, outputs}) => {
-  testCases = testCases.trim().split('\n')
+  testCases = testCases ? testCases.trim().split('\n') : ['']
   if (typeof outputs === 'string') {
     return outputs
   } else if (outputs.length === 0) {
