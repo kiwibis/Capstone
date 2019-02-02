@@ -13,11 +13,13 @@ const Results = ({testCases, outputs}) => {
       .call(text)
       .slice(8, -1)
       .toLowerCase()
-  const renderText = output => {
-    if (['null', 'undefined', 'boolean'].includes(type(output))) {
-      return JSON.parse(output)
+  const renderText = text => {
+    if (['null', 'boolean'].includes(type(text))) {
+      return JSON.stringify(text)
+    } else if (type(text) === 'undefined') {
+      return 'undefined'
     } else {
-      return output
+      return text
     }
   }
   return (
