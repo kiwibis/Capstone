@@ -22,6 +22,7 @@ const Results = ({testCases, outputs}) => {
       return text
     }
   }
+
   return (
     <ul>
       {testCases.map((input, i) => (
