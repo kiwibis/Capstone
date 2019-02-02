@@ -7,13 +7,22 @@ const Results = ({testCases, outputs}) => {
   } else if (outputs.length === 0) {
     return 'No Output'
   }
+
   const type = text =>
     Object.prototype.toString
       .call(text)
       .slice(8, -1)
       .toLowerCase()
-  const renderText = text =>
-    ['null', 'undefined'].includes(type(text)) ? type(text) : text
+  const renderText = output => {
+    const outputType = type(output)
+    if (outputType === 'null' || outputType === 'undefined') {
+      return outputType
+    } else if (outputType === 'boolean') {
+      return output ? 'true' : 'false'
+    } else {
+      return output
+    }
+  }
   return (
     <ul>
       {testCases.map((input, i) => (
