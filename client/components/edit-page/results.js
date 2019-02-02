@@ -7,22 +7,19 @@ const Results = ({testCases, outputs}) => {
   } else if (outputs.length === 0) {
     return 'No Output'
   }
-  const type = elem =>
+  const type = text =>
     Object.prototype.toString
-      .call(elem)
+      .call(text)
       .slice(8, -1)
       .toLowerCase()
+  const renderText = text =>
+    ['null', 'undefined'].includes(type(text)) ? type(text) : text
   return (
     <ul>
       {testCases.map((input, i) => (
         <li key={i}>
-          <div>Input: {input}</div>
-          <div>
-            Your Output:{' '}
-            {['null', 'undefined'].includes(type(outputs[i]))
-              ? type(outputs[i])
-              : outputs[i]}
-          </div>
+          <div>Input: {renderText(input)}</div>
+          <div>Your Output: {renderText(outputs[i])}</div>
         </li>
       ))}
     </ul>

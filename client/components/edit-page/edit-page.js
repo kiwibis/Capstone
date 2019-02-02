@@ -39,7 +39,9 @@ class EditPage extends Component {
     event.preventDefault()
     const {editedText, testCases} = this.state
     const code = editedText
-    const inputs = testCases.trim().split('\n')
+    // if the testCases is an empty string return an empty array instead of the
+    // default [""]
+    const inputs = testCases.trim() ? testCases.trim().split('\n') : []
     this.props.submitEditedText(editedText)
     try {
       this.setState({
