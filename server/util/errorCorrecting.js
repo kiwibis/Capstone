@@ -1,8 +1,8 @@
 function correctErrors(simplifiedArray) {
-  const troubleChars = [')', '>', '+', '=', '-']
-  const correctedArray = []
-
   //Characters that need to be checked regardless of GV confidence level
+  const troubleChars = [')', '>', '+', '=', '-']
+
+  const correctedArray = []
 
   simplifiedArray.forEach(originalWord => {
     console.log('*** NEW WORD ***')
@@ -20,55 +20,47 @@ function correctErrors(simplifiedArray) {
       //For each determines if any characters are low confidence and if word should be concatenated
       word.symbols.forEach((originalChar, index) => {
         //copy character object
-        const char = {...originalChar}
+        const charObject = {...originalChar}
 
-        if (isLowConfidence(char)) {
+        if (isLowConfidence(charObject)) {
           checkWord = true
         }
 
         //If this is the first character of the word and the corrected array is not empty
         correctedArray.length &&
-          wordIsCapitalizedAndPreviousWordIsWord(char, correctedArray, index) &&
+          wordIsCapitalizedAndPreviousWordIsWord(
+            charObject,
+            correctedArray,
+            index
+          ) &&
           (concatWord = true)
       })
 
+      //If word needs to be checked:
       if (checkWord) {
-        const correctedWord = wordCorrector(word, correctedArray)
-        if (concatWord) {
-          correctedArray[correctedArray.length - 1].symbols = correctedArray[
-            correctedArray.length - 1
-          ].symbols.concat(correctedWord.symbols)
-        } else {
-          correctedArray.push(correctedWord)
-        }
-      } else {
-        // eslint-disable-next-line no-lonely-if
-        if (concatWord) {
-          console.log('***IN CONCAT WORD***')
-          correctedArray[correctedArray.length - 1].symbols = correctedArray[
-            correctedArray.length - 1
-          ].symbols.concat(word.symbols)
-        } else {
-          correctedArray.push(word)
-        }
+        word = wordCorrector(word, correctedArray)
       }
+
+      //Either concat word to previous word or push word onto corrected Array
+      concatWord
+        ? concatWordToPreviousWord(word, correctedArray)
+        : correctedArray.push(word)
     } else {
       const correctedChar = {symbols: []}
-      word.symbols.forEach(originalChar => {
-        let char = {...originalChar}
-        console.log('***CONFIDENCE***', char.character, char.confidence)
-        if (char.confidence < 0.7 || troubleChars.includes(char.character)) {
-          const newChar = charCorrector(char, correctedArray)
-          if (newChar.character !== '') {
-            correctedChar.symbols.push(newChar)
-          }
-        } else {
-          correctedChar.symbols.push(char)
-        }
-      })
-      if (correctedChar.symbols.length) {
-        correctedArray.push(correctedChar)
+      // "Word" has one character and is a character
+
+      let charObject = {...word.symbols[0]}
+      let char = charObject.character
+
+      console.log('***CONFIDENCE***', char, charObject.confidence)
+
+      if (isLowConfidence(charObject) && troubleChars.includes(char)) {
+        charObject = charCorrector(char, charObject, correctedArray)
       }
+
+      char && correctedChar.symbols.push(charObject)
+
+      correctedChar.symbols.length && correctedArray.push(correctedChar)
     }
   })
   return correctedArray
@@ -78,52 +70,38 @@ function wordCorrector(word, correctedArray) {
   return word
 }
 
-function charCorrector(char, correctedArray) {
-  if (char.character === ')') {
+function charCorrector(char, charObject, correctedArray) {
+  const previousCharObject =
+    correctedArray[correctedArray.length - 1].symbols[0]
+
+  if (char === ')') {
     console.log('***IN CHANGE PARENS***')
-    if (
-      correctedArray[correctedArray.length - 1].symbols[0].character === '='
-    ) {
-      correctedArray[
-        correctedArray.length - 1
-      ].symbols[0].character = correctedArray[
-        correctedArray.length - 1
-      ].symbols[0].character.concat('>')
-      char.character = ''
+    if (previousCharObject.character === '=') {
+      previousCharObject.character = previousCharObject.character.concat('>')
+      char = ''
+      charObject = {...charObject, character: char}
     }
   }
-  if (char.character === '>') {
-    if (
-      correctedArray[correctedArray.length - 1].symbols[0].character === '='
-    ) {
-      correctedArray[
-        correctedArray.length - 1
-      ].symbols[0].character = correctedArray[
-        correctedArray.length - 1
-      ].symbols[0].character.concat('>')
-      char.character = ''
+  if (char === '>') {
+    if (previousCharObject.character === '=') {
+      previousCharObject.character = previousCharObject.character.concat('>')
+      char = ''
+      charObject = {...charObject, character: char}
     }
   }
-  if (['+', '-', '='].includes(char.character)) {
+  if (['+', '-', '='].includes(char)) {
     console.log(correctedArray)
     if (correctedArray.length) {
       console.log(correctedArray.length)
-      console.log(correctedArray[correctedArray.length - 1])
-      if (
-        ['+', '-', '='].includes(
-          correctedArray[correctedArray.length - 1].symbols[0].character
-        )
-      ) {
-        correctedArray[
-          correctedArray.length - 1
-        ].symbols[0].character = correctedArray[
-          correctedArray.length - 1
-        ].symbols[0].character.concat(char.character)
-        char.character = ''
+      console.log(previousCharObject)
+      if (['+', '-', '='].includes(previousCharObject.character)) {
+        previousCharObject.character = previousCharObject.character.concat(char)
+        char = ''
+        charObject = {...charObject, character: char}
       }
     }
   }
-  return char
+  return charObject
 }
 
 //Smaller utils
@@ -136,13 +114,18 @@ const wordIsCapitalizedAndPreviousWordIsWord = (
 ) => {
   if (index === 0) {
     if (
-      char.character[0] === char.character.toUpperCase() &&
+      char.character[0] === char.character[0].toUpperCase() &&
       correctedArray[correctedArray.length - 1].symbols.length > 1
     ) {
       return true
     }
   }
   return false
+}
+const concatWordToPreviousWord = (word, correctedArray) => {
+  correctedArray[correctedArray.length - 1].symbols = correctedArray[
+    correctedArray.length - 1
+  ].symbols.concat(word.symbols)
 }
 
 module.exports = correctErrors
