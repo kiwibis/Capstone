@@ -21,7 +21,7 @@ function correctErrors(simplifiedArray) {
       word.symbols.forEach((originalChar, index) => {
         //copy character object
         const charObject = {...originalChar}
-
+        console.log(charObject.character, charObject.confidence)
         if (isLowConfidence(charObject)) {
           checkWord = true
         }
@@ -46,23 +46,28 @@ function correctErrors(simplifiedArray) {
         ? concatWordToPreviousWord(word, correctedArray)
         : correctedArray.push(word)
     } else {
-      const correctedChar = {symbols: []}
       // "Word" has one character and is a character
+
+      const correctedChar = {symbols: []}
 
       let charObject = {...word.symbols[0]}
       let char = charObject.character
 
       console.log('***CONFIDENCE***', char, charObject.confidence)
 
-      if (isLowConfidence(charObject) && troubleChars.includes(char)) {
+      //if low confidence or a trouble character, call corrector
+      if (isLowConfidence(charObject) || troubleChars.includes(char)) {
         charObject = charCorrector(char, charObject, correctedArray)
       }
 
+      //if the character still exists, push charObject on to symbols of the correctedChar
       char && correctedChar.symbols.push(charObject)
 
+      //if the corrected Char has symbols, push to corrected Array
       correctedChar.symbols.length && correctedArray.push(correctedChar)
     }
   })
+
   return correctedArray
 }
 
@@ -83,6 +88,12 @@ function charCorrector(char, charObject, correctedArray) {
     }
   }
   if (char === '>') {
+    console.log(
+      '*** MAKE ARROW *** char:',
+      char,
+      'previous char',
+      previousCharObject.character
+    )
     if (previousCharObject.character === '=') {
       previousCharObject.character = previousCharObject.character.concat('>')
       char = ''
