@@ -5,7 +5,6 @@ function correctErrors(simplifiedArray) {
   const correctedArray = []
 
   simplifiedArray.forEach(originalWord => {
-    console.log('*** NEW WORD ***')
     //copy word object
     let word = {...originalWord}
 
@@ -46,14 +45,14 @@ function correctErrors(simplifiedArray) {
         ? concatWordToPreviousWord(word, correctedArray)
         : correctedArray.push(word)
     } else {
-      // "Word" has one character and is a character
+      // "Word" has one character meaning it is a character
 
       const correctedChar = {symbols: []}
 
       let charObject = {...word.symbols[0]}
       let char = charObject.character
 
-      console.log('***CONFIDENCE***', char, charObject.confidence)
+      console.log(char, charObject.confidence)
 
       //if low confidence or a trouble character, call corrector
       if (isLowConfidence(charObject) || troubleChars.includes(char)) {
@@ -61,9 +60,11 @@ function correctErrors(simplifiedArray) {
       }
 
       //if the character still exists, push charObject on to symbols of the correctedChar
-      char && correctedChar.symbols.push(charObject)
+
+      charObject.character && correctedChar.symbols.push(charObject)
 
       //if the corrected Char has symbols, push to corrected Array
+      console.log(correctedChar.symbols.length)
       correctedChar.symbols.length && correctedArray.push(correctedChar)
     }
   })
@@ -101,14 +102,20 @@ function charCorrector(char, charObject, correctedArray) {
     }
   }
   if (['+', '-', '='].includes(char)) {
-    console.log(correctedArray)
     if (correctedArray.length) {
       console.log(correctedArray.length)
       console.log(previousCharObject)
-      if (['+', '-', '='].includes(previousCharObject.character)) {
+      if (['+', '-', '=', '=='].includes(previousCharObject.character)) {
         previousCharObject.character = previousCharObject.character.concat(char)
         char = ''
         charObject = {...charObject, character: char}
+        console.log(
+          '*** CONCAT OPERATORS ***',
+          'previous:',
+          previousCharObject.character,
+          'current:',
+          charObject.character
+        )
       }
     }
   }
@@ -116,7 +123,9 @@ function charCorrector(char, charObject, correctedArray) {
 }
 
 //Smaller utils
-const isWord = word => word.symbols.length > 1
+const isWord = word =>
+  word.symbols.length > 1 ||
+  'ABCDEFGHIJKLMNOPQRSTUVWXWZ'.includes(word.symbols[0].character)
 const isLowConfidence = char => char.confidence < 0.7
 const wordIsCapitalizedAndPreviousWordIsWord = (
   char,
@@ -126,7 +135,7 @@ const wordIsCapitalizedAndPreviousWordIsWord = (
   if (index === 0) {
     if (
       char.character[0] === char.character[0].toUpperCase() &&
-      correctedArray[correctedArray.length - 1].symbols.length > 1
+      isWord(correctedArray[correctedArray.length - 1])
     ) {
       return true
     }
