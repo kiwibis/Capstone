@@ -1,3 +1,5 @@
+// adapted to JavaScript from post: http://stevehanov.ca/blog/index.php?id=114
+
 class Trie {
   constructor(character = '') {
     this.letter = character
@@ -54,14 +56,14 @@ class Trie {
       currentRow.push(Math.min(...[insertCost, deleteCost, swapCost]))
     }
 
-    // if the last entry in the row indicates the optimal cost is less than the
-    // maximum cost, and there is a word in this trie node, then add it.
+    // if the node is terminal, and the word it represents is within the
+    // the maximum distance away from the input word, add the word
     if (currentRow[columns - 1] <= maxDistance && node.word) {
       candidates.push([node.word, currentRow[columns - 1]])
     }
 
-    // if any entries in the row are less than the maximum cost, then
-    // recursively search each brMath.anch of the trie
+    // if any entries in the row are less than the maximum cost/distance, then
+    // recursively search the branches of the trie
     if (Math.min(...currentRow) <= maxDistance) {
       for (const letter of Object.keys(node.children)) {
         this.searchHelper(
