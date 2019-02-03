@@ -7,35 +7,40 @@ import HamburgerMenu from 'react-hamburger-menu'
 
 const Navbar = ({isLoggedIn, logout, menuOpen, toggleMenu}) => {
   return (
-    <nav>
-      <HamburgerMenu
-        isOpen={menuOpen}
-        menuClicked={toggleMenu}
-        width={18}
-        height={15}
-        strokeWidth={1}
-        rotate={0}
-        color="black"
-        borderRadius={0}
-        animationDuration={0.5}
-      />
-      <Link to="/">
-        <h1>Kiwibis</h1>
-      </Link>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <button onClick={logout}>Logout</button>
+    <div>
+      <nav id="nav-bar">
+        <nav role="navigation">
+          <div id="menuToggle">
+            <input type="checkbox" />
+
+            <span />
+            <span />
+            <span />
+
+            <ul id="menu">
+              {isLoggedIn ? (
+                <div id="menu-link-list">
+                  {/* The navbar will show these links after you log in */}
+                  <button onClick={logout}>Logout</button>
+                </div>
+              ) : (
+                <div id="menu-link-list">
+                  {/* The navbar will show these links before you log in */}
+                  <Link to="/login">Login</Link>
+                  <Link to="/signup">Sign Up</Link>
+                </div>
+              )}
+            </ul>
+          </div>
+        </nav>
+        <div id="title-container">
+          <Link to="/">
+            <h1 id="title">Kiwi</h1>
+          </Link>
         </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
+      </nav>
       <hr />
-    </nav>
+    </div>
   )
 }
 
@@ -56,7 +61,10 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(
+  mapState,
+  mapDispatch
+)(Navbar)
 
 /**
  * PROP TYPES

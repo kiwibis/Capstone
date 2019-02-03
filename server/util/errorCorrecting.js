@@ -1,31 +1,37 @@
 function correctErrors(simplifiedArray) {
-  const troubleChars = [')', '>']
+  const troubleChars = [')', '>', '+', '=', '-']
   const correctedArray = []
+
+  //Characters that need to be checked regardless of GV confidence level
+
   simplifiedArray.forEach(originalWord => {
     console.log('*** NEW WORD ***')
+    //copy word object
     let word = {...originalWord}
-    if (word.symbols.length > 1) {
+
+    //if word object is a word (multiple characters)
+    if (isWord(word)) {
+      //Indicates whether the word should be passed to the word corrector function
       let checkWord = false
+
+      //Indicates whether the word should be concatenated to the previous word
       let concatWord = false
-      word.symbols.forEach(originalChar => {
+
+      //For each determines if any characters are low confidence and if word should be concatenated
+      word.symbols.forEach((originalChar, index) => {
+        //copy character object
         const char = {...originalChar}
-        if (char.confidence < 0.7) {
+
+        if (isLowConfidence(char)) {
           checkWord = true
         }
-        if (correctedArray.length) {
-          console.log(
-            '***UPPERCASE?***',
-            char,
-            char.character[0] === char.character.toUpperCase()
-          )
-          if (
-            char.character[0] === char.character.toUpperCase() &&
-            correctedArray[correctedArray.length - 1].symbols.length > 1
-          ) {
-            concatWord = true
-          }
-        }
+
+        //If this is the first character of the word and the corrected array is not empty
+        correctedArray.length &&
+          wordIsCapitalizedAndPreviousWordIsWord(char, correctedArray, index) &&
+          (concatWord = true)
       })
+
       if (checkWord) {
         const correctedWord = wordCorrector(word, correctedArray)
         if (concatWord) {
@@ -60,7 +66,9 @@ function correctErrors(simplifiedArray) {
           correctedChar.symbols.push(char)
         }
       })
-      correctedArray.push(correctedChar)
+      if (correctedChar.symbols.length) {
+        correctedArray.push(correctedChar)
+      }
     }
   })
   return correctedArray
@@ -96,7 +104,45 @@ function charCorrector(char, correctedArray) {
       char.character = ''
     }
   }
+  if (['+', '-', '='].includes(char.character)) {
+    console.log(correctedArray)
+    if (correctedArray.length) {
+      console.log(correctedArray.length)
+      console.log(correctedArray[correctedArray.length - 1])
+      if (
+        ['+', '-', '='].includes(
+          correctedArray[correctedArray.length - 1].symbols[0].character
+        )
+      ) {
+        correctedArray[
+          correctedArray.length - 1
+        ].symbols[0].character = correctedArray[
+          correctedArray.length - 1
+        ].symbols[0].character.concat(char.character)
+        char.character = ''
+      }
+    }
+  }
   return char
+}
+
+//Smaller utils
+const isWord = word => word.symbols.length > 1
+const isLowConfidence = char => char.confidence < 0.7
+const wordIsCapitalizedAndPreviousWordIsWord = (
+  char,
+  correctedArray,
+  index
+) => {
+  if (index === 0) {
+    if (
+      char.character[0] === char.character.toUpperCase() &&
+      correctedArray[correctedArray.length - 1].symbols.length > 1
+    ) {
+      return true
+    }
+  }
+  return false
 }
 
 module.exports = correctErrors

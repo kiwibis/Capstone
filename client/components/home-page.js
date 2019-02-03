@@ -5,10 +5,12 @@ const HomePage = () => {
   return (
     <div id="HomePage">
       <div id="brand-info">
-        <h3 id="brand-name">Kiwibis</h3>
-        <p id="brand-description">The app that lets you run your REACTOs</p>
+        <h3 id="brand-description">The app that lets you run your REACTOs!</h3>
       </div>
-      <PhotoCapture buttonText="Try it now" />
+      <div>
+        <h4>Take Photo</h4>
+        <PhotoCapture buttonText="Try it now" />
+      </div>
     </div>
   )
 }
