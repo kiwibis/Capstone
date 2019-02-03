@@ -84,16 +84,6 @@ form div {
   cursor: pointer;
 }
 
-#edit-image {
-  width: 80%;
-  height: auto;
-}
-
-#edit-page {
-  display: flex;
-  flex-direction: column;
-}
-
 /* Style the tab */
 .tab {
   overflow: hidden;

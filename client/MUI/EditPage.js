@@ -22,7 +22,9 @@ const styles = theme => ({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    spacing: 40
+    spacing: 40,
+    maxHeight: '100%',
+    maxWidth: '100%'
   },
   littleGrid: {
     display: 'flex',
@@ -32,11 +34,19 @@ const styles = theme => ({
     spacing: 40
   },
   image: {
-    objectFit: 'cover'
+    padding: 10,
+    maxWidth: '90%'
+  },
+  rotatedImage: {
+    transform: 'rotate(90deg) scale(0.7)',
+    padding: 10,
+    paddingLeft: 20,
+    maxWidth: '100%'
   },
   paper: {
     width: '80vw',
-    height: '80vh',
+    height: 'auto',
+    minHeight: '80vh',
     display: 'flex',
     alignItems: 'center'
   },
@@ -45,10 +55,15 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  littleGridItems: {
+  gridItems: {
     width: '100%',
     objectFit: 'cover',
     padding: 20
+  },
+  bigGridItem: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
@@ -105,11 +120,11 @@ class MainView extends Component {
         if (!err) {
           if (orientation.rotate === 90) {
             this.setState({
-              imageClass: 'rotate'
+              imageClass: 'rotatedImage'
             })
           } else {
             this.setState({
-              imageClass: ''
+              imageClass: 'image'
             })
           }
         }
@@ -145,11 +160,9 @@ class MainView extends Component {
               md={7}
               lg={6}
               xl={6}
-              className={classes.image}
+              className={classes.bigGridItem}
             >
-              <center>
-                <img className={imageClass} id="edit-image" src={image} />
-              </center>
+              <img className={classes[imageClass]} src={image} />
             </Grid>
             <Grid item xs={12} sm={5} md={5} lg={6} xl={6}>
               <Grid container className={classes.littleGrid}>
@@ -160,7 +173,7 @@ class MainView extends Component {
                   md={12}
                   lg={12}
                   xl={12}
-                  className={classes.littleGridItems}
+                  className={classes.gridItems}
                 >
                   <CodeMirror
                     editedText={editedText}
@@ -175,7 +188,7 @@ class MainView extends Component {
                   md={12}
                   lg={12}
                   xl={12}
-                  className={classes.littleGridItems}
+                  className={classes.gridItems}
                 >
                   <form
                     onSubmit={this.handleSubmit}
