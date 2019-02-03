@@ -15,7 +15,7 @@ class EditPage extends Component {
     super()
     this.state = {
       editedText: '',
-      testCases: '',
+      testCases: undefined,
       outputs: [],
       image: null,
       imageClass: ''
@@ -39,7 +39,8 @@ class EditPage extends Component {
     event.preventDefault()
     const {editedText, testCases} = this.state
     const code = editedText
-    const inputs = testCases.trim().split('\n')
+    // will invoke the function once even if the user doesn't input anything
+    const inputs = testCases ? testCases.trim().split('\n') : ['undefined']
     this.props.submitEditedText(editedText)
     try {
       this.setState({
