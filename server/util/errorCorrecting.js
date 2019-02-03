@@ -69,7 +69,51 @@ function correctErrors(simplifiedArray) {
     }
   })
 
+  finalCheck(correctedArray)
   return correctedArray
+}
+
+function finalCheck(correctedArray) {
+  let singleQuotes = []
+  let doubleQuotes = []
+
+  //tracks the location of each quotation mark in code
+  correctedArray.forEach((word, wordIndex) => {
+    word.symbols.forEach((char, charIndex) => {
+      char.character === "'" && singleQuotes.push({wordIndex, charIndex})
+      char.character === '"' && doubleQuotes.push({wordIndex, charIndex})
+    })
+  })
+
+  //if there are only two total quotation marks, changes both to be double quotation marks
+  if (singleQuotes.length + doubleQuotes.length === 2) {
+    singleQuotes.forEach(quote => {
+      correctedArray[quote.wordIndex].symbols[quote.charIndex].character = '"'
+    })
+    const bothQuotes = singleQuotes.concat(doubleQuotes)
+    let firstIndex
+    let secondIndex
+    if (bothQuotes[0].wordIndex < bothQuotes[1].wordIndex) {
+      firstIndex = 0
+      secondIndex = 1
+    } else {
+      firstIndex = 1
+      secondIndex = 0
+    }
+
+    correctedArray[bothQuotes[firstIndex].wordIndex + 1].symbols.unshift({
+      character: '"',
+      confidence: 1
+    })
+
+    correctedArray[bothQuotes[secondIndex].wordIndex - 1].symbols.push({
+      character: '"',
+      confidence: 1
+    })
+
+    correctedArray.splice([bothQuotes[firstIndex].wordIndex], 1)
+    correctedArray.splice([bothQuotes[secondIndex].wordIndex - 1], 1)
+  }
 }
 
 function wordCorrector(word, correctedArray) {
@@ -118,6 +162,9 @@ function charCorrector(char, charObject, correctedArray) {
         )
       }
     }
+  }
+  if (char === 'Ş') {
+    charObject.character = '{'
   }
   return charObject
 }
