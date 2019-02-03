@@ -44,10 +44,12 @@ class EditPage extends Component {
     this.props.submitEditedText(editedText)
     try {
       this.setState({
-        outputs: await Promise.all(this.evaluator.getResult(code, inputs))
+        outputs: await this.evaluator.getResult(code, inputs)
       })
     } catch (error) {
-      this.setState({outputs: `${error.name}: ${error.message}`})
+      this.setState({
+        outputs: `${error.name ? error.name + ': ' : ''}${error.message}`
+      })
     }
   }
 
