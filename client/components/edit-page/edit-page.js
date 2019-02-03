@@ -8,7 +8,7 @@ import CodeMirror from './code-mirror'
 import jBeautify from 'js-beautify'
 import findOrientation from 'exif-orientation'
 import Loader from 'react-loader-spinner'
-import Evaluator from './evaluator'
+import Evaluator from '../../util/evaluator'
 
 class EditPage extends Component {
   constructor() {
@@ -35,14 +35,16 @@ class EditPage extends Component {
     this.setState({[inputName]: inputValue})
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
     const {editedText, testCases} = this.state
     const code = editedText
     const inputs = testCases.trim().split('\n')
     this.props.submitEditedText(editedText)
     try {
-      this.setState({outputs: this.evaluator.getResult(code, inputs)})
+      this.setState({
+        outputs: await Promise.all(this.evaluator.getResult(code, inputs))
+      })
     } catch (error) {
       this.setState({outputs: `${error.name}: ${error.message}`})
     }
