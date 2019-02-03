@@ -2,7 +2,6 @@
 function convertWordObjectToString(wordObject) {
   const wordAsString = wordObject.symbols.reduce(
     (accumulator, currentValue) => {
-      console.log('accumulator', accumulator)
       return accumulator + currentValue.character
     },
     ''

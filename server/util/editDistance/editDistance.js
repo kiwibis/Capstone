@@ -86,9 +86,9 @@ const replaceWithJSWord = givenWord => {
   const closestWords = closestJSWords(givenWord, jsWords)
   if (closestWords.distance < threshold) {
     console.log(closestWords.words)
-    return closestWords.words[0]
+    return {returnedWord: closestWords.words[0], replaced: true}
   }
-  return givenWord
+  return {returnedWord: givenWord, replaced: false}
 }
 
 module.exports = replaceWithJSWord
