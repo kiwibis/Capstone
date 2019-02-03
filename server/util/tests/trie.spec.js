@@ -1,6 +1,6 @@
 const chai = require('chai')
 const expect = chai.expect
-const Trie = require('./trie')
+const Trie = require('../editDistance/trie')
 
 describe('Trie', function() {
   let trie
