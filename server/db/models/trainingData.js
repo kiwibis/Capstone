@@ -10,10 +10,6 @@ const TrainingData = db.define('trainingData', {
     type: Sequelize.TEXT,
     allowNull: false
   }
-  // imageDataURI: {
-  //   type: Sequelize.TEXT,
-  //   allowNull: false
-  // }
 })
 
 module.exports = TrainingData

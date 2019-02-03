@@ -1,5 +1,11 @@
+const replaceWithJSWord = require('./editDistance/editDistance')
+const {
+  convertStringToWordObject,
+  convertWordObjectToString
+} = require('./editDistance/convert')
+
 function correctErrors(simplifiedArray) {
-  //Characters that need to be checked regardless of GV confidence level
+  //Characters that need to be checked regardless of google vision confidence level
   const troubleChars = [')', '>', '+', '=', '-']
 
   const correctedArray = []
@@ -71,8 +77,14 @@ function correctErrors(simplifiedArray) {
   return correctedArray
 }
 
-function wordCorrector(word, correctedArray) {
-  return word
+function wordCorrector(wordObject, correctedArray) {
+  const wordAsString = convertWordObjectToString(wordObject)
+  const newWord = replaceWithJSWord(wordAsString)
+  if (newWord === wordAsString) {
+    return wordObject
+  } else {
+    return convertStringToWordObject(newWord)
+  }
 }
 
 function charCorrector(char, charObject, correctedArray) {
