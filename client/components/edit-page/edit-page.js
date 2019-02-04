@@ -15,6 +15,7 @@ import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import NProgress from 'nprogress'
 
 const styles = theme => ({
   bigGrid: {
@@ -102,6 +103,8 @@ class EditPage extends Component {
     // will invoke the function once even if the user doesn't input anything
     const inputs = testCases ? testCases.trim().split('\n') : ['undefined']
     this.props.submitEditedText(editedText)
+    NProgress.start()
+    NProgress.set(0.1)
     try {
       this.setState({
         outputs: await this.evaluator.getResult(code, inputs)
@@ -111,6 +114,7 @@ class EditPage extends Component {
         outputs: `${error.name ? error.name + ': ' : ''}${error.message}`
       })
     }
+    NProgress.done()
   }
 
   readFile() {
