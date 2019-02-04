@@ -1,4 +1,9 @@
 import React from 'react'
+import Table from '@material-ui/core/Table'
+import TableHead from '@material-ui/core/TableHead'
+import TableCell from '@material-ui/core/TableCell'
+import TableRow from '@material-ui/core/TableRow'
+import TableBody from '@material-ui/core/TableBody'
 
 const Results = ({testCases, outputs}) => {
   testCases = testCases ? testCases.trim().split('\n') : ['']
@@ -24,14 +29,20 @@ const Results = ({testCases, outputs}) => {
   }
 
   return (
-    <ul>
-      {testCases.map((input, i) => (
-        <li key={i}>
-          <div>Input: {renderText(input)}</div>
-          <div>Your Output: {renderText(outputs[i])}</div>
-        </li>
-      ))}
-    </ul>
+    <Table>
+      <TableHead>
+        <TableCell>Input</TableCell>
+        <TableCell>Output</TableCell>
+      </TableHead>
+      <TableBody>
+        {testCases.map((input, i) => (
+          <TableRow key={input}>
+            <TableCell>{renderText(input)}</TableCell>
+            <TableCell>{renderText(outputs[i])}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   )
 }
 
