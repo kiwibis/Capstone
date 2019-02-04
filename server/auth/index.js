@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
-const TrainingData = require('../db/models/trainingData')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -13,8 +12,8 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
-      const data = await user.getTrainingData()
-      req.login(user, err => (err ? next(err) : res.json({user, data})))
+      const info = await user.getTrainingData()
+      req.login(user, err => (err ? next(err) : res.json({user, info})))
     }
   } catch (err) {
     next(err)
@@ -40,8 +39,13 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', async (req, res) => {
+  let info = []
+  if (req.user) {
+    const user = await User.findById(req.user.id)
+    info = await user.getTrainingData()
+  }
+  res.json({user: req.user, info})
 })
 
 router.use('/google', require('./google'))
