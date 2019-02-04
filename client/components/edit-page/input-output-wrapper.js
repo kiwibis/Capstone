@@ -81,20 +81,15 @@ class InputOutputWrapper extends React.Component {
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}
-            onChangeIndex={this.handleChangeIndex}
             className={classes.swipe}
           >
-            {value === 0 && (
-              <TabContainer>
-                {' '}
-                <TestCases testCases={testCases} onChange={onChange} />
-              </TabContainer>
-            )}
-            {value === 1 && (
-              <TabContainer>
-                <Results testCases={testCases} outputs={outputs} />
-              </TabContainer>
-            )}
+            <TabContainer>
+              {' '}
+              <TestCases testCases={testCases} onChange={onChange} />
+            </TabContainer>
+            <TabContainer>
+              <Results testCases={testCases} outputs={outputs} />
+            </TabContainer>
           </SwipeableViews>
         </div>
       </NoSsr>
