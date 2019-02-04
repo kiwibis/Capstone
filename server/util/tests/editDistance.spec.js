@@ -1,6 +1,6 @@
 const chai = require('chai')
 const expect = chai.expect
-const editDistance = require('../editDistance/editDistance')
+const {editDistance} = require('../editDistance/editDistance')
 
 describe('Edit Distance', () => {
   it('returns the edit distance between 2 strings', () => {

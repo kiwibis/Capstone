@@ -37,7 +37,6 @@
     "var",
     "while",
     "constructor",
-    "extends",
     "statict",
     "prototype",
     "debug",
@@ -46,8 +45,8 @@
     "encodeURI",
     "encodeURIComponent",
     "escape",
-    "null",
-    "undefined"
+    "undefined",
+    "handler"
   ],
 
   "objects": [
@@ -59,7 +58,6 @@
     "Boolean",
     "DataView",
     "Date",
-    "debug",
     "Error",
     "EvalError",
     "Float32Array",
@@ -67,7 +65,6 @@
     "Function",
     "Generator",
     "GeneratorFunction",
-    "handler",
     "Infinity",
     "Int16Array",
     "Int32Array",
@@ -84,13 +81,6 @@
     "WeakMap",
     "WeakSet",
     "WebAssembly",
-    "decodeURI",
-    "decodeURIComponent",
-    "encodeURI",
-    "encodeURIComponent",
-    "escape",
-    "null",
-    "undefined",
     "DateTimeFormat",
     "ListFormat",
     "NumberFormat",

@@ -1,5 +1,11 @@
+const {replaceWithJSWord} = require('./editDistance/editDistance')
+const {
+  convertStringToWordObject,
+  convertWordObjectToString
+} = require('./editDistance/convert')
+
 function correctErrors(simplifiedArray) {
-  //Characters that need to be checked regardless of GV confidence level
+  //Characters that need to be checked regardless of google vision confidence level
   const troubleChars = [')', '>', '+', '=', '-']
 
   const correctedArray = []
@@ -26,13 +32,27 @@ function correctErrors(simplifiedArray) {
         }
 
         //If this is the first character of the word and the corrected array is not empty
-        correctedArray.length &&
+        if (
+          correctedArray.length &&
           wordIsCapitalizedAndPreviousWordIsWord(
             charObject,
             correctedArray,
             index
-          ) &&
-          (concatWord = true)
+          )
+        ) {
+          let previousWordIsJSWord = false
+          const previousWord = correctedArray[correctedArray.length - 1]
+          const previousWordAsString = convertWordObjectToString(previousWord)
+          const {returnedWord, replaced} = replaceWithJSWord(
+            previousWordAsString
+          )
+          if (replaced) {
+            previousWordIsJSWord = true
+          }
+          if (!previousWordIsJSWord) {
+            concatWord = true
+          }
+        }
       })
 
       //If word needs to be checked:
@@ -64,13 +84,22 @@ function correctErrors(simplifiedArray) {
       charObject.character && correctedChar.symbols.push(charObject)
 
       //if the corrected Char has symbols, push to corrected Array
-      console.log(correctedChar.symbols.length)
       correctedChar.symbols.length && correctedArray.push(correctedChar)
     }
   })
 
   finalCheck(correctedArray)
   return correctedArray
+}
+
+function wordCorrector(wordObject, correctedArray) {
+  const wordAsString = convertWordObjectToString(wordObject)
+  const {returnedWord, replaced} = replaceWithJSWord(wordAsString)
+  if (returnedWord === wordAsString) {
+    return wordObject
+  } else {
+    return convertStringToWordObject(returnedWord)
+  }
 }
 
 function finalCheck(correctedArray) {
@@ -116,16 +145,11 @@ function finalCheck(correctedArray) {
   }
 }
 
-function wordCorrector(word, correctedArray) {
-  return word
-}
-
 function charCorrector(char, charObject, correctedArray) {
   const previousCharObject =
     correctedArray[correctedArray.length - 1].symbols[0]
 
   if (char === ')') {
-    console.log('***IN CHANGE PARENS***')
     if (previousCharObject.character === '=') {
       previousCharObject.character = previousCharObject.character.concat('>')
       char = ''
@@ -133,12 +157,6 @@ function charCorrector(char, charObject, correctedArray) {
     }
   }
   if (char === '>') {
-    console.log(
-      '*** MAKE ARROW *** char:',
-      char,
-      'previous char',
-      previousCharObject.character
-    )
     if (previousCharObject.character === '=') {
       previousCharObject.character = previousCharObject.character.concat('>')
       char = ''
@@ -147,19 +165,10 @@ function charCorrector(char, charObject, correctedArray) {
   }
   if (['+', '-', '='].includes(char)) {
     if (correctedArray.length) {
-      console.log(correctedArray.length)
-      console.log(previousCharObject)
       if (['+', '-', '=', '=='].includes(previousCharObject.character)) {
         previousCharObject.character = previousCharObject.character.concat(char)
         char = ''
         charObject = {...charObject, character: char}
-        console.log(
-          '*** CONCAT OPERATORS ***',
-          'previous:',
-          previousCharObject.character,
-          'current:',
-          charObject.character
-        )
       }
     }
   }
@@ -173,7 +182,9 @@ function charCorrector(char, charObject, correctedArray) {
 const isWord = word =>
   word.symbols.length > 1 ||
   'ABCDEFGHIJKLMNOPQRSTUVWXWZ'.includes(word.symbols[0].character)
+
 const isLowConfidence = char => char.confidence < 0.7
+
 const wordIsCapitalizedAndPreviousWordIsWord = (
   char,
   correctedArray,
