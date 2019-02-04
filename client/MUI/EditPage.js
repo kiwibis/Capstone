@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
-import PhotoCapture from '../photo-capture'
+import PhotoCapture from '../components/photo-capture'
 import {connect} from 'react-redux'
-import {submitEditedText} from '../../store'
-import history from '../../history'
-import InputOutputWrapper from './input-output-wrapper'
-import CodeMirror from './code-mirror'
+import {submitEditedText} from '../store'
+import history from '../history'
+import CodeMirror from './CodeMirror'
 import jBeautify from 'js-beautify'
 import findOrientation from 'exif-orientation'
 import Loader from 'react-loader-spinner'
-import Evaluator from '../../util/evaluator'
+import Evaluator from '../util/evaluator'
 import Grid from '@material-ui/core/Grid'
+import InputOutputWrapper from './InputOutput'
 import {withStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
@@ -48,9 +48,7 @@ const styles = theme => ({
     height: 'auto',
     minHeight: '80vh',
     display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'center'
+    alignItems: 'center'
   },
   main: {
     display: 'flex',
@@ -69,12 +67,12 @@ const styles = theme => ({
   }
 })
 
-class EditPage extends Component {
+class MainView extends Component {
   constructor() {
     super()
     this.state = {
       editedText: '',
-      testCases: undefined,
+      testCases: '',
       outputs: [],
       image: null,
       imageClass: ''
@@ -98,17 +96,14 @@ class EditPage extends Component {
     event.preventDefault()
     const {editedText, testCases} = this.state
     const code = editedText
-    // will invoke the function once even if the user doesn't input anything
-    const inputs = testCases ? testCases.trim().split('\n') : ['undefined']
+    const inputs = testCases.trim().split('\n')
     this.props.submitEditedText(editedText)
     try {
       this.setState({
-        outputs: await this.evaluator.getResult(code, inputs)
+        outputs: await Promise.all(this.evaluator.getResult(code, inputs))
       })
     } catch (error) {
-      this.setState({
-        outputs: `${error.name ? error.name + ': ' : ''}${error.message}`
-      })
+      this.setState({outputs: `${error.name}: ${error.message}`})
     }
   }
 
@@ -157,7 +152,6 @@ class EditPage extends Component {
     return (
       <div className={classes.main}>
         <Paper className={classes.paper}>
-          <img src="/results.png" alt="results" />
           <Grid container className={classes.bigGrid}>
             <Grid
               item
@@ -235,12 +229,11 @@ const mapDispatchToProps = dispatch => {
     submitEditedText: editedText => dispatch(submitEditedText(editedText))
   }
 }
-
-EditPage.propTypes = {
+MainView.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(EditPage))
+)(withStyles(styles)(MainView))
