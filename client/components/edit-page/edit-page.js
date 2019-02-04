@@ -206,12 +206,13 @@ class EditPage extends Component {
                       testCases={testCases}
                       outputs={outputs}
                       onChange={this.handleChange}
+                      handleSubmit={this.handleSubmit}
                     />
-                    <Button type="submit" variant="outlined">
-                      Submit
-                    </Button>
                   </form>
-                  <PhotoCapture buttonImage="Retake Image" />
+                  <p />
+                  <p />
+                  <p />
+                  <PhotoCapture buttonText="Choose Another Image" />
                 </Grid>
               </Grid>
             </Grid>

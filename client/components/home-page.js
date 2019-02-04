@@ -8,8 +8,8 @@ const HomePage = () => {
         <h3 id="brand-description">The app that lets you run your REACTOs!</h3>
       </div>
       <div>
-        <h4>Take Photo</h4>
-        <PhotoCapture buttonText="Try it now" />
+        <h4>Take or Upload Photo</h4>
+        <PhotoCapture />
       </div>
     </div>
   )
