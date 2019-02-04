@@ -46,9 +46,9 @@ const styles = theme => ({
     maxWidth: '100%'
   },
   paper: {
-    width: '80vw',
+    width: '95vw',
     height: 'auto',
-    minHeight: '80vh',
+    minHeight: '95vh',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
