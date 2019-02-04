@@ -62,7 +62,14 @@ class InputOutputWrapper extends React.Component {
   }
 
   render() {
-    const {classes, testCases, outputs, onChange, theme} = this.props
+    const {
+      classes,
+      testCases,
+      outputs,
+      onChange,
+      theme,
+      handleSubmit
+    } = this.props
     const {value} = this.state
 
     return (
@@ -75,26 +82,21 @@ class InputOutputWrapper extends React.Component {
               onChange={this.handleChange}
             >
               <LinkTab label="Test Cases" href="page1" />
-              <LinkTab label="Results" href="page2" />
+              <LinkTab label="Results" href="page2" onClick={handleSubmit} />
             </Tabs>
           </AppBar>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}
-            onChangeIndex={this.handleChangeIndex}
             className={classes.swipe}
           >
-            {value === 0 && (
-              <TabContainer>
-                {' '}
-                <TestCases testCases={testCases} onChange={onChange} />
-              </TabContainer>
-            )}
-            {value === 1 && (
-              <TabContainer>
-                <Results testCases={testCases} outputs={outputs} />
-              </TabContainer>
-            )}
+            <TabContainer>
+              {' '}
+              <TestCases testCases={testCases} onChange={onChange} />
+            </TabContainer>
+            <TabContainer>
+              <Results testCases={testCases} outputs={outputs} />
+            </TabContainer>
           </SwipeableViews>
         </div>
       </NoSsr>

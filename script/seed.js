@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, TrainingData} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -14,6 +14,29 @@ async function seed() {
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
+
+  const trainingData = await Promise.all([
+    TrainingData.create({
+      algoResultText: `const testMe = num =>  { for ( let i = 0 ; i < 3 ; ++  i ) { num = num * num ; return num ; }}`,
+      userEditedText: `const testMe = num => {
+        for (let i = 0; i < 3; ++i) {
+            num = num * num;
+            return num;
+        }
+    }`,
+      userId: 1
+    }),
+    TrainingData.create({
+      algoResultText: `const testMe = num =>  { for ( let i = 0 ; i < 3 ; i ++   ) { num = num * num ; return num ; }}`,
+      userEditedText: `const testMe = num => {
+        for (let i = 0; i < 3; i++) {
+            num = num * num;
+            return num;
+        }
+    }`,
+      userId: 1
+    })
+  ])
 }
 
 // We've separated the `seed` function from the `runSeed` function.

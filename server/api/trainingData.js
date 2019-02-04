@@ -8,11 +8,13 @@ router.post('/', async (req, res, next) => {
       userId = req.user.id
     }
     const {initialText, editedText} = req.body
-    await TrainingData.create({
-      algoResultText: initialText,
-      userEditedText: editedText,
-      userId
+    const [trainingData, created] = await TrainingData.findOrCreate({
+      where: {userId, algoResultText: initialText},
+      defaults: {userEditedText: editedText}
     })
+    if (!created && trainingData.userEditedText !== editedText) {
+      await trainingData.update({userEditedText: editedText})
+    }
     res.sendStatus(201)
   } catch (err) {
     next(err)
