@@ -140,3 +140,14 @@ a {
 a:hover {
   color: rgba(139, 201, 0);
 }
+
+svg.MuiSvgIcon-root-78.MuiSvgIcon-colorPrimary-79.MuiSvgIcon-fontSizeLarge-86,
+svg.MuiSvgIcon-root-78.MuiSvgIcon-colorPrimary-79.MuiSvgIcon-fontSizeLarge-86 {
+  font-size: 5em;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
