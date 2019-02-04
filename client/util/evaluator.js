@@ -1,37 +1,49 @@
 export default class Evaluator {
+  constructor() {
+    this.seenErrorMessages = new Set()
+    this.seenErrors = []
+  }
+
   getFunctionBody(code) {
-    // =(?:\s)*(.*) returns the function definition of the function expression
+    // =(?:\s)*(.*) captures what comes after an assignment
     return code.startsWith('function')
       ? code
-      : code.match(new RegExp('=(?:\\s)*(.*)'))[1]
+      : code.slice(new RegExp('=(?:\\s)*(.*)').exec(code).index + 1)
+  }
+
+  sanitizeInputQuotes(input) {
+    return input
+      .replace(/[\u2018\u2019]/g, "'")
+      .replace(/[\u201C\u201D\u201c\u201d]/g, '"')
   }
 
   getResult(code, inputArray) {
     code = this.getFunctionBody(code.trim())
-    return inputArray.map(input => {
-      return this.evaluate(code, input)
+
+    const outputs = inputArray.map(async (input, index) => {
+      const output = await this.evaluate(code, this.sanitizeInputQuotes(input))
+      const singleErrorForAllInputs =
+        index === inputArray.length - 1 && this.seenErrorMessages.size === 1
+      if (singleErrorForAllInputs) throw this.seenErrors[0]
+      return output
     })
+
+    this.seenErrorMessages.clear()
+    this.seenErrors = []
+    return Promise.all(outputs)
   }
 
   evaluate(fn, input) {
     return new Promise((resolve, reject) => {
       try {
         const code = `
-        const console = {
-          log: function() {
-            let str = arguments.map(arg => JSON.stringify(arg)).join(' ')
-
-            // send the message back to the main thread
-            self.postMessage(str + '\\n')
-          }
-        }
         self.onmessage = () => {
           self.postMessage((${fn})(...[${input}]))
         }`
 
         const blob = new Blob([code], {type: 'text/javascript'})
         const blobUrl = window.URL.createObjectURL(blob)
-        const worker = new Worker(blobUrl)
+        let worker = new Worker(blobUrl)
         window.URL.revokeObjectURL(blobUrl)
 
         worker.onmessage = result => {
@@ -40,11 +52,20 @@ export default class Evaluator {
         }
 
         worker.onerror = error => {
-          reject(error)
+          this.seenErrorMessages.add(error.message)
+          this.seenErrors.push(error)
+          resolve(error.message)
           worker.terminate()
         }
 
-        worker.postMessage('run')
+        worker.postMessage('')
+        setTimeout(function() {
+          worker.terminate()
+          worker = null
+          resolve(
+            'This is taking longer than expected! Check out our FAQs to learn what the issue could be.'
+          )
+        }, 10000)
       } catch (error) {
         reject(error)
       }

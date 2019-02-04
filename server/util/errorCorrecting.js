@@ -5,7 +5,6 @@ function correctErrors(simplifiedArray) {
   const correctedArray = []
 
   simplifiedArray.forEach(originalWord => {
-    console.log('*** NEW WORD ***')
     //copy word object
     let word = {...originalWord}
 
@@ -46,14 +45,14 @@ function correctErrors(simplifiedArray) {
         ? concatWordToPreviousWord(word, correctedArray)
         : correctedArray.push(word)
     } else {
-      // "Word" has one character and is a character
+      // "Word" has one character meaning it is a character
 
       const correctedChar = {symbols: []}
 
       let charObject = {...word.symbols[0]}
       let char = charObject.character
 
-      console.log('***CONFIDENCE***', char, charObject.confidence)
+      console.log(char, charObject.confidence)
 
       //if low confidence or a trouble character, call corrector
       if (isLowConfidence(charObject) || troubleChars.includes(char)) {
@@ -61,14 +60,60 @@ function correctErrors(simplifiedArray) {
       }
 
       //if the character still exists, push charObject on to symbols of the correctedChar
-      char && correctedChar.symbols.push(charObject)
+
+      charObject.character && correctedChar.symbols.push(charObject)
 
       //if the corrected Char has symbols, push to corrected Array
+      console.log(correctedChar.symbols.length)
       correctedChar.symbols.length && correctedArray.push(correctedChar)
     }
   })
 
+  finalCheck(correctedArray)
   return correctedArray
+}
+
+function finalCheck(correctedArray) {
+  let singleQuotes = []
+  let doubleQuotes = []
+
+  //tracks the location of each quotation mark in code
+  correctedArray.forEach((word, wordIndex) => {
+    word.symbols.forEach((char, charIndex) => {
+      char.character === "'" && singleQuotes.push({wordIndex, charIndex})
+      char.character === '"' && doubleQuotes.push({wordIndex, charIndex})
+    })
+  })
+
+  //if there are only two total quotation marks, changes both to be double quotation marks
+  if (singleQuotes.length + doubleQuotes.length === 2) {
+    singleQuotes.forEach(quote => {
+      correctedArray[quote.wordIndex].symbols[quote.charIndex].character = '"'
+    })
+    const bothQuotes = singleQuotes.concat(doubleQuotes)
+    let firstIndex
+    let secondIndex
+    if (bothQuotes[0].wordIndex < bothQuotes[1].wordIndex) {
+      firstIndex = 0
+      secondIndex = 1
+    } else {
+      firstIndex = 1
+      secondIndex = 0
+    }
+
+    correctedArray[bothQuotes[firstIndex].wordIndex + 1].symbols.unshift({
+      character: '"',
+      confidence: 1
+    })
+
+    correctedArray[bothQuotes[secondIndex].wordIndex - 1].symbols.push({
+      character: '"',
+      confidence: 1
+    })
+
+    correctedArray.splice([bothQuotes[firstIndex].wordIndex], 1)
+    correctedArray.splice([bothQuotes[secondIndex].wordIndex - 1], 1)
+  }
 }
 
 function wordCorrector(word, correctedArray) {
@@ -101,22 +146,33 @@ function charCorrector(char, charObject, correctedArray) {
     }
   }
   if (['+', '-', '='].includes(char)) {
-    console.log(correctedArray)
     if (correctedArray.length) {
       console.log(correctedArray.length)
       console.log(previousCharObject)
-      if (['+', '-', '='].includes(previousCharObject.character)) {
+      if (['+', '-', '=', '=='].includes(previousCharObject.character)) {
         previousCharObject.character = previousCharObject.character.concat(char)
         char = ''
         charObject = {...charObject, character: char}
+        console.log(
+          '*** CONCAT OPERATORS ***',
+          'previous:',
+          previousCharObject.character,
+          'current:',
+          charObject.character
+        )
       }
     }
+  }
+  if (char === 'Ş') {
+    charObject.character = '{'
   }
   return charObject
 }
 
 //Smaller utils
-const isWord = word => word.symbols.length > 1
+const isWord = word =>
+  word.symbols.length > 1 ||
+  'ABCDEFGHIJKLMNOPQRSTUVWXWZ'.includes(word.symbols[0].character)
 const isLowConfidence = char => char.confidence < 0.7
 const wordIsCapitalizedAndPreviousWordIsWord = (
   char,
@@ -126,7 +182,7 @@ const wordIsCapitalizedAndPreviousWordIsWord = (
   if (index === 0) {
     if (
       char.character[0] === char.character[0].toUpperCase() &&
-      correctedArray[correctedArray.length - 1].symbols.length > 1
+      isWord(correctedArray[correctedArray.length - 1])
     ) {
       return true
     }

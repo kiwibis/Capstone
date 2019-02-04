@@ -69,7 +69,8 @@ form div {
 }
 
 #title {
-  color: rgba(139, 201, 0);
+  /* color: rgba(139, 201, 0); */
+  color: #9ab452;
   font-size: 40px;
   font-family: 'Baloo Thambi', cursive;
   margin-top: 0;
