@@ -1,7 +1,6 @@
 import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import PropTypes from 'prop-types'
@@ -14,6 +13,7 @@ import BreakpointMedia from 'react-media-material-ui/BreakpointMedia'
 import {Link} from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import {logout} from '../store'
 
 const style = theme => ({
   appBar: {
@@ -72,7 +72,7 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const {classes, isLoggedIn} = this.props
+    const {classes, isLoggedIn, logoutThunk} = this.props
     const loggedIn = [
       {
         text: 'Home',
@@ -137,13 +137,26 @@ class Navbar extends React.Component {
                     >
                       <div className={classes.fullList}>
                         <List>
-                          {currentList.map(item => (
-                            <Link to={item.link} key={item.text}>
-                              <ListItem button>
-                                <ListItemText primary={item.text} />
-                              </ListItem>
-                            </Link>
-                          ))}
+                          {currentList.map(item => {
+                            if (item.text === 'Logout') {
+                              return (
+                                <ListItem
+                                  button
+                                  onClick={logoutThunk}
+                                  key={item.text}
+                                >
+                                  <ListItemText primary={item.text} />
+                                </ListItem>
+                              )
+                            }
+                            return (
+                              <Link to={item.link} key={item.text}>
+                                <ListItem button>
+                                  <ListItemText primary={item.text} />
+                                </ListItem>
+                              </Link>
+                            )
+                          })}
                         </List>
                       </div>
                     </div>
@@ -156,11 +169,16 @@ class Navbar extends React.Component {
               </BreakpointMedia>
               <BreakpointMedia min="sm">
                 <div>
-                  {currentList.map(item => (
-                    <Link to={item.link} key={item.text}>
-                      <Button>{item.text}</Button>
-                    </Link>
-                  ))}
+                  {currentList.map(item => {
+                    if (item.text === 'Logout') {
+                      return <Button onClick={logoutThunk}>{item.text}</Button>
+                    }
+                    return (
+                      <Link to={item.link} key={item.text}>
+                        <Button>{item.text}</Button>
+                      </Link>
+                    )
+                  })}
                 </div>
               </BreakpointMedia>
             </Toolbar>
@@ -181,4 +199,11 @@ const mapState = state => ({
   isLoggedIn: !!state.user.id
 })
 
-export default connect(mapState)(withStyles(style)(Navbar))
+const mapDispatch = dispatch => ({
+  logoutThunk: () => dispatch(logout())
+})
+
+export default connect(
+  mapState,
+  mapDispatch
+)(withStyles(style)(Navbar))
