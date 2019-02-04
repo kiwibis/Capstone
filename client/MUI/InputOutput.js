@@ -1,6 +1,6 @@
 import React from 'react'
-import TestCases from './test-cases'
-import Results from './results'
+import TestCases from './TestCases'
+import Results from '../components/edit-page/results'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import SwipeableViews from 'react-swipeable-views'
@@ -49,12 +49,9 @@ const styles = theme => ({
   }
 })
 
-class InputOutputWrapper extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      value: 0
-    }
+class NavTabs extends React.Component {
+  state = {
+    value: 0
   }
 
   handleChange = (event, value) => {
@@ -102,8 +99,8 @@ class InputOutputWrapper extends React.Component {
   }
 }
 
-InputOutputWrapper.propTypes = {
+NavTabs.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, {withTheme: true})(InputOutputWrapper)
+export default withStyles(styles, {withTheme: true})(NavTabs)

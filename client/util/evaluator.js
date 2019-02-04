@@ -1,6 +1,7 @@
 export default class Evaluator {
   constructor() {
-    this.seenErrors = new Set()
+    this.seenErrorMessages = new Set()
+    this.seenErrors = []
   }
 
   getFunctionBody(code) {
@@ -10,20 +11,26 @@ export default class Evaluator {
       : code.slice(new RegExp('=(?:\\s)*(.*)').exec(code).index + 1)
   }
 
+  sanitizeInputQuotes(input) {
+    return input
+      .replace(/[\u2018\u2019]/g, "'")
+      .replace(/[\u201C\u201D\u201c\u201d]/g, '"')
+  }
+
   getResult(code, inputArray) {
     code = this.getFunctionBody(code.trim())
 
-    const outputs = inputArray.map((input, index) => {
-      const output = this.evaluate(code, input)
+    const outputs = inputArray.map(async (input, index) => {
+      const output = await this.evaluate(code, this.sanitizeInputQuotes(input))
       const singleErrorForAllInputs =
-        index === inputArray.length - 1 && this.seenErrors.size === 1
-      if (singleErrorForAllInputs)
-        throw new Error(Array.from(this.seenErrors)[0])
+        index === inputArray.length - 1 && this.seenErrorMessages.size === 1
+      if (singleErrorForAllInputs) throw this.seenErrors[0]
       return output
     })
 
-    this.seenErrors.clear()
-    return outputs
+    this.seenErrorMessages.clear()
+    this.seenErrors = []
+    return Promise.all(outputs)
   }
 
   evaluate(fn, input) {
@@ -45,7 +52,8 @@ export default class Evaluator {
         }
 
         worker.onerror = error => {
-          this.seenErrors.add(error.message)
+          this.seenErrorMessages.add(error.message)
+          this.seenErrors.push(error)
           resolve(error.message)
           worker.terminate()
         }
