@@ -1,4 +1,4 @@
-const replaceWithJSWord = require('./editDistance/editDistance')
+const {replaceWithJSWord} = require('./editDistance/editDistance')
 const {
   convertStringToWordObject,
   convertWordObjectToString

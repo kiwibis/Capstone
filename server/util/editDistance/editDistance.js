@@ -91,4 +91,4 @@ const replaceWithJSWord = givenWord => {
   return {returnedWord: givenWord, replaced: false}
 }
 
-module.exports = replaceWithJSWord
+module.exports = {replaceWithJSWord, editDistance}
