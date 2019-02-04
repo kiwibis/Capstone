@@ -8,11 +8,22 @@ router.post('/', async (req, res, next) => {
       userId = req.user.id
     }
     const {initialText, editedText} = req.body
-    await TrainingData.create({
-      algoResultText: initialText,
-      userEditedText: editedText,
-      userId
+    const alreadyDone = await TrainingData.findOne({
+      where: {
+        algoResultText: initialText,
+        userId
+      }
     })
+    if (alreadyDone && alreadyDone.userId) {
+      alreadyDone.update({userEditedText: editedText})
+    } else {
+      await TrainingData.create({
+        algoResultText: initialText,
+        userEditedText: editedText,
+        userId
+      })
+    }
+
     res.sendStatus(201)
   } catch (err) {
     next(err)
