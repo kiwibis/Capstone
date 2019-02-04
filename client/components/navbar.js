@@ -112,7 +112,7 @@ class Navbar extends React.Component {
     const currentList = isLoggedIn ? loggedIn : loggedOut
     return (
       <div>
-        <AppBar position="static" className={classes.appBar}>
+        <AppBar position="sticky" className={classes.appBar}>
           <div className={classes.titleLink}>
             <Link to="/" className={classes.titleLink}>
               <img src="/logo.png" alt="Kiwi" />
