@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {sendImage, setLoadingTrue} from '../store'
 import history from '../history'
 import AddAPhotoRounded from '@material-ui/icons/AddAPhotoRounded'
-import {Icon, SvgIcon} from '@material-ui/core'
+import {Icon, SvgIcon, Button} from '@material-ui/core'
 
 class PhotoCapture extends React.Component {
   constructor() {

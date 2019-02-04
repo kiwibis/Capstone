@@ -146,8 +146,7 @@ svg.MuiSvgIcon-root-78.MuiSvgIcon-colorPrimary-79.MuiSvgIcon-fontSizeLarge-86 {
   font-size: 5em;
 }
 
-label {
+.image-upload {
   display: flex;
-  align-items: center;
   justify-content: center;
 }

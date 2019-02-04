@@ -9,7 +9,7 @@ const HomePage = () => {
       </div>
       <div>
         <h4>Take or Upload Photo</h4>
-        <PhotoCapture buttonText="Try it now" />
+        <PhotoCapture />
       </div>
     </div>
   )
