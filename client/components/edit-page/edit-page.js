@@ -14,6 +14,7 @@ import {withStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 const styles = theme => ({
   bigGrid: {
@@ -156,6 +157,7 @@ class EditPage extends Component {
       )
     return (
       <div className={classes.main}>
+        <CssBaseline />
         <Paper className={classes.paper}>
           <img src="/results.png" alt="results" />
           <Grid container className={classes.bigGrid}>
