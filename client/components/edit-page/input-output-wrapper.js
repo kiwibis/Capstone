@@ -1,64 +1,109 @@
 import React from 'react'
 import TestCases from './test-cases'
 import Results from './results'
+import PropTypes from 'prop-types'
+import {withStyles} from '@material-ui/core/styles'
+import SwipeableViews from 'react-swipeable-views'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
+import NoSsr from '@material-ui/core/NoSsr'
 
-export default class InputOutputWrapper extends React.Component {
+function TabContainer(props) {
+  return (
+    <Typography
+      component="div"
+      style={{
+        padding: 12,
+        width: 'auto',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        border: '1px'
+      }}
+    >
+      {props.children}
+    </Typography>
+  )
+}
+
+TabContainer.propTypes = {
+  children: PropTypes.node.isRequired
+}
+
+function LinkTab(props) {
+  return (
+    <Tab component="a" onClick={event => event.preventDefault()} {...props} />
+  )
+}
+
+const styles = theme => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    width: '100%'
+  },
+  swipe: {
+    width: '100%',
+    backgroundColor: theme.palette.secondary
+  }
+})
+
+class InputOutputWrapper extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showResults: false
+      value: 0
     }
-    this.handleTabClick = this.handleTabClick.bind(this)
   }
 
-  handleTabClick(event) {
-    const {showResults} = this.state
-    if (event.target.innerHTML === 'Test Case' && showResults) {
-      this.setState({
-        showResults: false
-      })
-    } else if (event.target.innerHTML === 'Results' && !showResults) {
-      this.setState({
-        showResults: true
-      })
-    }
+  handleChange = (event, value) => {
+    this.setState({value})
   }
 
   render() {
-    const {showResults} = this.state
-    const {testCases, outputs, onChange} = this.props
-    let testCasesClassName = ''
-    let resultsClassName = ''
-    if (showResults) {
-      resultsClassName = 'active'
-    } else {
-      testCasesClassName = 'active'
-    }
+    const {classes, testCases, outputs, onChange, theme} = this.props
+    const {value} = this.state
+
     return (
-      <div id="form-area">
-        <div className="tab">
-          <button
-            className={`tablinks ${testCasesClassName}`}
-            onClick={this.handleTabClick}
+      <NoSsr>
+        <div className={classes.root}>
+          <AppBar position="static">
+            <Tabs
+              variant="fullWidth"
+              value={value}
+              onChange={this.handleChange}
+            >
+              <LinkTab label="Test Cases" href="page1" />
+              <LinkTab label="Results" href="page2" />
+            </Tabs>
+          </AppBar>
+          <SwipeableViews
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={this.state.value}
+            onChangeIndex={this.handleChangeIndex}
+            className={classes.swipe}
           >
-            Test Case
-          </button>
-          <button
-            className={`tablinks ${resultsClassName}`}
-            onClick={this.handleTabClick}
-          >
-            Results
-          </button>
+            {value === 0 && (
+              <TabContainer>
+                {' '}
+                <TestCases testCases={testCases} onChange={onChange} />
+              </TabContainer>
+            )}
+            {value === 1 && (
+              <TabContainer>
+                <Results testCases={testCases} outputs={outputs} />
+              </TabContainer>
+            )}
+          </SwipeableViews>
         </div>
-
-        <div id="input" className={`tabcontent ${testCasesClassName}`}>
-          <TestCases testCases={testCases} onChange={onChange} />
-        </div>
-
-        <div id="results" className={`tabcontent ${resultsClassName}`}>
-          <Results testCases={testCases} outputs={outputs} />
-        </div>
-      </div>
+      </NoSsr>
     )
   }
 }
+
+InputOutputWrapper.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles, {withTheme: true})(InputOutputWrapper)

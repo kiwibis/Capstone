@@ -9,13 +9,72 @@ import jBeautify from 'js-beautify'
 import findOrientation from 'exif-orientation'
 import Loader from 'react-loader-spinner'
 import Evaluator from '../../util/evaluator'
+import Grid from '@material-ui/core/Grid'
+import {withStyles} from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
+import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
+
+const styles = theme => ({
+  bigGrid: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    spacing: 40,
+    maxHeight: '100%',
+    maxWidth: '100%'
+  },
+  littleGrid: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    spacing: 40
+  },
+  image: {
+    padding: 10,
+    maxWidth: '90%'
+  },
+  rotatedImage: {
+    transform: 'rotate(90deg) scale(0.7)',
+    padding: 10,
+    paddingLeft: 20,
+    maxWidth: '100%'
+  },
+  paper: {
+    width: '80vw',
+    height: 'auto',
+    minHeight: '80vh',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
+  main: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  gridItems: {
+    width: '100%',
+    objectFit: 'cover',
+    padding: 20
+  },
+  bigGridItem: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})
 
 class EditPage extends Component {
   constructor() {
     super()
     this.state = {
       editedText: '',
-      testCases: '',
+      testCases: undefined,
       outputs: [],
       image: null,
       imageClass: ''
@@ -39,14 +98,17 @@ class EditPage extends Component {
     event.preventDefault()
     const {editedText, testCases} = this.state
     const code = editedText
-    const inputs = testCases.trim().split('\n')
+    // will invoke the function once even if the user doesn't input anything
+    const inputs = testCases ? testCases.trim().split('\n') : ['undefined']
     this.props.submitEditedText(editedText)
     try {
       this.setState({
-        outputs: await Promise.all(this.evaluator.getResult(code, inputs))
+        outputs: await this.evaluator.getResult(code, inputs)
       })
     } catch (error) {
-      this.setState({outputs: `${error.name}: ${error.message}`})
+      this.setState({
+        outputs: `${error.name ? error.name + ': ' : ''}${error.message}`
+      })
     }
   }
 
@@ -63,11 +125,11 @@ class EditPage extends Component {
         if (!err) {
           if (orientation.rotate === 90) {
             this.setState({
-              imageClass: 'rotate'
+              imageClass: 'rotatedImage'
             })
           } else {
             this.setState({
-              imageClass: ''
+              imageClass: 'image'
             })
           }
         }
@@ -85,6 +147,7 @@ class EditPage extends Component {
 
   render() {
     const {editedText, testCases, outputs, image, imageClass} = this.state
+    const {classes} = this.props
     if (this.props.loading)
       return (
         <center>
@@ -92,27 +155,66 @@ class EditPage extends Component {
         </center>
       )
     return (
-      <div id="EditPage">
-        <div>
-          <center>
-            <img className={imageClass} id="edit-image" src={image} />
-          </center>
-        </div>
-        <div>
-          <CodeMirror
-            editedText={editedText}
-            handleChange={this.handleChange}
-          />
-          <form onSubmit={this.handleSubmit}>
-            <InputOutputWrapper
-              testCases={testCases}
-              outputs={outputs}
-              onChange={this.handleChange}
-            />
-            <input type="submit" />
-          </form>
-          <PhotoCapture buttonImage="Retake Image" />
-        </div>
+      <div className={classes.main}>
+        <Paper className={classes.paper}>
+          <img src="/results.png" alt="results" />
+          <Grid container className={classes.bigGrid}>
+            <Grid
+              item
+              xs={12}
+              sm={7}
+              md={7}
+              lg={6}
+              xl={6}
+              className={classes.bigGridItem}
+            >
+              <img className={classes[imageClass]} src={image} />
+            </Grid>
+            <Grid item xs={12} sm={5} md={5} lg={6} xl={6}>
+              <Grid container className={classes.littleGrid}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  xl={12}
+                  className={classes.gridItems}
+                >
+                  <CodeMirror
+                    editedText={editedText}
+                    handleChange={this.handleChange}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  xl={12}
+                  className={classes.gridItems}
+                >
+                  <form
+                    onSubmit={this.handleSubmit}
+                    className={classes.littleGrid}
+                  >
+                    <InputOutputWrapper
+                      testCases={testCases}
+                      outputs={outputs}
+                      onChange={this.handleChange}
+                    />
+                    <Button type="submit" variant="outlined">
+                      Submit
+                    </Button>
+                  </form>
+                  <PhotoCapture buttonImage="Retake Image" />
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Paper>
       </div>
     )
   }
@@ -134,7 +236,11 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
+EditPage.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditPage)
+)(withStyles(styles)(EditPage))

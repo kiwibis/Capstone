@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from './MUI/Navbar'
+import {Navbar} from './components'
 import Routes from './routes'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 

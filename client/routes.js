@@ -2,8 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, HomePage} from './components'
-import EditPage from './MUI/EditPage'
+import {Login, Signup, UserHome, HomePage, EditPage} from './components'
 import {me} from './store'
 
 /**
