@@ -13,6 +13,7 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import BreakpointMedia from 'react-media-material-ui/BreakpointMedia'
 import {Link} from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 const style = theme => ({
   appBar: {
@@ -166,6 +167,7 @@ class Navbar extends React.Component {
           </div>
         </AppBar>
         <div className={classes.appBarSpacer} />
+        <CssBaseline />
       </div>
     )
   }
