@@ -68,7 +68,8 @@ class InputOutputWrapper extends React.Component {
       outputs,
       onChange,
       theme,
-      handleSubmit
+      handleSubmit,
+      running
     } = this.props
     const {value} = this.state
 
@@ -82,7 +83,12 @@ class InputOutputWrapper extends React.Component {
               onChange={this.handleChange}
             >
               <LinkTab label="Test Cases" href="page1" />
-              <LinkTab label="Results" href="page2" onClick={handleSubmit} />
+              <LinkTab
+                label="Results"
+                href="page2"
+                onClick={handleSubmit}
+                disabled={running}
+              />
             </Tabs>
           </AppBar>
           <SwipeableViews
