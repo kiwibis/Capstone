@@ -1,6 +1,5 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
-const TrainingData = require('../db/models/trainingData')
+const {User} = require('../db/models')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -13,8 +12,7 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
-      const data = await user.getTrainingData()
-      req.login(user, err => (err ? next(err) : res.json({user, data})))
+      req.login(user, err => (err ? next(err) : res.json({user})))
     }
   } catch (err) {
     next(err)
@@ -24,7 +22,7 @@ router.post('/login', async (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   try {
     const user = await User.create(req.body)
-    req.login(user, err => (err ? next(err) : res.json(user)))
+    req.login(user, err => (err ? next(err) : res.json({user})))
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
       res.status(401).send('User already exists')
@@ -40,8 +38,9 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', async (req, res) => {
+  const data = await req.user.getFunctions()
+  res.json({user: req.user, data})
 })
 
 router.use('/google', require('./google'))

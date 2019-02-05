@@ -63,7 +63,7 @@ const UserHome = props => {
 const mapStateToProps = state => {
   return {
     email: state.user.email,
-    functions: state.user.functions
+    functions: state.userFunctions
   }
 }
 
