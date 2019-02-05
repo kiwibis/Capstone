@@ -8,9 +8,9 @@ import TableBody from '@material-ui/core/TableBody'
 const Results = ({testCases, outputs}) => {
   testCases = testCases ? testCases.trim().split('\n') : ['']
   if (typeof outputs === 'string') {
-    return outputs
+    return <p>{outputs}</p>
   } else if (outputs.length === 0) {
-    return 'No Output'
+    return <p>No output</p>
   }
 
   const type = text =>
