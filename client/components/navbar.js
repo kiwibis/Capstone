@@ -80,7 +80,7 @@ class Navbar extends React.Component {
       },
       {
         text: 'Evaluate',
-        link: '/evaluate'
+        link: '/'
       },
       {
         text: 'FAQs',
@@ -94,7 +94,7 @@ class Navbar extends React.Component {
     const loggedOut = [
       {
         text: 'Evaluate',
-        link: '/evaluate'
+        link: '/'
       },
       {
         text: 'FAQs',
