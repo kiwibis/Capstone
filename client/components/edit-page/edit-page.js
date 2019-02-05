@@ -7,7 +7,6 @@ import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
 import jBeautify from 'js-beautify'
 import findOrientation from 'exif-orientation'
-import Loader from 'react-loader-spinner'
 import Evaluator from '../../util/evaluator'
 import Grid from '@material-ui/core/Grid'
 import {withStyles} from '@material-ui/core/styles'
@@ -16,6 +15,7 @@ import Paper from '@material-ui/core/Paper'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import NProgress from 'nprogress'
 import ErrorPage from './error-page'
+import Loading from './loading-page'
 
 const styles = theme => ({
   bigGrid: {
@@ -172,7 +172,7 @@ class EditPage extends Component {
     if (loading)
       return (
         <center>
-          <Loader type="Puff" color="#00BFFF" height="100" width="100" />
+          <Loading />
         </center>
       )
     else if (error) return <ErrorPage classes={classes} error={error} />
