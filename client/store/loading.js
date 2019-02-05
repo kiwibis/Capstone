@@ -22,7 +22,9 @@ export default function(state = defaultLoadingState, action) {
   switch (action.type) {
     case SET_LOADING_TRUE:
       return true
-    case 'GET_CODE':
+    case 'GOT_CODE':
+      return false
+    case 'GOT_SERVER_ERROR':
       return false
     default:
       return state
