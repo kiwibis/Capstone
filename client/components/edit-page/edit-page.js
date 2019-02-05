@@ -82,7 +82,8 @@ class EditPage extends Component {
       testCases: undefined,
       outputs: [],
       image: null,
-      imageClass: ''
+      imageClass: '',
+      testCasesRunning: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -107,6 +108,9 @@ class EditPage extends Component {
     // will invoke the function once even if the user doesn't input anything
     const inputs = testCases ? testCases.trim().split('\n') : ['undefined']
     this.props.submitEditedText(editedText)
+    this.setState({
+      testCasesRunning: true
+    })
     NProgress.start()
     let inc = 0.1,
       progress = 0.0
@@ -116,11 +120,13 @@ class EditPage extends Component {
     }, 1000)
     try {
       this.setState({
-        outputs: await this.evaluator.getResult(code, inputs)
+        outputs: await this.evaluator.getResult(code, inputs),
+        testCasesRunning: false
       })
     } catch (error) {
       this.setState({
-        outputs: `${error.name ? error.name + ': ' : ''}${error.message}`
+        outputs: `${error.name ? error.name + ': ' : ''}${error.message}`,
+        testCasesRunning: false
       })
     }
     clearInterval(incLoader)
@@ -162,8 +168,8 @@ class EditPage extends Component {
 
   render() {
     const {editedText, testCases, outputs, image, imageClass} = this.state
-    const {classes, error} = this.props
-    if (this.props.loading)
+    const {classes, error, loading} = this.props
+    if (loading)
       return (
         <center>
           <Loader type="Puff" color="#00BFFF" height="100" width="100" />
@@ -218,6 +224,7 @@ class EditPage extends Component {
                     className={classes.littleGrid}
                   >
                     <InputOutputWrapper
+                      running={this.state.testCasesRunning}
                       testCases={testCases}
                       outputs={outputs}
                       onChange={this.handleChange}
