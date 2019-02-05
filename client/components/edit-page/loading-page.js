@@ -12,11 +12,11 @@ const style = () => ({
     justifyContent: 'center',
     width: '90vw',
     height: 'auto',
-    minHeight: '90vh'
+    minHeight: '90vh',
+    padding: 10
   },
   items: {
-    padding: 50,
-    maxWidth: '70vw'
+    width: '70vw'
   }
 })
 
@@ -31,25 +31,25 @@ const Loading = props => {
     '/tip7.png'
   ]
   const index = Math.floor(Math.random() * 7)
-  const override = css`
-    display: block;
-    margin: 0 auto;
-  `
+
   const {classes} = props
   return (
     <div className="loader">
       <Paper className={classes.paper}>
         <div className={classes.item}>
           <PropagateLoader
-            css={override}
             color="#9AB452"
             size={20}
             loading={true}
             align="center"
           />
         </div>
-        <div className={classes.item}>
-          <img src={tipsArray[index]} alt="Useful Tips" />
+        <div>
+          <img
+            src={tipsArray[index]}
+            alt="Useful Tips"
+            className={classes.item}
+          />
         </div>
       </Paper>
     </div>
