@@ -86,6 +86,8 @@ class InputOutputWrapper extends React.Component {
             </Tabs>
           </AppBar>
           <SwipeableViews
+            resistance
+            onSwitching={index => this.handleChange(null, index)}
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}
             className={classes.swipe}
