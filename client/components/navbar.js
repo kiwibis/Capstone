@@ -171,7 +171,11 @@ class Navbar extends React.Component {
                 <div>
                   {currentList.map(item => {
                     if (item.text === 'Logout') {
-                      return <Button onClick={logoutThunk}>{item.text}</Button>
+                      return (
+                        <Button key={item.text} onClick={logoutThunk}>
+                          {item.text}
+                        </Button>
+                      )
                     }
                     return (
                       <Link to={item.link} key={item.text}>
