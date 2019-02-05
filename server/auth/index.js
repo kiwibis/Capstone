@@ -39,7 +39,10 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', async (req, res) => {
-  const data = await req.user.getFunctions()
+  let data = []
+  if (req.user) {
+    data = await req.user.getFunctions()
+  }
   res.json({user: req.user, data})
 })
 
