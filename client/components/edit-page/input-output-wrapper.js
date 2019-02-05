@@ -74,7 +74,7 @@ class InputOutputWrapper extends React.Component {
 
     return (
       <NoSsr>
-        <div className={classes.root}>
+        <div id="inputOutput" className={classes.root}>
           <AppBar position="static">
             <Tabs
               variant="fullWidth"

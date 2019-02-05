@@ -13,9 +13,9 @@ import Grid from '@material-ui/core/Grid'
 import {withStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import NProgress from 'nprogress'
+import ErrorPage from './error-page'
 
 const styles = theme => ({
   bigGrid: {
@@ -54,6 +54,9 @@ const styles = theme => ({
     flexDirection: 'column',
     justifyContent: 'center'
   },
+  errorPage: {
+    padding: '0 10vw 0 10vw'
+  },
   main: {
     display: 'flex',
     justifyContent: 'center',
@@ -89,6 +92,7 @@ class EditPage extends Component {
 
   componentDidMount() {
     if (!this.props.loading && !this.props.image) return history.push('/')
+    NProgress.configure({parent: '#inputOutput'})
     this.readFile()
   }
 
@@ -104,7 +108,12 @@ class EditPage extends Component {
     const inputs = testCases ? testCases.trim().split('\n') : ['undefined']
     this.props.submitEditedText(editedText)
     NProgress.start()
-    NProgress.set(0.1)
+    let inc = 0.1,
+      progress = 0.0
+    let incLoader = setInterval(function() {
+      progress += inc
+      NProgress.set(progress)
+    }, 1000)
     try {
       this.setState({
         outputs: await this.evaluator.getResult(code, inputs)
@@ -114,6 +123,7 @@ class EditPage extends Component {
         outputs: `${error.name ? error.name + ': ' : ''}${error.message}`
       })
     }
+    clearInterval(incLoader)
     NProgress.done()
   }
 
@@ -152,13 +162,14 @@ class EditPage extends Component {
 
   render() {
     const {editedText, testCases, outputs, image, imageClass} = this.state
-    const {classes} = this.props
+    const {classes, error} = this.props
     if (this.props.loading)
       return (
         <center>
           <Loader type="Puff" color="#00BFFF" height="100" width="100" />
         </center>
       )
+    else if (error) return <ErrorPage classes={classes} error={error} />
     return (
       <div className={classes.main}>
         <CssBaseline />
@@ -228,11 +239,12 @@ class EditPage extends Component {
 }
 
 const mapStateToProps = state => {
-  const {text, editedText, image} = state.code
+  const {text, editedText, image, error} = state.code
   return {
     text,
     editedText,
     image,
+    error,
     loading: state.loading
   }
 }

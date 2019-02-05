@@ -19,7 +19,7 @@ const gotEditedText = editedText => ({
 
 const gotServerError = error => ({
   type: GOT_SERVER_ERROR,
-  payload: error.message
+  payload: error
 })
 
 /**
@@ -32,7 +32,7 @@ export const sendImage = imageFile => async dispatch => {
     const res = await axios.post('/api/images', data)
     dispatch(gotCode({text: res.data, image: imageFile}))
   } catch (err) {
-    dispatch(gotServerError(err))
+    dispatch(gotServerError(err.response.data))
   }
 }
 
