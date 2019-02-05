@@ -214,10 +214,10 @@ const mapStateToProps = state => {
   }
 }
 
-EditPage.propTypes = {
-  classes: PropTypes.object.isRequired
-}
-
 export default connect(mapStateToProps)(
   withStyles(styles)(editCodeWrapper(EditPage))
 )
+
+EditPage.propTypes = {
+  classes: PropTypes.object.isRequired
+}

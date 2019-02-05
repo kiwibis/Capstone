@@ -5,6 +5,7 @@ import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import GridListTileBar from '@material-ui/core/GridListTileBar'
 import CodeMirror from '../edit-page/code-mirror'
+import InputOutputWrapper from '../edit-page/input-output-wrapper'
 
 const styles = theme => ({
   root: {
@@ -13,6 +14,13 @@ const styles = theme => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper
+  },
+  littleGrid: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    spacing: 40
   },
   gridList: {
     flexWrap: 'nowrap',
@@ -29,12 +37,19 @@ const styles = theme => ({
 })
 
 const UserHome = props => {
-  const {classes, email, functions, handleChange} = props
+  const {
+    classes,
+    testCasesRunning,
+    testCases,
+    outputs,
+    handleSubmit,
+    handleChange
+  } = props
   return (
     <div className={classes.root}>
-      <h3>Welcome, {email}</h3>
+      <h3>Welcome, {props.email}</h3>
       <GridList className={classes.gridList} cols={2.5}>
-        {functions.map(func => (
+        {props.functions.map(func => (
           <GridListTile key={func.id}>
             <CodeMirror
               editedText={func.userEditedText}
@@ -50,6 +65,15 @@ const UserHome = props => {
           </GridListTile>
         ))}
       </GridList>
+      <form className={classes.littleGrid}>
+        <InputOutputWrapper
+          running={testCasesRunning}
+          testCases={testCases}
+          outputs={outputs}
+          onChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
+      </form>
     </div>
   )
 }

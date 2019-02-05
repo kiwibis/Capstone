@@ -23,9 +23,8 @@ const mapDispatchToProps = dispatch => {
 
 export default function editCodeWrapper(WrappedComponent) {
   class EditCodeWrapper extends Component {
-    constructor(props) {
-      super(props)
-      console.log(props.text)
+    constructor() {
+      super()
       this.state = {
         editedText: '',
         testCases: undefined,
