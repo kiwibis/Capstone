@@ -45,7 +45,7 @@ export const submitEditedText = editedText => async (dispatch, getState) => {
     })
     dispatch(gotEditedText(editedText))
   } catch (err) {
-    dispatch()
+    console.error(err)
   }
 }
 /**
