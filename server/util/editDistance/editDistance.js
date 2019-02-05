@@ -1,5 +1,6 @@
 const jsDictionary = require('./jsDictionary.json')
 const {objects, functions, misc} = jsDictionary
+const jsLexicon = misc.concat(functions.concat(objects))
 
 // The editDistance function uses dynamic programming to return the minimum number of operations (insertions, deletions, swaps) needed to transform the source string into the target
 function editDistance(source, target) {
@@ -43,17 +44,17 @@ function editDistance(source, target) {
   return prefixDistances[lengthTarget][lengthSource]
 }
 
-// The closestJSWords function takes a string and an array of JavaScript words, computes the edit distance between the string and each JS word, and returns an object containing an array of the closest word(s) and the edit distance between the string and the JS word(s)
-const closestJSWords = (givenWord, jsWords) => {
-  const firstDistance = editDistance(givenWord, jsWords[0])
+// The closestWordsAndDistance function takes a string and an array of JavaScript words, computes the edit distance between the string and each JS word, and returns an object containing an array of the closest word(s) and the edit distance between the string and the JS word(s)
+const closestWordsAndDistance = (givenWord, wordsToCompare) => {
+  const firstDistance = editDistance(givenWord, wordsToCompare[0])
   // used if one word closer than all others
-  let closestWord = jsWords[0]
+  let closestWord = wordsToCompare[0]
   // used if multiple words equidistant
   let closestWords
   let oneWordClosest = true
   let minDistance = firstDistance
-  for (let i = 1; i < jsWords.length; i++) {
-    const currentWord = jsWords[i]
+  for (let i = 1; i < wordsToCompare.length; i++) {
+    const currentWord = wordsToCompare[i]
     const currentDistance = editDistance(givenWord, currentWord)
     if (currentDistance < minDistance) {
       oneWordClosest = true
@@ -79,16 +80,15 @@ const closestJSWords = (givenWord, jsWords) => {
   }
 }
 
-// The replaceWithJSWord function takes a string and determines whether that string is fewer than 'threshold' operations away from a JavaScript word. If it is, it returns the closest JS word. Otherwise, it returns the original string.
-const replaceWithJSWord = givenWord => {
+// The replace function takes a string and determines whether that string is fewer than 'threshold' operations away from a JavaScript word. If it is, it returns the closest JS word and replaced is true. Otherwise, it returns the original string and replaced is false.
+const replace = (givenWord, wordsToCompare = jsLexicon) => {
   const threshold = 2
-  const jsWords = misc.concat(functions.concat(objects))
-  const closestWords = closestJSWords(givenWord, jsWords)
+  const closestWords = closestWordsAndDistance(givenWord, wordsToCompare)
   if (closestWords.distance < threshold) {
-    console.log(closestWords.words)
+    console.log(closestWords)
     return {returnedWord: closestWords.words[0], replaced: true}
   }
   return {returnedWord: givenWord, replaced: false}
 }
 
-module.exports = {replaceWithJSWord, editDistance}
+module.exports = {replace, editDistance}
