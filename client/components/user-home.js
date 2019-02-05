@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {deleteFunctionInServer, updateFunctionInServer} from '../store'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList'
@@ -67,7 +68,16 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(UserHome))
+const mapDispatchToProps = dispatch => ({
+  removeFunction: id => dispatch(deleteFunctionInServer(id)),
+  updateFunction: (id, newEditedText) =>
+    dispatch(updateFunctionInServer(id, newEditedText))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(UserHome))
 
 /**
  * PROP TYPES

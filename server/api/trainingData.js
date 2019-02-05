@@ -21,4 +21,22 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    let userId = null
+    if (req.user) {
+      userId = req.user.id
+    }
+    await TrainingData.destroy({
+      where: {
+        userId,
+        id: req.params.id
+      }
+    })
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router
