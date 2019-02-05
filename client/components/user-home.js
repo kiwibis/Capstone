@@ -1,27 +1,11 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import GridListTileBar from '@material-ui/core/GridListTileBar'
-import IconButton from '@material-ui/core/IconButton'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
-import tileData from './tileData'
 import CodeMirrorWrapper from './edit-page/code-mirror'
-
-// The example data is structured as follows:
-
-// import image from 'path/to/image.jpg';
-// [etc...]
-
-const tileData = [
-  {
-    img: image,
-    title: 'Image',
-    author: 'author'
-  }
-]
 
 const styles = theme => ({
   root: {
@@ -44,55 +28,51 @@ const styles = theme => ({
       'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)'
   }
 })
+
 /**
  * COMPONENT
  */
-class UserHome extends Component {
-  componentDidMount() {}
 
-  render() {
-    const {classes, email} = props
-    return (
-      <div className={classes.root}>
-        <h3>Welcome, {email}</h3>
-        <GridList className={classes.gridList} cols={2.5}>
-          {tileData.map(tile => (
-            <GridListTile key={tile.img}>
-              <img src={tile.img} alt={tile.title} />
-              <GridListTileBar
-                title={tile.title}
-                classes={{
-                  root: classes.titleBar,
-                  title: classes.title
-                }}
-                actionIcon={
-                  <IconButton>
-                    <StarBorderIcon className={classes.title} />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-          ))}
-        </GridList>
-      </div>
-    )
-  }
+const UserHome = props => {
+  const {classes, email, functions} = props
+  return (
+    <div className={classes.root}>
+      <h3>Welcome, {email}</h3>
+      <GridList className={classes.gridList} cols={2.5}>
+        {functions.map(func => (
+          <GridListTile key={func.id}>
+            <CodeMirrorWrapper editedText={func.userEditedText} />
+            <GridListTileBar
+              title={func.updatedAt}
+              classes={{
+                root: classes.titleBar,
+                title: classes.title
+              }}
+            />
+          </GridListTile>
+        ))}
+      </GridList>
+    </div>
+  )
 }
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+
+const mapStateToProps = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    functions: state.user.functions
   }
 }
 
-export default connect(mapState)(withStyles(styles)(UserHome))
+export default connect(mapStateToProps)(withStyles(styles)(UserHome))
 
 /**
  * PROP TYPES
  */
+
 UserHome.propTypes = {
   email: PropTypes.string,
   classes: PropTypes.object.isRequired
