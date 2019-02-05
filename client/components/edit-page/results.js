@@ -29,16 +29,16 @@ const Results = ({testCases, outputs}) => {
   }
 
   return (
-    <Table>
+    <Table align="center">
       <TableHead>
-        <TableCell>Input</TableCell>
-        <TableCell>Output</TableCell>
+        <TableCell align="center">Input</TableCell>
+        <TableCell align="center">Output</TableCell>
       </TableHead>
       <TableBody>
         {testCases.map((input, i) => (
           <TableRow key={input}>
-            <TableCell>{renderText(input)}</TableCell>
-            <TableCell>{renderText(outputs[i])}</TableCell>
+            <TableCell align="center">{renderText(input)}</TableCell>
+            <TableCell align="center">{renderText(outputs[i])}</TableCell>
           </TableRow>
         ))}
       </TableBody>
