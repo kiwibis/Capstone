@@ -26,7 +26,7 @@ const TestCases = ({onChange, testCases, classes}) => {
     <TextField
       id="outlined-textarea"
       label="Input"
-      placeholder="Make sure you write each test case on a separate line."
+      placeholder="Write each test case on a separate line."
       multiline
       className={classes.textField}
       margin="normal"
