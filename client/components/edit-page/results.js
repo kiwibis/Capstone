@@ -8,37 +8,25 @@ import TableBody from '@material-ui/core/TableBody'
 const Results = ({testCases, outputs}) => {
   testCases = testCases ? testCases.trim().split('\n') : ['']
   if (typeof outputs === 'string') {
-    return outputs
+    // only occurs in the case there's an error
+    return <p>{outputs}</p>
   } else if (outputs.length === 0) {
-    return 'No Output'
-  }
-
-  const type = text =>
-    Object.prototype.toString
-      .call(text)
-      .slice(8, -1)
-      .toLowerCase()
-  const renderText = text => {
-    if (['null', 'boolean'].includes(type(text))) {
-      return JSON.stringify(text)
-    } else if (type(text) === 'undefined') {
-      return 'undefined'
-    } else {
-      return text
-    }
+    return <p>No output</p>
   }
 
   return (
     <Table>
       <TableHead>
-        <TableCell>Input</TableCell>
-        <TableCell>Output</TableCell>
+        <TableRow>
+          <TableCell>Input</TableCell>
+          <TableCell>Output</TableCell>
+        </TableRow>
       </TableHead>
       <TableBody>
         {testCases.map((input, i) => (
           <TableRow key={input}>
-            <TableCell>{renderText(input)}</TableCell>
-            <TableCell>{renderText(outputs[i])}</TableCell>
+            <TableCell>{input + ''}</TableCell>
+            <TableCell>{outputs[i] + ''}</TableCell>
           </TableRow>
         ))}
       </TableBody>

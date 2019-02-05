@@ -39,11 +39,11 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', async (req, res) => {
-  let data = []
+  let functions = []
   if (req.user) {
-    data = await req.user.getFunctions()
+    functions = await req.user.getFunctions()
   }
-  res.json({user: req.user, data})
+  res.json({user: req.user, functions})
 })
 
 router.use('/google', require('./google'))

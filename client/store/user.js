@@ -15,7 +15,11 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
-const getUser = (user, data) => ({type: GET_USER, user, data})
+const getUser = (user, functions) => ({
+  type: GET_USER,
+  user,
+  functions
+})
 const removeUser = () => ({type: REMOVE_USER})
 
 /**
@@ -23,8 +27,12 @@ const removeUser = () => ({type: REMOVE_USER})
  */
 export const me = () => async dispatch => {
   try {
-    const res = await axios.get('/auth/me')
-    dispatch(getUser(res.data.user || defaultUser, res.data.data))
+    const {data} = await axios.get('/auth/me')
+    if (data.user) {
+      dispatch(getUser(data.user, data.functions))
+    } else {
+      dispatch(getUser({}, []))
+    }
   } catch (err) {
     console.error(err)
   }
@@ -39,7 +47,7 @@ export const auth = (email, password, method) => async dispatch => {
   }
 
   try {
-    dispatch(getUser(res.data.user, res.data.data))
+    dispatch(getUser(res.data.user, res.data.info))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)

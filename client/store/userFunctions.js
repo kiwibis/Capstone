@@ -58,7 +58,7 @@ const defaultFunctions = []
 export default function(state = defaultFunctions, action) {
   switch (action.type) {
     case 'GET_USER':
-      return action.data || []
+      return action.functions || []
     case UPDATE_FUNCTION:
       return state.map(fn => {
         if (fn.id === action.id) {

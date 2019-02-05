@@ -68,13 +68,14 @@ class InputOutputWrapper extends React.Component {
       outputs,
       onChange,
       theme,
-      handleSubmit
+      handleSubmit,
+      running
     } = this.props
     const {value} = this.state
 
     return (
       <NoSsr>
-        <div className={classes.root}>
+        <div id="inputOutput" className={classes.root}>
           <AppBar position="static">
             <Tabs
               variant="fullWidth"
@@ -82,10 +83,17 @@ class InputOutputWrapper extends React.Component {
               onChange={this.handleChange}
             >
               <LinkTab label="Test Cases" href="page1" />
-              <LinkTab label="Results" href="page2" onClick={handleSubmit} />
+              <LinkTab
+                label="Results"
+                href="page2"
+                onClick={handleSubmit}
+                disabled={running}
+              />
             </Tabs>
           </AppBar>
           <SwipeableViews
+            resistance
+            onSwitching={index => this.handleChange(null, index)}
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}
             className={classes.swipe}

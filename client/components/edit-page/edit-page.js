@@ -1,20 +1,18 @@
 import React, {Component} from 'react'
 import PhotoCapture from '../photo-capture'
 import {connect} from 'react-redux'
-import {submitEditedText} from '../../store'
 import history from '../../history'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
-import jBeautify from 'js-beautify'
 import findOrientation from 'exif-orientation'
 import Loader from 'react-loader-spinner'
-import Evaluator from '../../util/evaluator'
 import Grid from '@material-ui/core/Grid'
 import {withStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import ErrorPage from './error-page'
+import editCodeWrapper from '../edit-code'
 
 const styles = theme => ({
   bigGrid: {
@@ -45,13 +43,16 @@ const styles = theme => ({
     maxWidth: '100%'
   },
   paper: {
-    width: '80vw',
+    width: '95vw',
     height: 'auto',
-    minHeight: '80vh',
+    minHeight: '95vh',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'center'
+  },
+  errorPage: {
+    padding: '0 10vw 0 10vw'
   },
   main: {
     display: 'flex',
@@ -74,16 +75,10 @@ class EditPage extends Component {
   constructor() {
     super()
     this.state = {
-      editedText: '',
-      testCases: undefined,
-      outputs: [],
       image: null,
       imageClass: ''
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
     this.readFile = this.readFile.bind(this)
-    this.evaluator = new Evaluator()
   }
 
   componentDidMount() {
@@ -91,35 +86,12 @@ class EditPage extends Component {
     this.readFile()
   }
 
-  handleChange(inputName, inputValue) {
-    this.setState({[inputName]: inputValue})
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault()
-    const {editedText, testCases} = this.state
-    const code = editedText
-    // will invoke the function once even if the user doesn't input anything
-    const inputs = testCases ? testCases.trim().split('\n') : ['undefined']
-    this.props.submitEditedText(editedText)
-    try {
-      this.setState({
-        outputs: await this.evaluator.getResult(code, inputs)
-      })
-    } catch (error) {
-      this.setState({
-        outputs: `${error.name ? error.name + ': ' : ''}${error.message}`
-      })
-    }
-  }
-
   readFile() {
     if (!this.props.image) return
     try {
-      const {text} = this.props
       const fileReader = new FileReader()
       fileReader.onloadend = () => {
-        this.setState({image: fileReader.result, editedText: jBeautify(text)})
+        this.setState({image: fileReader.result})
       }
       fileReader.readAsDataURL(this.props.image)
       findOrientation(this.props.image, (err, orientation) => {
@@ -147,14 +119,24 @@ class EditPage extends Component {
   }
 
   render() {
-    const {editedText, testCases, outputs, image, imageClass} = this.state
-    const {classes} = this.props
+    const {
+      handleSubmit,
+      handleChange,
+      editedText,
+      testCases,
+      testCasesRunning,
+      outputs,
+      classes
+    } = this.props
+    const {image, imageClass} = this.state
     if (this.props.loading)
       return (
         <center>
           <Loader type="Puff" color="#00BFFF" height="100" width="100" />
         </center>
       )
+    else if (this.props.error)
+      return <ErrorPage classes={classes} error={this.props.error} />
     return (
       <div className={classes.main}>
         <CssBaseline />
@@ -185,7 +167,7 @@ class EditPage extends Component {
                 >
                   <CodeMirror
                     editedText={editedText}
-                    handleChange={this.handleChange}
+                    handleChange={handleChange}
                   />
                 </Grid>
 
@@ -198,15 +180,13 @@ class EditPage extends Component {
                   xl={12}
                   className={classes.gridItems}
                 >
-                  <form
-                    onSubmit={this.handleSubmit}
-                    className={classes.littleGrid}
-                  >
+                  <form onSubmit={handleSubmit} className={classes.littleGrid}>
                     <InputOutputWrapper
+                      running={testCasesRunning}
                       testCases={testCases}
                       outputs={outputs}
-                      onChange={this.handleChange}
-                      handleSubmit={this.handleSubmit}
+                      onChange={handleChange}
+                      handleSubmit={handleSubmit}
                     />
                   </form>
                   <p />
@@ -224,18 +204,13 @@ class EditPage extends Component {
 }
 
 const mapStateToProps = state => {
-  const {text, editedText, image} = state.code
+  const {text, editedText, image, error} = state.code
   return {
     text,
     editedText,
     image,
+    error,
     loading: state.loading
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    submitEditedText: editedText => dispatch(submitEditedText(editedText))
   }
 }
 
@@ -243,7 +218,6 @@ EditPage.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(EditPage))
+export default connect(mapStateToProps)(
+  withStyles(styles)(editCodeWrapper(EditPage))
+)
