@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import InputOutputWrapper from './edit-page/input-output-wrapper'
 import editCode from './edit-code'
 import {withStyles} from '@material-ui/core/styles'
-import Carousel from './MUI-carousel'
+import Carousel from './carousel'
 import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
