@@ -35,7 +35,7 @@ const style = theme => ({
   titleFont: {
     color: 'white',
     fontSize: '24px',
-    fontWeight: '500'
+    fontWeight: '600'
   },
   image: {
     maxWidth: '90%'
