@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import jBeautify from 'js-beautify'
 import {submitEditedText} from '../store'
 import Evaluator from '../util/evaluator'
 import NProgress from 'nprogress'
+import jBeautify from 'js-beautify'
 
 const mapStateToProps = state => {
   return {
-    text: state.code,
+    text: state.code.text,
     loading: state.loading
   }
 }
@@ -35,9 +35,6 @@ export default function editCode(WrappedComponent) {
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.evaluator = new Evaluator()
-      }
-
-      componentDidMount() {
         NProgress.configure({parent: '#inputOutput'})
       }
 
