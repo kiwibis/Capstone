@@ -7,10 +7,10 @@ import {
   Login,
   Signup,
   UserHome,
-  HomePage,
   EditPage,
   Contact,
-  LandingPage
+  LandingPage,
+  Tips
 } from './components'
 
 import {me} from './store'
@@ -33,6 +33,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/editPage" component={EditPage} />
+        <Route path="/tips" component={Tips} />
         <Route path="/contact" component={Contact} />
         {isLoggedIn && (
           <Switch>
@@ -40,7 +41,7 @@ class Routes extends Component {
             <Route path="/home" component={UserHome} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback */}
+        {/* Displays our home page as a fallback */}
         <Route component={LandingPage} />
       </Switch>
     )

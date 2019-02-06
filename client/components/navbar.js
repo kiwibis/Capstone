@@ -99,6 +99,10 @@ class Navbar extends React.Component {
         link: '/'
       },
       {
+        text: 'Tips',
+        link: '/tips'
+      },
+      {
         text: 'Contact Us',
         link: '/contact'
       },
@@ -111,6 +115,10 @@ class Navbar extends React.Component {
       {
         text: 'Evaluate',
         link: '/'
+      },
+      {
+        text: 'Tips',
+        link: '/tips'
       },
       {
         text: 'Contact Us',
