@@ -9,7 +9,8 @@ import {
   UserHome,
   HomePage,
   EditPage,
-  Contact
+  Contact,
+  LandingPage
 } from './components'
 
 import {me} from './store'
