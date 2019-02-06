@@ -99,8 +99,8 @@ class Navbar extends React.Component {
         link: '/'
       },
       {
-        text: 'FAQs',
-        link: '/faq'
+        text: 'Contact Us',
+        link: '/contact'
       },
       {
         text: 'Logout',
@@ -113,8 +113,8 @@ class Navbar extends React.Component {
         link: '/'
       },
       {
-        text: 'FAQs',
-        link: '/faq'
+        text: 'Contact Us',
+        link: '/contact'
       },
       {
         text: 'Login',
