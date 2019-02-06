@@ -169,18 +169,13 @@ class EditPage extends Component {
   render() {
     const {editedText, testCases, outputs, image, imageClass} = this.state
     const {classes, error, loading} = this.props
-    if (loading)
-      return (
-        <center>
-          <Loading />
-        </center>
-      )
+    if (loading) return <Loading />
     else if (error) return <ErrorPage classes={classes} error={error} />
     return (
       <div className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <img src="/your-code.png" alt="results" />
+          <img src="/results.png" alt="results" />
           <Grid container className={classes.bigGrid}>
             <Grid
               item
