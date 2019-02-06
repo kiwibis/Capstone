@@ -19,13 +19,13 @@ class PhotoCapture extends React.Component {
   }
 
   render() {
-    const {buttonText} = this.props
+    const {text} = this.props
     return (
       <div className="image-upload">
         <label htmlFor="file-input">
           <center>
             <AddAPhotoRounded color="primary" fontSize="large" />
-            <Typography>Try it now!</Typography>
+            <Typography>{text}</Typography>
           </center>
         </label>
         <input

@@ -20,7 +20,7 @@ const style = theme => ({
   appBar: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justify: 'space-between',
     alignItems: 'center',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -41,7 +41,7 @@ const style = theme => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flexEnd',
-    justifyContent: 'space-around'
+    justify: 'space-around'
   },
   button: {
     margin: theme.spacing.unit
