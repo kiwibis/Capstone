@@ -16,6 +16,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import NProgress from 'nprogress'
 import ErrorPage from './error-page'
 import Loading from './loading-page'
+import {Typography} from '@material-ui/core'
 
 const styles = theme => ({
   bigGrid: {
@@ -71,6 +72,10 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  title: {
+    fontFamily: theme.typography.fontFamily[1],
+    fontSize: '40px'
   }
 })
 
@@ -175,7 +180,9 @@ class EditPage extends Component {
       <div className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <img src="/results.png" alt="results" />
+          <Typography component="h1" className={classes.title}>
+            Your code
+          </Typography>
           <Grid container className={classes.bigGrid}>
             <Grid
               item

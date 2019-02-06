@@ -14,6 +14,7 @@ import {Link} from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import {logout} from '../store'
+import {Typography} from '@material-ui/core'
 
 const style = theme => ({
   appBar: {
@@ -54,6 +55,11 @@ const style = theme => ({
   titleLink: {
     paddingLeft: '20px',
     flexGrow: 4
+  },
+  title: {
+    fontFamily: theme.typography.fontFamily[1],
+    fontSize: '35px',
+    color: 'white'
   }
 })
 
@@ -116,7 +122,9 @@ class Navbar extends React.Component {
         <AppBar position="sticky" className={classes.appBar}>
           <div className={classes.titleLink}>
             <Link to="/" className={classes.titleLink}>
-              <img src="/logo.png" alt="Kiwi" />
+              <Typography component="h1" className={classes.title}>
+                Kiwi
+              </Typography>
             </Link>
           </div>
           <div className={classes.navlinks}>
