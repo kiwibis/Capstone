@@ -6,7 +6,7 @@ const {
 
 function correctErrors(simplifiedArray) {
   //Characters that need to be checked regardless of google vision confidence level
-  const troubleChars = [')', '>', '+', '=', '-']
+  const troubleChars = [')', '>', '+', '=', '-', '&', '|']
 
   const correctedArray = []
 
@@ -155,24 +155,39 @@ function charCorrector(char, charObject, correctedArray) {
       char = ''
       charObject = {...charObject, character: char}
     }
-  }
-  if (char === '>') {
+  } else if (char === '>') {
     if (previousCharObject.character === '=') {
       previousCharObject.character = previousCharObject.character.concat('>')
       char = ''
       charObject = {...charObject, character: char}
     }
-  }
-  if (['+', '-', '='].includes(char)) {
+  } else if (char === '|') {
     if (correctedArray.length) {
-      if (['+', '-', '=', '=='].includes(previousCharObject.character)) {
+      if (previousCharObject.character === '|') {
         previousCharObject.character = previousCharObject.character.concat(char)
         char = ''
         charObject = {...charObject, character: char}
       }
     }
-  }
-  if (char === 'Ş') {
+  } else if (char === '&') {
+    if (correctedArray.length) {
+      if (previousCharObject.character === '&') {
+        previousCharObject.character = previousCharObject.character.concat(char)
+        char = ''
+        charObject = {...charObject, character: char}
+      }
+    }
+  } else if (['+', '-', '='].includes(char)) {
+    if (correctedArray.length) {
+      if (
+        ['+', '-', '=', '==', '!', '!='].includes(previousCharObject.character)
+      ) {
+        previousCharObject.character = previousCharObject.character.concat(char)
+        char = ''
+        charObject = {...charObject, character: char}
+      }
+    }
+  } else if (char === 'Ş') {
     charObject.character = '{'
   }
   return charObject
