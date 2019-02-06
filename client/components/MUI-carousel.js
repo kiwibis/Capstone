@@ -11,6 +11,7 @@ import {setSelectedFunction, fetchFunctions, gotCode} from '../store'
 import CodeMirror from './edit-page/code-mirror'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import jBeautify from 'js-beautify'
+import withWidth, {isWidthUp} from '@material-ui/core/withWidth'
 
 const styles = theme => ({
   root: {
@@ -42,6 +43,24 @@ class CodeList extends React.Component {
     }
     this.handleSelect = this.handleSelect.bind(this)
   }
+  getGridListCols() {
+    if (isWidthUp('xl', this.props.width)) {
+      return 3
+    }
+
+    if (isWidthUp('lg', this.props.width)) {
+      return 3
+    }
+
+    if (isWidthUp('md', this.props.width)) {
+      return 2
+    }
+    if (isWidthUp('sm', this.props.width)) {
+      return 2
+    }
+
+    return 1
+  }
 
   handleSelect(currIndex) {
     this.setState({currIndex})
@@ -56,10 +75,12 @@ class CodeList extends React.Component {
 
   render() {
     const {classes, functions, handleChange, editedText} = this.props
+    const {currIndex} = this.state
     if (!functions.length) return 'No Functions'
+
     return (
       <div className={classes.root}>
-        <GridList className={classes.gridList} cols={3}>
+        <GridList className={classes.gridList} cols={getGridListCols()}>
           {functions.map((func, index) => (
             <GridListTile
               onClick={() => this.handleSelect(index)}
@@ -116,4 +137,4 @@ CodeList.propTypes = {
 export default connect(
   mapState,
   mapDispatch
-)(withStyles(styles)(CodeList))
+)(withWidth()(withStyles(styles)(CodeList)))

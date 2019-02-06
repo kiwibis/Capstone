@@ -5,6 +5,7 @@ import InputOutputWrapper from './edit-page/input-output-wrapper'
 import editCode from './edit-code'
 import {withStyles} from '@material-ui/core/styles'
 import Carousel from './MUI-carousel'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
   littleGrid: {
@@ -13,6 +14,9 @@ const styles = theme => ({
     alignItems: 'center',
     justify: 'center',
     spacing: 40
+  },
+  title: {
+    fontFamily: theme.typography.fontFamily[1]
   }
 })
 
@@ -32,7 +36,9 @@ export const UserHome = props => {
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      <Typography component="h2" className={classes.title}>
+        Welcome, {email}!
+      </Typography>
       <Carousel {...props} />
       <form onSubmit={handleSubmit} className={classes.littleGrid}>
         <InputOutputWrapper
