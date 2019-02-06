@@ -62,13 +62,13 @@ const style = theme => ({
     color: 'white'
   },
   logo: {
-    maxHeight: '7vw'
+    maxHeight: '50px'
   },
   logoDiv: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '15vw',
+    width: '100px',
     alignContent: 'center'
   }
 })
@@ -99,8 +99,8 @@ class Navbar extends React.Component {
         link: '/'
       },
       {
-        text: 'FAQs',
-        link: '/faq'
+        text: 'Contact Us',
+        link: '/contact'
       },
       {
         text: 'Logout',
@@ -113,8 +113,8 @@ class Navbar extends React.Component {
         link: '/'
       },
       {
-        text: 'FAQs',
-        link: '/faq'
+        text: 'Contact Us',
+        link: '/contact'
       },
       {
         text: 'Login',

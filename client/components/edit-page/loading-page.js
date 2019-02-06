@@ -8,15 +8,14 @@ const style = () => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flexStart',
-    width: '90vw',
-    height: '90vh'
+    justifyContent: 'flexStart'
   },
   items: {
-    padding: 8
+    padding: '20px'
   },
   image: {
-    maxWidth: '90vw'
+    maxWidth: '90vw',
+    padding: '30px'
   },
   loader: {
     display: 'flex',
