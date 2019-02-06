@@ -27,7 +27,8 @@ const styles = theme => ({
     justify: 'center',
     spacing: 40,
     maxHeight: '100%',
-    maxWidth: '100%'
+    maxWidth: '100%',
+    padding: '20px'
   },
   littleGrid: {
     display: 'flex',
@@ -47,12 +48,11 @@ const styles = theme => ({
     maxWidth: '100%'
   },
   paper: {
-    width: '95vw',
-    height: 'auto',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    justifyContent: 'flexStart'
+    justifyContent: 'flexStart',
+    maxWidth: '95vw'
   },
   errorPage: {
     padding: '0 10vw 0 10vw'
