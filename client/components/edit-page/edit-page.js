@@ -17,7 +17,8 @@ import NProgress from 'nprogress'
 import ErrorPage from './error-page'
 import Loading from './loading-page'
 import {Typography} from '@material-ui/core'
-import getDimensions from 'image-dimensions'
+import BreakpointMedia from 'react-media-material-ui/BreakpointMedia'
+import classnames from 'classnames'
 
 const styles = theme => ({
   bigGrid: {
@@ -46,7 +47,9 @@ const styles = theme => ({
     transform: 'rotate(90deg) scale(0.7)',
     padding: 10,
     paddingLeft: 20,
-    maxWidth: '100%'
+    minHeight: '50vw',
+    maxHeight: '55vw',
+    maxWidth: '600px'
   },
   paper: {
     display: 'flex',
@@ -66,7 +69,7 @@ const styles = theme => ({
   gridItems: {
     width: '100%',
     objectFit: 'cover',
-    padding: 20
+    padding: 10
   },
   bigGridItem: {
     display: 'flex',
@@ -76,6 +79,9 @@ const styles = theme => ({
   title: {
     fontFamily: theme.typography.fontFamily[1],
     fontSize: '40px'
+  },
+  smallImage: {
+    minHeight: '100vw'
   }
 })
 
@@ -96,11 +102,9 @@ class EditPage extends Component {
     this.evaluator = new Evaluator()
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (!this.props.loading && !this.props.image) return history.push('/')
     NProgress.configure({parent: '#inputOutput'})
-    const size = await getDimensions(this.props.image)
-    console.log(size.width, size.height)
     this.readFile()
   }
 
@@ -175,6 +179,7 @@ class EditPage extends Component {
 
   render() {
     const {editedText, testCases, outputs, image, imageClass} = this.state
+
     const {classes, error, loading} = this.props
     if (loading) return <Loading />
     else if (error) return <ErrorPage classes={classes} error={error} />
@@ -195,7 +200,19 @@ class EditPage extends Component {
               xl={6}
               className={classes.bigGridItem}
             >
-              <img className={classes[imageClass]} src={image} />
+              <BreakpointMedia max="xs">
+                <img
+                  className={classnames(
+                    classes[imageClass],
+                    classes.smallImage
+                  )}
+                  src={image}
+                />
+              </BreakpointMedia>
+
+              <BreakpointMedia min="sm">
+                <img className={classes[imageClass]} src={image} />
+              </BreakpointMedia>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
               <Grid container className={classes.littleGrid}>
