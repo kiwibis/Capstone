@@ -16,6 +16,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import NProgress from 'nprogress'
 import ErrorPage from './error-page'
 import Loading from './loading-page'
+import {Typography} from '@material-ui/core'
 
 const styles = theme => ({
   bigGrid: {
@@ -23,7 +24,7 @@ const styles = theme => ({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    justifyContent: 'center',
+    justify: 'center',
     spacing: 40,
     maxHeight: '100%',
     maxWidth: '100%'
@@ -32,7 +33,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justify: 'center',
     spacing: 40
   },
   image: {
@@ -71,6 +72,10 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  title: {
+    fontFamily: theme.typography.fontFamily[1],
+    fontSize: '40px'
   }
 })
 
@@ -169,18 +174,15 @@ class EditPage extends Component {
   render() {
     const {editedText, testCases, outputs, image, imageClass} = this.state
     const {classes, error, loading} = this.props
-    if (loading)
-      return (
-        <center>
-          <Loading />
-        </center>
-      )
+    if (loading) return <Loading />
     else if (error) return <ErrorPage classes={classes} error={error} />
     return (
       <div className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <img src="/results.png" alt="results" />
+          <Typography component="h1" className={classes.title}>
+            Your code
+          </Typography>
           <Grid container className={classes.bigGrid}>
             <Grid
               item
@@ -234,7 +236,7 @@ class EditPage extends Component {
                   <p />
                   <p />
                   <p />
-                  <PhotoCapture buttonText="Choose Another Image" />
+                  <PhotoCapture text="Take another photo" />
                 </Grid>
               </Grid>
             </Grid>

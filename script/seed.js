@@ -15,7 +15,7 @@ async function seed() {
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 
-  const trainingData = await Promise.all([
+  await Promise.all([
     TrainingData.create({
       algoResultText: `const testMe = num =>  { for ( let i = 0 ; i < 3 ; ++  i ) { num = num * num ; return num ; }}`,
       userEditedText: `const testMe = num => {
