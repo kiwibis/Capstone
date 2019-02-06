@@ -63,7 +63,7 @@ export default class Evaluator {
           worker.terminate()
           worker = null
           resolve(
-            'This is taking longer than expected! Check out our FAQs to learn what the issue could be.'
+            'This is taking longer than expected! You may have written an infinite loop, or your code may require too many resources.'
           )
         }, 10000)
       } catch (error) {

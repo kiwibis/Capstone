@@ -37,11 +37,13 @@ function simplifyVisionResponse(visionAPIResponse, languageCheckNeeded) {
             confidence: symbol.confidence
           }
           if (languageCheckNeeded) {
-            symbol.property.detectedLanguages.forEach(lang => {
-              if (lang.languageCode !== 'en' && lang.languageCode !== 'la') {
-                symbolObject.confidence = 0
-              }
-            })
+            if (symbol.property && symbol.property.detectedLanguages) {
+              symbol.property.detectedLanguages.forEach(lang => {
+                if (lang.languageCode !== 'en' && lang.languageCode !== 'la') {
+                  symbolObject.confidence = 0
+                }
+              })
+            }
           }
           wordObject.symbols.push(symbolObject)
         })
