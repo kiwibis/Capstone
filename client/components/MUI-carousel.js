@@ -10,6 +10,7 @@ import {connect} from 'react-redux'
 import {setSelectedFunction, fetchFunctions, gotCode} from '../store'
 import CodeMirror from './edit-page/code-mirror'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import jBeautify from 'js-beautify'
 
 const styles = theme => ({
   root: {
@@ -37,12 +38,13 @@ class CodeList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currIndex: 0
+      currIndex: null
     }
     this.handleSelect = this.handleSelect.bind(this)
   }
 
   handleSelect(currIndex) {
+    this.setState({currIndex})
     this.props.updateFunctionIndex(currIndex)
 
     this.props.gotCode({text: this.props.functions[currIndex].userEditedText})
@@ -58,19 +60,27 @@ class CodeList extends React.Component {
     return (
       <div className={classes.root}>
         <GridList className={classes.gridList} cols={3}>
-          {functions.map(func => (
-            <GridListTile key={func.id}>
-              <CodeMirror
-                editedText={func.userEditedText}
-                handleChange={handleChange}
-              />
+          {functions.map((func, index) => (
+            <GridListTile
+              onClick={() => this.handleSelect(index)}
+              key={func.id}
+            >
+              {index === this.state.currIndex ? (
+                <CodeMirror
+                  editedText={editedText}
+                  handleChange={handleChange}
+                />
+              ) : (
+                <CodeMirror editedText={jBeautify(func.userEditedText)} />
+              )}
+
               <GridListTileBar
                 title={new Date(func.updatedAt).toUTCString()}
                 classes={{
                   root: classes.titleBar,
                   title: classes.title
                 }}
-                onClick={() => this.handleSelect(func.id)}
+                onClick={() => this.handleSelect(index)}
                 actionIcon={
                   <IconButton>
                     <StarBorderIcon className={classes.title} />

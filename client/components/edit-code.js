@@ -39,10 +39,11 @@ export default function editCode(WrappedComponent) {
       }
 
       componentDidUpdate(prevProps) {
-        if (prevProps.loading && !this.props.loading) {
-          this.setState({editedText: jBeautify(this.props.text)})
-        }
-        if (prevProps.text !== this.props.text) {
+        if (
+          (prevProps.loading && !this.props.loading) ||
+          prevProps.text !== this.props.text
+        ) {
+          console.log(prevProps.text, this.props.text)
           this.setState({editedText: jBeautify(this.props.text)})
         }
       }

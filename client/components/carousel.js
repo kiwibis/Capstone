@@ -18,10 +18,8 @@ class CarouselWrapper extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  async handleChange(currIndex) {
+  handleChange(currIndex) {
     console.log(currIndex)
-    this.props.updateFunctionIndex(currIndex)
-
     this.props.gotCode({text: this.props.functions[currIndex].userEditedText})
   }
 
@@ -35,12 +33,15 @@ class CarouselWrapper extends React.Component {
       <Carousel
         showThumbs={false}
         showStatus={false}
-        onChange={currIndex => this.handleChange(currIndex)}
+        onChange={this.handleChange}
       >
         {this.props.functions.map((func, index) => {
           return (
             <div key={func.id}>
-              <CodeMirror editedText={func.userEditedText} />
+              <CodeMirror
+                handleChange={this.props.handleChange}
+                editedText={this.props.editedText}
+              />
 
               <p className="legend">{new Date(func.updatedAt).toUTCString()}</p>
             </div>
