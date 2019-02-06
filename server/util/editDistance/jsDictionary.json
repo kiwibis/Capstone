@@ -393,6 +393,6 @@
     "watch",
     "write",
     "writeln",
-    ".xor"
+    "xor"
   ]
 }
