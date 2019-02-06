@@ -186,15 +186,15 @@ class EditPage extends Component {
             <Grid
               item
               xs={12}
-              sm={7}
-              md={7}
+              sm={6}
+              md={6}
               lg={6}
               xl={6}
               className={classes.bigGridItem}
             >
               <img className={classes[imageClass]} src={image} />
             </Grid>
-            <Grid item xs={12} sm={5} md={5} lg={6} xl={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
               <Grid container className={classes.littleGrid}>
                 <Grid
                   item
