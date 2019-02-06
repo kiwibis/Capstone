@@ -17,6 +17,7 @@ import NProgress from 'nprogress'
 import ErrorPage from './error-page'
 import Loading from './loading-page'
 import {Typography} from '@material-ui/core'
+import getDimensions from 'image-dimensions'
 
 const styles = theme => ({
   bigGrid: {
@@ -95,9 +96,11 @@ class EditPage extends Component {
     this.evaluator = new Evaluator()
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (!this.props.loading && !this.props.image) return history.push('/')
     NProgress.configure({parent: '#inputOutput'})
+    const size = await getDimensions(this.props.image)
+    console.log(size.width, size.height)
     this.readFile()
   }
 
