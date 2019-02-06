@@ -23,7 +23,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
+    alignItems: 'flexStart',
     justify: 'center',
     spacing: 40,
     maxHeight: '100%',
@@ -49,11 +49,10 @@ const styles = theme => ({
   paper: {
     width: '95vw',
     height: 'auto',
-    minHeight: '95vh',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'flexStart'
   },
   errorPage: {
     padding: '0 10vw 0 10vw'
