@@ -10,17 +10,18 @@ import {Carousel} from 'react-responsive-carousel'
  * COMPONENT
  */
 class CarouselWrapper extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       currIndex: 0
     }
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange(currIndex) {
-    this.setState({currIndex})
-    //this.props.updateFunctionIndex(currIndex)
+  async handleChange(currIndex) {
+    console.log(currIndex)
+    this.props.updateFunctionIndex(currIndex)
+
     this.props.gotCode({text: this.props.functions[currIndex].userEditedText})
   }
 
@@ -34,7 +35,7 @@ class CarouselWrapper extends React.Component {
       <Carousel
         showThumbs={false}
         showStatus={false}
-        onChange={this.handleChange}
+        onChange={currIndex => this.handleChange(currIndex)}
       >
         {this.props.functions.map((func, index) => {
           return (

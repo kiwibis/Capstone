@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import Carousel from './carousel'
 import InputOutputWrapper from './edit-page/input-output-wrapper'
 import editCode from './edit-code'
 import {withStyles} from '@material-ui/core/styles'
+import Carousel from './MUI-carousel'
 
 const styles = theme => ({
   littleGrid: {

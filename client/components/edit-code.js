@@ -42,6 +42,9 @@ export default function editCode(WrappedComponent) {
         if (prevProps.loading && !this.props.loading) {
           this.setState({editedText: jBeautify(this.props.text)})
         }
+        if (prevProps.text !== this.props.text) {
+          this.setState({editedText: jBeautify(this.props.text)})
+        }
       }
 
       handleChange(inputName, inputValue) {
