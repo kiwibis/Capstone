@@ -186,3 +186,7 @@ a:hover {
   width: 50px;
   cursor: pointer;
 }
+
+center:hover {
+  cursor: pointer;
+}

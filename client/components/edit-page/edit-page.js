@@ -122,7 +122,7 @@ class EditPage extends Component {
         <CssBaseline />
         <Paper className={classes.paper}>
           <Typography component="h1" className={classes.title}>
-            Your code
+            Your Code
           </Typography>
           <Grid container className={classes.bigGrid}>
             <Grid
