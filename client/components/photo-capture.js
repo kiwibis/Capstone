@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {sendImage, setLoadingTrue} from '../store'
 import history from '../history'
 import AddAPhotoRounded from '@material-ui/icons/AddAPhotoRounded'
+import {Typography} from '@material-ui/core'
 
 class PhotoCapture extends React.Component {
   constructor() {
@@ -22,7 +23,10 @@ class PhotoCapture extends React.Component {
     return (
       <div className="image-upload">
         <label htmlFor="file-input">
-          <AddAPhotoRounded color="primary" fontSize="large" />
+          <center>
+            <AddAPhotoRounded color="primary" fontSize="large" />
+            <Typography>Try it now!</Typography>
+          </center>
         </label>
         <input
           id="file-input"
