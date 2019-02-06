@@ -1,16 +1,48 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Carousel from './carousel'
+import InputOutputWrapper from './edit-page/input-output-wrapper'
+import editCode from './edit-code'
+import {withStyles} from '@material-ui/core/styles'
+
+const styles = theme => ({
+  littleGrid: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justify: 'center',
+    spacing: 40
+  }
+})
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
-  const {email} = props
+  const {
+    testCasesRunning,
+    testCases,
+    outputs,
+    handleChange,
+    handleSubmit,
+    email,
+    classes
+  } = props
 
   return (
     <div>
       <h3>Welcome, {email}</h3>
+      <Carousel {...props} />
+      <form onSubmit={handleSubmit} className={classes.littleGrid}>
+        <InputOutputWrapper
+          running={testCasesRunning}
+          testCases={testCases}
+          outputs={outputs}
+          onChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
+      </form>
     </div>
   )
 }
@@ -24,7 +56,7 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(UserHome)
+export default connect(mapState)(withStyles(styles)(editCode(UserHome)))
 
 /**
  * PROP TYPES
