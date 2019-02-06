@@ -189,6 +189,8 @@ function charCorrector(char, charObject, correctedArray) {
     }
   } else if (char === 'Ş') {
     charObject.character = '{'
+  } else if (char === 'Ş') {
+    charObject.character = '{'
   }
   return charObject
 }

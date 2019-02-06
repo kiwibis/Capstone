@@ -6,18 +6,21 @@ import {Link} from 'react-router-dom'
 
 const ErrorPage = ({classes, error}) => {
   let message
+  const seeTips =
+    ' Please visit our tips page to learn how to get the best possible results when using Kiwi.'
   if (error.includes("'detectedLanguages'")) {
     // this is the error that usually comes when the picture is poor
-    message = "It's possible this was a poor image. Please visit our "
+    message =
+      "It's possible that the quality of the photo you uploaded was too poor." +
+      seeTips
   } else if (error.includes("'pages'")) {
     // this is the error that usually comes when there is no text detected
     message =
-      "It's possible that the photo you uploaded doesn't actually contain text. " +
-      'Please visit our '
+      "It's possible that the photo you uploaded doesn't actually contain text." +
+      seeTips
   } else {
     message =
-      'Oops! Something went wrong with the photo you just uploaded. ' +
-      'Please visit our '
+      'Oops! Something went wrong with the photo you just uploaded.' + seeTips
   }
   return (
     <div className={classes.main}>
@@ -33,8 +36,7 @@ const ErrorPage = ({classes, error}) => {
           align="center"
         >
           {message}
-          <Link to="/faq">FAQ</Link>
-          {' in order to learn the best pictures to use with our application.'}
+          <Link to="/tips">Tips</Link>
         </Typography>
       </Paper>
     </div>
