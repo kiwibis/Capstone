@@ -32,6 +32,7 @@ export const UserHome = props => {
     outputs,
     handleChange,
     handleSubmit,
+    editedText,
     email,
     classes
   } = props
@@ -43,7 +44,7 @@ export const UserHome = props => {
           Welcome, {email}!
         </Typography>
       </center>
-      <Carousel {...props} />
+      <Carousel editedText={editedText} handleChange={handleChange} />
       <form onSubmit={handleSubmit} className={classes.littleGrid}>
         <InputOutputWrapper
           running={testCasesRunning}
