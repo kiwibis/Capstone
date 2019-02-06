@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {setSelectedFunction, fetchFunctions} from '../store'
+import {setSelectedFunction, fetchFunctions, gotCode} from '../store'
 import CodeMirror from './edit-page/code-mirror'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import {Carousel} from 'react-responsive-carousel'
@@ -20,7 +20,8 @@ class CarouselWrapper extends React.Component {
 
   handleChange(currIndex) {
     this.setState({currIndex})
-    this.props.updateFunctionIndex(currIndex)
+    //this.props.updateFunctionIndex(currIndex)
+    this.props.gotCode({text: this.props.functions[currIndex].userEditedText})
   }
 
   componentDidMount() {
@@ -35,12 +36,15 @@ class CarouselWrapper extends React.Component {
         showStatus={false}
         onChange={this.handleChange}
       >
-        {this.props.functions.map((func, index) => (
-          <div key={func.id}>
-            <CodeMirror editedText={func.userEditedText} />
-            <p className="legend">{new Date(func.updatedAt).toUTCString()}</p>
-          </div>
-        ))}
+        {this.props.functions.map((func, index) => {
+          return (
+            <div key={func.id}>
+              <CodeMirror editedText={func.userEditedText} />
+
+              <p className="legend">{new Date(func.updatedAt).toUTCString()}</p>
+            </div>
+          )
+        })}
       </Carousel>
     )
   }
@@ -58,7 +62,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchFunctions: () => dispatch(fetchFunctions()),
-    updateFunctionIndex: id => dispatch(setSelectedFunction(id))
+    updateFunctionIndex: id => dispatch(setSelectedFunction(id)),
+    gotCode: code => dispatch(gotCode(code))
   }
 }
 

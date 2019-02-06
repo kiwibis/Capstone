@@ -10,7 +10,7 @@ const GOT_SERVER_ERROR = 'GOT_SERVER_ERROR'
 /**
  * ACTION CREATORS
  */
-const gotCode = imageInfo => ({type: GOT_CODE, payload: imageInfo})
+export const gotCode = imageInfo => ({type: GOT_CODE, payload: imageInfo})
 
 const gotEditedText = editedText => ({
   type: GOT_EDITED_TEXT,
