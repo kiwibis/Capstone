@@ -23,7 +23,7 @@ const styles = theme => ({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    justifyContent: 'center',
+    justify: 'center',
     spacing: 40,
     maxHeight: '100%',
     maxWidth: '100%'
@@ -32,7 +32,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justify: 'center',
     spacing: 40
   },
   image: {
@@ -175,7 +175,7 @@ class EditPage extends Component {
       <div className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <img src="/results.png" alt="results" />
+          <img src="/your-code.png" alt="results" />
           <Grid container className={classes.bigGrid}>
             <Grid
               item
@@ -229,7 +229,7 @@ class EditPage extends Component {
                   <p />
                   <p />
                   <p />
-                  <PhotoCapture buttonText="Choose Another Image" />
+                  <PhotoCapture text="Take another photo" />
                 </Grid>
               </Grid>
             </Grid>
