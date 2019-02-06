@@ -21,7 +21,6 @@ const styles = theme => ({
 })
 
 const TestCases = ({onChange, testCases, classes}) => {
-  console.log('new test case')
   return (
     <TextField
       id="outlined-textarea"
@@ -34,7 +33,6 @@ const TestCases = ({onChange, testCases, classes}) => {
       fullWidth={true}
       name="testCases"
       onChange={event => {
-        console.log(event)
         const {target} = event
         onChange(target.name, target.value)
       }}

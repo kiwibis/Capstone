@@ -180,7 +180,7 @@ class EditPage extends Component {
       <div className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <img src="/results.png" alt="results" />
+          <img src="/your-code.png" alt="results" />
           <Grid container className={classes.bigGrid}>
             <Grid
               item

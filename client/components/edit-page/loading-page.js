@@ -9,10 +9,14 @@ const style = () => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: '90vw',
+    height: 'auto',
+    minHeight: '90vh'
   },
   items: {
-    padding: 8
+    padding: 50,
+    maxWidth: '70vw'
   }
 })
 
@@ -28,28 +32,25 @@ const Loading = props => {
   ]
   const index = Math.floor(Math.random() * 7)
   const override = css`
+    display: block;
     margin: 0 auto;
   `
   const {classes} = props
   return (
     <div className="loader">
       <Paper className={classes.paper}>
-        <PropagateLoader
-          css={override}
-          color="#9AB452"
-          size={20}
-          loading={true}
-          align="center"
-          className={classes.item}
-        />
-        <br />
-        <br />
-        <br />
-        <img
-          src={tipsArray[index]}
-          alt="Useful Tips"
-          className={classes.item}
-        />
+        <div className={classes.item}>
+          <PropagateLoader
+            css={override}
+            color="#9AB452"
+            size={20}
+            loading={true}
+            align="center"
+          />
+        </div>
+        <div className={classes.item}>
+          <img src={tipsArray[index]} alt="Useful Tips" />
+        </div>
       </Paper>
     </div>
   )
