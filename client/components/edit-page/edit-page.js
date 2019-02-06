@@ -28,7 +28,8 @@ const styles = theme => ({
     justify: 'center',
     spacing: 40,
     maxHeight: '100%',
-    maxWidth: '100%'
+    maxWidth: '100%',
+    padding: '20px'
   },
   littleGrid: {
     display: 'flex',
@@ -48,12 +49,11 @@ const styles = theme => ({
     maxWidth: '100%'
   },
   paper: {
-    width: '95vw',
-    height: 'auto',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    justifyContent: 'flexStart'
+    justifyContent: 'flexStart',
+    maxWidth: '95vw'
   },
   errorPage: {
     padding: '0 10vw 0 10vw'
@@ -189,15 +189,15 @@ class EditPage extends Component {
             <Grid
               item
               xs={12}
-              sm={7}
-              md={7}
+              sm={6}
+              md={6}
               lg={6}
               xl={6}
               className={classes.bigGridItem}
             >
               <img className={classes[imageClass]} src={image} />
             </Grid>
-            <Grid item xs={12} sm={5} md={5} lg={6} xl={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
               <Grid container className={classes.littleGrid}>
                 <Grid
                   item
