@@ -57,7 +57,6 @@
     "express-fileupload": "^1.1.1-alpha.1",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
-    "image-dimensions": "^1.0.0",
     "js-beautify": "^1.8.9",
     "morgan": "^1.9.1",
     "nprogress": "^0.2.0",
