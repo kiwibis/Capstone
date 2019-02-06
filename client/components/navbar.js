@@ -60,6 +60,16 @@ const style = theme => ({
     fontFamily: theme.typography.fontFamily[1],
     fontSize: '35px',
     color: 'white'
+  },
+  logo: {
+    maxHeight: '7vw'
+  },
+  logoDiv: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '15vw',
+    alignContent: 'center'
   }
 })
 
@@ -122,9 +132,12 @@ class Navbar extends React.Component {
         <AppBar position="sticky" className={classes.appBar}>
           <div className={classes.titleLink}>
             <Link to="/" className={classes.titleLink}>
-              <Typography component="h1" className={classes.title}>
-                Kiwi
-              </Typography>
+              <div className={classes.logoDiv}>
+                <img src="/kiwi.png" alt="Kiwi" className={classes.logo} />
+                <Typography component="h1" className={classes.title}>
+                  Kiwi
+                </Typography>
+              </div>
             </Link>
           </div>
           <div className={classes.navlinks}>

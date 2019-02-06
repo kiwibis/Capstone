@@ -21,7 +21,8 @@ const style = theme => ({
     minWidth: '30vw',
     height: '60vh',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap'
   },
   card1: {
     backgroundColor: '#D9DB9F'
@@ -35,7 +36,8 @@ const style = theme => ({
   titleFont: {
     color: 'white',
     fontSize: '24px',
-    fontWeight: '600'
+    fontWeight: '600',
+    padding: 8
   },
   image: {
     maxWidth: '90%'
