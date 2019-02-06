@@ -12,8 +12,6 @@ import {
   Contact
 } from './components'
 
-import {Login, Signup, UserHome, LandingPage, EditPage} from './components'
-
 import {me} from './store'
 
 /**
