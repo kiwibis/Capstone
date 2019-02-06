@@ -6,7 +6,7 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
-export {default as HomePage} from './home-page'
+export {default as LandingPage} from './landing-page'
 export {default as EditPage} from './edit-page/edit-page'
 export {default as PhotoCapture} from './photo-capture'
 export {default as Contact} from './contact'

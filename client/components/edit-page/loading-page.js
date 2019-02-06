@@ -1,7 +1,6 @@
 import React from 'react'
 import {PropagateLoader} from 'react-spinners'
 import Paper from '@material-ui/core/Paper'
-import {css} from '@emotion/core'
 import {withStyles} from '@material-ui/core/styles'
 
 const style = () => ({
@@ -9,10 +8,19 @@ const style = () => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flexStart'
   },
   items: {
-    padding: 8
+    padding: '20px'
+  },
+  image: {
+    maxWidth: '90vw',
+    padding: '30px'
+  },
+  loader: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
@@ -24,18 +32,18 @@ const Loading = props => {
     '/tip4.png',
     '/tip5.png',
     '/tip6.png',
-    '/tip7.png'
+    '/tip7.png',
+    '/tip8.png'
   ]
-  const index = Math.floor(Math.random() * 7)
-  const override = css`
-    margin: 0 auto;
-  `
+  const index = Math.floor(Math.random() * 8)
+
   const {classes} = props
   return (
-    <div className="loader">
+    <div className={classes.loader}>
       <Paper className={classes.paper}>
+        <br />
+        <br />
         <PropagateLoader
-          css={override}
           color="#9AB452"
           size={20}
           loading={true}
@@ -45,11 +53,13 @@ const Loading = props => {
         <br />
         <br />
         <br />
-        <img
-          src={tipsArray[index]}
-          alt="Useful Tips"
-          className={classes.item}
-        />
+        <div className={classes.item}>
+          <img
+            src={tipsArray[index]}
+            alt="Useful Tips"
+            className={classes.image}
+          />
+        </div>
       </Paper>
     </div>
   )

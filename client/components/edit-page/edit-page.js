@@ -16,23 +16,25 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import NProgress from 'nprogress'
 import ErrorPage from './error-page'
 import Loading from './loading-page'
+import {Typography} from '@material-ui/core'
 
 const styles = theme => ({
   bigGrid: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flexStart',
+    justify: 'center',
     spacing: 40,
     maxHeight: '100%',
-    maxWidth: '100%'
+    maxWidth: '100%',
+    padding: '20px'
   },
   littleGrid: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justify: 'center',
     spacing: 40
   },
   image: {
@@ -46,13 +48,11 @@ const styles = theme => ({
     maxWidth: '100%'
   },
   paper: {
-    width: '95vw',
-    height: 'auto',
-    minHeight: '95vh',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'flexStart',
+    maxWidth: '95vw'
   },
   errorPage: {
     padding: '0 10vw 0 10vw'
@@ -71,6 +71,10 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  title: {
+    fontFamily: theme.typography.fontFamily[1],
+    fontSize: '40px'
   }
 })
 
@@ -169,31 +173,28 @@ class EditPage extends Component {
   render() {
     const {editedText, testCases, outputs, image, imageClass} = this.state
     const {classes, error, loading} = this.props
-    if (loading)
-      return (
-        <center>
-          <Loading />
-        </center>
-      )
+    if (loading) return <Loading />
     else if (error) return <ErrorPage classes={classes} error={error} />
     return (
       <div className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <img src="/results.png" alt="results" />
+          <Typography component="h1" className={classes.title}>
+            Your code
+          </Typography>
           <Grid container className={classes.bigGrid}>
             <Grid
               item
               xs={12}
-              sm={7}
-              md={7}
+              sm={6}
+              md={6}
               lg={6}
               xl={6}
               className={classes.bigGridItem}
             >
               <img className={classes[imageClass]} src={image} />
             </Grid>
-            <Grid item xs={12} sm={5} md={5} lg={6} xl={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
               <Grid container className={classes.littleGrid}>
                 <Grid
                   item
@@ -234,7 +235,7 @@ class EditPage extends Component {
                   <p />
                   <p />
                   <p />
-                  <PhotoCapture buttonText="Choose Another Image" />
+                  <PhotoCapture text="Take another photo" />
                 </Grid>
               </Grid>
             </Grid>

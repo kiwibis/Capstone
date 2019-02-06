@@ -1,4 +1,4 @@
-const {replaceWithJSWord} = require('./editDistance/editDistance')
+const {replace} = require('./editDistance/editDistance')
 const {
   convertStringToWordObject,
   convertWordObjectToString
@@ -41,13 +41,13 @@ function correctErrors(simplifiedArray) {
           )
         ) {
           let previousWordIsJSWord = false
-          const previousWord = correctedArray[correctedArray.length - 1]
-          const previousWordAsString = convertWordObjectToString(previousWord)
-          const {returnedWord, replaced} = replaceWithJSWord(
-            previousWordAsString
-          )
-          if (replaced) {
-            previousWordIsJSWord = true
+          if (correctedArray.length) {
+            const previousWord = correctedArray[correctedArray.length - 1]
+            const previousWordAsString = convertWordObjectToString(previousWord)
+            const {returnedWord, replaced} = replace(previousWordAsString)
+            if (replaced) {
+              previousWordIsJSWord = true
+            }
           }
           if (!previousWordIsJSWord) {
             concatWord = true
@@ -88,13 +88,13 @@ function correctErrors(simplifiedArray) {
     }
   })
 
-  finalCheck(correctedArray)
-  return correctedArray
+  checkQuotationMarks(correctedArray)
+  return finalCheck(correctedArray)
 }
 
 function wordCorrector(wordObject, correctedArray) {
   const wordAsString = convertWordObjectToString(wordObject)
-  const {returnedWord, replaced} = replaceWithJSWord(wordAsString)
+  const {returnedWord, replaced} = replace(wordAsString)
   if (returnedWord === wordAsString) {
     return wordObject
   } else {
@@ -102,7 +102,7 @@ function wordCorrector(wordObject, correctedArray) {
   }
 }
 
-function finalCheck(correctedArray) {
+function checkQuotationMarks(correctedArray) {
   let singleQuotes = []
   let doubleQuotes = []
 
@@ -178,10 +178,33 @@ function charCorrector(char, charObject, correctedArray) {
   return charObject
 }
 
+// The final check tries to ensure that argument and variable names are used consistently throughout the code
+const finalCheck = correctedArray => {
+  return correctedArray.map((word, index) => {
+    // Calculate edit distance between word and all previous words; replace with previous word if distance is less than 2
+    if (index > 0 && word.symbols.length > 1) {
+      const wordAsString = convertWordObjectToString(word)
+      const previousWordsAsStrings = correctedArray
+        .slice(0, index)
+        .map(wordObject => convertWordObjectToString(wordObject))
+      const {returnedWord, replaced} = replace(
+        wordAsString,
+        previousWordsAsStrings
+      )
+      if (replaced) {
+        return convertStringToWordObject(returnedWord)
+      }
+    }
+    return word
+  })
+}
+
 //Smaller utils
 const isWord = word =>
   word.symbols.length > 1 ||
-  'ABCDEFGHIJKLMNOPQRSTUVWXWZ'.includes(word.symbols[0].character)
+  'ABCDEFGHIJKLMNOPQRSTUVWXWZabcdefghijklmnopqrstuvwxyz'.includes(
+    word.symbols[0].character
+  )
 
 const isLowConfidence = char => char.confidence < 0.7
 

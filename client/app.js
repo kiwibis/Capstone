@@ -34,7 +34,7 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true,
-    fontFamily: ['']
+    fontFamily: ['Encode Sans', 'Baloo Thambi']
   }
 })
 

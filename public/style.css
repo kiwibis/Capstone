@@ -40,33 +40,11 @@ form div {
   max-width: 90%;
 }
 
-#HomePage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-
-  height: 80vh;
-}
-
-#brand-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: center;
-}
-
 #title-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   height: 10vh;
-}
-
-#brand-description {
-  margin-top: 20%;
-  margin-bottom: 30%;
-  text-align: center;
 }
 
 #title {
@@ -75,15 +53,6 @@ form div {
   font-size: 40px;
   font-family: 'Baloo Thambi', cursive;
   margin-top: 0;
-}
-
-.image-upload > input {
-  display: none;
-}
-
-.image-upload img {
-  width: 80px;
-  cursor: pointer;
 }
 
 /* Style the tab */
@@ -142,15 +111,11 @@ a:hover {
   color: rgba(139, 201, 0);
 }
 
-svg.MuiSvgIcon-root-78.MuiSvgIcon-colorPrimary-79.MuiSvgIcon-fontSizeLarge-86,
-svg.MuiSvgIcon-root-78.MuiSvgIcon-colorPrimary-79.MuiSvgIcon-fontSizeLarge-86 {
-  font-size: 5em;
-}
-
 .image-upload {
   display: flex;
   justify-content: center;
 }
+
 
 #ContactPage {
   display: flex;
@@ -210,4 +175,13 @@ svg.MuiSvgIcon-root-78.MuiSvgIcon-colorPrimary-79.MuiSvgIcon-fontSizeLarge-86 {
 
 #email:hover {
   color: #9ab452;
+
+.image-upload > input {
+  display: none;
+}
+
+.image-upload img {
+  width: 50px;
+  cursor: pointer;
+
 }

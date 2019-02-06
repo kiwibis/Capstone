@@ -14,12 +14,13 @@ import {Link} from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import {logout} from '../store'
+import {Typography} from '@material-ui/core'
 
 const style = theme => ({
   appBar: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justify: 'space-between',
     alignItems: 'center',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -40,7 +41,7 @@ const style = theme => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flexEnd',
-    justifyContent: 'space-around'
+    justify: 'space-around'
   },
   button: {
     margin: theme.spacing.unit
@@ -54,6 +55,21 @@ const style = theme => ({
   titleLink: {
     paddingLeft: '20px',
     flexGrow: 4
+  },
+  title: {
+    fontFamily: theme.typography.fontFamily[1],
+    fontSize: '35px',
+    color: 'white'
+  },
+  logo: {
+    maxHeight: '50px'
+  },
+  logoDiv: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100px',
+    alignContent: 'center'
   }
 })
 
@@ -116,7 +132,12 @@ class Navbar extends React.Component {
         <AppBar position="sticky" className={classes.appBar}>
           <div className={classes.titleLink}>
             <Link to="/" className={classes.titleLink}>
-              <img src="/logo.png" alt="Kiwi" />
+              <div className={classes.logoDiv}>
+                <img src="/kiwi.png" alt="Kiwi" className={classes.logo} />
+                <Typography component="h1" className={classes.title}>
+                  Kiwi
+                </Typography>
+              </div>
             </Link>
           </div>
           <div className={classes.navlinks}>
