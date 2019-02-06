@@ -68,9 +68,11 @@ class CodeList extends React.Component {
 
   handleSelect(currIndex) {
     this.setState({currIndex})
-    this.props.updateFunctionIndex(currIndex)
-
-    this.props.gotCode({text: this.props.functions[currIndex].userEditedText})
+    const currFunction = this.props.functions[currIndex]
+    this.props.gotCode({
+      text: currFunction.userEditedText,
+      functionInitialText: currFunction.algoResultText
+    })
   }
 
   componentDidMount() {
