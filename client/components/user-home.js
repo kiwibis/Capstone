@@ -16,7 +16,9 @@ const styles = theme => ({
     spacing: 40
   },
   title: {
-    fontFamily: theme.typography.fontFamily[1]
+    fontFamily: theme.typography.fontFamily[1],
+    fontSize: '20px',
+    padding: '10px'
   }
 })
 
@@ -36,9 +38,11 @@ export const UserHome = props => {
 
   return (
     <div>
-      <Typography component="h2" className={classes.title}>
-        Welcome, {email}!
-      </Typography>
+      <center>
+        <Typography component="h2" className={classes.title}>
+          Welcome, {email}!
+        </Typography>
+      </center>
       <Carousel {...props} />
       <form onSubmit={handleSubmit} className={classes.littleGrid}>
         <InputOutputWrapper

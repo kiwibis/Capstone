@@ -32,6 +32,9 @@ const styles = theme => ({
   codeMirror: {
     height: 'auto',
     width: '400px'
+  },
+  titleBar: {
+    backgroundColor: theme.palette.primary.light
   }
 })
 
@@ -42,6 +45,7 @@ class CodeList extends React.Component {
       currIndex: null
     }
     this.handleSelect = this.handleSelect.bind(this)
+    this.getGridListCols = this.getGridListCols.bind(this)
   }
   getGridListCols() {
     if (isWidthUp('xl', this.props.width)) {
@@ -80,7 +84,7 @@ class CodeList extends React.Component {
 
     return (
       <div className={classes.root}>
-        <GridList className={classes.gridList} cols={getGridListCols()}>
+        <GridList className={classes.gridList} cols={this.getGridListCols()}>
           {functions.map((func, index) => (
             <GridListTile
               onClick={() => this.handleSelect(index)}
@@ -94,20 +98,24 @@ class CodeList extends React.Component {
               ) : (
                 <CodeMirror editedText={jBeautify(func.userEditedText)} />
               )}
-
-              <GridListTileBar
-                title={new Date(func.updatedAt).toUTCString()}
-                classes={{
-                  root: classes.titleBar,
-                  title: classes.title
-                }}
-                onClick={() => this.handleSelect(index)}
-                actionIcon={
-                  <IconButton>
-                    <StarBorderIcon className={classes.title} />
-                  </IconButton>
-                }
-              />
+              {index === this.state.currIndex ? (
+                <GridListTileBar
+                  title={new Date(func.updatedAt).toUTCString()}
+                  classes={{
+                    root: classes.titleBar,
+                    title: classes.title
+                  }}
+                  onClick={() => this.handleSelect(index)}
+                />
+              ) : (
+                <GridListTileBar
+                  title={new Date(func.updatedAt).toUTCString()}
+                  classes={{
+                    title: classes.title
+                  }}
+                  onClick={() => this.handleSelect(index)}
+                />
+              )}
             </GridListTile>
           ))}
         </GridList>
