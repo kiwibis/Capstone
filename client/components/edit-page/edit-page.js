@@ -6,7 +6,6 @@ import history from '../../history'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
 import jBeautify from 'js-beautify'
-import findOrientation from 'exif-orientation'
 import Evaluator from '../../util/evaluator'
 import Grid from '@material-ui/core/Grid'
 import {withStyles} from '@material-ui/core/styles'
@@ -41,15 +40,8 @@ const styles = theme => ({
   },
   image: {
     padding: 10,
-    maxWidth: '90%'
-  },
-  rotatedImage: {
-    transform: 'rotate(90deg) scale(0.7)',
-    padding: 10,
-    paddingLeft: 20,
-    minHeight: '50vw',
-    maxHeight: '55vw',
-    maxWidth: '600px'
+    maxWidth: '90%',
+    orientation: 'true'
   },
   paper: {
     display: 'flex',
@@ -153,19 +145,6 @@ class EditPage extends Component {
         this.setState({image: fileReader.result, editedText: jBeautify(text)})
       }
       fileReader.readAsDataURL(this.props.image)
-      findOrientation(this.props.image, (err, orientation) => {
-        if (!err) {
-          if (orientation.rotate === 90) {
-            this.setState({
-              imageClass: 'rotatedImage'
-            })
-          } else {
-            this.setState({
-              imageClass: 'image'
-            })
-          }
-        }
-      })
     } catch (err) {
       console.error(err)
     }
@@ -202,16 +181,13 @@ class EditPage extends Component {
             >
               <BreakpointMedia max="xs">
                 <img
-                  className={classnames(
-                    classes[imageClass],
-                    classes.smallImage
-                  )}
+                  className={classnames(classes.image, classes.smallImage)}
                   src={image}
                 />
               </BreakpointMedia>
 
               <BreakpointMedia min="sm">
-                <img className={classes[imageClass]} src={image} />
+                <img className={classes.image} src={image} />
               </BreakpointMedia>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
