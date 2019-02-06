@@ -5,11 +5,15 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import code from './code'
 import loading from './loading'
+import userFunctions from './userFunctions'
+import selectedFunction from './selectedFunction'
 
 const reducer = combineReducers({
   user,
   code,
-  loading
+  loading,
+  userFunctions,
+  selectedFunction
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
@@ -20,3 +24,5 @@ export default store
 export * from './user'
 export * from './code'
 export * from './loading'
+export * from './userFunctions'
+export * from './selectedFunction'
