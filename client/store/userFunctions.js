@@ -15,7 +15,7 @@ const gotFunctions = functions => ({type: GOT_FUNCTIONS, payload: functions})
  */
 export const fetchFunctions = () => async dispatch => {
   try {
-    const {data} = await axios.get('/api/images')
+    const {data} = await axios.get('/api/trainingData')
     dispatch(gotFunctions(data))
   } catch (err) {
     console.error(err)

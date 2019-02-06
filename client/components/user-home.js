@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Carousel from './carousel'
 
 /**
  * COMPONENT
@@ -11,6 +12,7 @@ export const UserHome = props => {
   return (
     <div>
       <h3>Welcome, {email}</h3>
+      <Carousel />
     </div>
   )
 }
@@ -22,6 +24,10 @@ const mapState = state => {
   return {
     email: state.user.email
   }
+}
+
+const mapDispatch = dispatch => {
+  return {}
 }
 
 export default connect(mapState)(UserHome)
