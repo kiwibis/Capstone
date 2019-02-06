@@ -116,7 +116,6 @@ a:hover {
   justify-content: center;
 }
 
-
 #ContactPage {
   display: flex;
   flex-direction: column;
@@ -175,6 +174,7 @@ a:hover {
 
 #email:hover {
   color: #9ab452;
+}
 
 .image-upload > input {
   display: none;
@@ -183,5 +183,4 @@ a:hover {
 .image-upload img {
   width: 50px;
   cursor: pointer;
-
 }
