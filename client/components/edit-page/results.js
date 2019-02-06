@@ -17,8 +17,10 @@ const Results = ({testCases, outputs}) => {
   return (
     <Table align="center">
       <TableHead>
-        <TableCell align="center">Input</TableCell>
-        <TableCell align="center">Output</TableCell>
+        <TableRow>
+          <TableCell align="center">Input</TableCell>
+          <TableCell align="center">Output</TableCell>
+        </TableRow>
       </TableHead>
       <TableBody>
         {testCases.map((input, i) => (
