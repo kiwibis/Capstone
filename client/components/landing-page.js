@@ -96,7 +96,7 @@ const LandingPage = ({classes}) => {
           >
             <div className={classes.card2}>
               <Typography component="h4" className={classes.titleFont}>
-                Input your testcases
+                Input your test cases
               </Typography>
               <br />
               <br />
