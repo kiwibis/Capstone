@@ -4,8 +4,6 @@ import {connect} from 'react-redux'
 import history from '../../history'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
-import jBeautify from 'js-beautify'
-import Evaluator from '../../util/evaluator'
 import Grid from '@material-ui/core/Grid'
 import {withStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
@@ -17,6 +15,7 @@ import {Typography} from '@material-ui/core'
 import BreakpointMedia from 'react-media-material-ui/BreakpointMedia'
 import classnames from 'classnames'
 import editCode from '../edit-code'
+import findOrientation from 'exif-orientation'
 
 const styles = theme => ({
   bigGrid: {
@@ -42,6 +41,17 @@ const styles = theme => ({
     maxWidth: '90%',
     orientation: 'true'
   },
+  rotatedImage: {
+    transform: 'rotate(90deg)',
+    padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    width: 'auto',
+    height: 'auto',
+    minHeight: '45vw',
+    maxHeight: '50vw',
+    maxWidth: '600px'
+  },
   paper: {
     display: 'flex',
     alignItems: 'center',
@@ -65,14 +75,15 @@ const styles = theme => ({
   bigGridItem: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    objectFit: 'cover'
   },
   title: {
     fontFamily: theme.typography.fontFamily[1],
     fontSize: '40px'
   },
   smallImage: {
-    minHeight: '100vw'
+    minHeight: '90vw'
   }
 })
 
@@ -99,6 +110,19 @@ class EditPage extends Component {
         this.setState({image: fileReader.result})
       }
       fileReader.readAsDataURL(this.props.image)
+      findOrientation(this.props.image, (err, orientation) => {
+        if (!err) {
+          if (orientation.rotate === 90) {
+            this.setState({
+              imageClass: 'rotatedImage'
+            })
+          } else {
+            this.setState({
+              imageClass: 'image'
+            })
+          }
+        }
+      })
     } catch (err) {
       console.error(err)
     }
@@ -111,7 +135,7 @@ class EditPage extends Component {
   }
 
   render() {
-    const {image} = this.state
+    const {image, imageClass} = this.state
     const {editedText, testCases, testCasesRunning, outputs} = this.props
     const {handleChange, handleSubmit} = this.props
     const {classes, error, loading} = this.props
@@ -136,13 +160,16 @@ class EditPage extends Component {
             >
               <BreakpointMedia max="xs">
                 <img
-                  className={classnames(classes.image, classes.smallImage)}
+                  className={classnames(
+                    classes[imageClass],
+                    classes.smallImage
+                  )}
                   src={image}
                 />
               </BreakpointMedia>
 
               <BreakpointMedia min="sm">
-                <img className={classes.image} src={image} />
+                <img className={classes[imageClass]} src={image} />
               </BreakpointMedia>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
