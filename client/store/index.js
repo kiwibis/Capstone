@@ -6,14 +6,12 @@ import user from './user'
 import code from './code'
 import loading from './loading'
 import userFunctions from './userFunctions'
-import selectedFunction from './selectedFunction'
 
 const reducer = combineReducers({
   user,
   code,
   loading,
-  userFunctions,
-  selectedFunction
+  userFunctions
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
@@ -25,4 +23,3 @@ export * from './user'
 export * from './code'
 export * from './loading'
 export * from './userFunctions'
-export * from './selectedFunction'

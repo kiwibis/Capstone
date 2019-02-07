@@ -7,7 +7,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar'
 import IconButton from '@material-ui/core/IconButton'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import {connect} from 'react-redux'
-import {setSelectedFunction, fetchFunctions, gotCode} from '../store'
+import {fetchFunctions, gotCode} from '../store'
 import CodeMirror from './edit-page/code-mirror'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import jBeautify from 'js-beautify'
@@ -135,7 +135,6 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchFunctions: () => dispatch(fetchFunctions()),
-    updateFunctionIndex: id => dispatch(setSelectedFunction(id)),
     gotCode: code => dispatch(gotCode(code))
   }
 }
