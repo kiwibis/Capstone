@@ -40,7 +40,7 @@ const style = theme => ({
     color: 'white',
     fontSize: '24px',
     fontWeight: '600',
-    padding: '70px 6px'
+    padding: '50px 6px'
   },
   image: {
     maxWidth: '90%'
