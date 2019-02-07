@@ -9,7 +9,7 @@ const style = theme => ({
   landing: {
     display: 'flex',
     flexDirection: 'column',
-    justify: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   grid: {
@@ -20,33 +20,44 @@ const style = theme => ({
     flexDirection: 'column',
     minWidth: '30vw',
     height: '60vh',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flexWrap: 'wrap'
   },
   card1: {
-    backgroundColor: '#D9DB9F'
+    backgroundColor: '#D9DB9F',
+    textAlign: 'center'
   },
   card2: {
-    backgroundColor: '#9AB452'
+    backgroundColor: '#9AB452',
+    textAlign: 'center'
   },
   card3: {
-    backgroundColor: '#789236'
+    backgroundColor: '#789236',
+    textAlign: 'center'
   },
   titleFont: {
     color: 'white',
     fontSize: '24px',
     fontWeight: '600',
-    padding: 8
+    padding: '70px 6px'
   },
   image: {
     maxWidth: '90%'
+  },
+  title: {
+    fontFamily: theme.typography.fontFamily[1],
+    fontSize: '40px',
+    color: '#789236'
   }
 })
 
 const LandingPage = ({classes}) => {
   return (
     <div className={classes.landing}>
+      <Typography component="h1" className={classes.title}>
+        The App that Lets You Run Handwritten JavaScript
+      </Typography>
       <div>
         <PhotoCapture text="Try it now!" />
         <br />
@@ -62,7 +73,7 @@ const LandingPage = ({classes}) => {
           >
             <div className={classes.card1}>
               <Typography component="h4" className={classes.titleFont}>
-                Take a picture of your JS function
+                Take a picture of your function
               </Typography>
               <br />
               <br />
@@ -108,7 +119,7 @@ const LandingPage = ({classes}) => {
           >
             <div className={classes.card3}>
               <Typography component="h4" className={classes.titleFont}>
-                Check your results!
+                Check your results
               </Typography>
               <br />
               <br />

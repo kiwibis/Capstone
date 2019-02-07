@@ -108,7 +108,8 @@ a {
 }
 
 a:hover {
-  color: rgba(139, 201, 0);
+  color: white;
+  font-weight: bold;
 }
 
 .image-upload {
@@ -123,7 +124,7 @@ a:hover {
 }
 
 #contact-title {
-  color: #9ab452;
+  color: #789236;
   font-size: 40px;
   font-family: 'Baloo Thambi', cursive;
   margin-top: 0;
@@ -189,4 +190,8 @@ a:hover {
 
 center:hover {
   cursor: pointer;
+}
+
+h4.jss48.jss56.jss123 {
+  text-align: center;
 }
