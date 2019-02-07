@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import {updateFunction} from './userFunctions'
 /**
  * ACTION TYPES
  */
@@ -39,6 +39,13 @@ export const sendImage = imageFile => async dispatch => {
 export const submitEditedText = editedText => async (dispatch, getState) => {
   try {
     const {text, functionInitialText} = getState().code
+    if (functionInitialText !== undefined)
+      dispatch(
+        updateFunction({
+          algoResultText: functionInitialText,
+          userEditedText: editedText
+        })
+      )
     await axios.post('/api/trainingData', {
       initialText: functionInitialText || text,
       editedText

@@ -116,12 +116,20 @@ function checkQuotationMarks(correctedArray) {
     })
   })
 
-  if (singleQuotes.length + doubleQuotes.length === 2) {
+  if (singleQuotes.length + doubleQuotes.length === 2 && singleQuotes.length) {
     correctedArrayCopy[singleQuotes[0].wordIndex].symbols[
       singleQuotes[0].charIndex
     ].character = '"'
 
     doubleQuotes.push(singleQuotes[0])
+
+    if (singleQuotes[1]) {
+      correctedArrayCopy[singleQuotes[1].wordIndex].symbols[
+        singleQuotes[1].charIndex
+      ].character = '"'
+
+      doubleQuotes.push(singleQuotes[1])
+    }
   }
 
   if (!(singleQuotes % 2)) {
