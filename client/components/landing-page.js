@@ -9,7 +9,7 @@ const style = theme => ({
   landing: {
     display: 'flex',
     flexDirection: 'column',
-    justify: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   grid: {
@@ -20,33 +20,46 @@ const style = theme => ({
     flexDirection: 'column',
     minWidth: '30vw',
     height: '60vh',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'nowrap'
   },
   card1: {
-    backgroundColor: '#D9DB9F'
+    backgroundColor: '#D9DB9F',
+    textAlign: 'center'
   },
   card2: {
-    backgroundColor: '#9AB452'
+    backgroundColor: '#9AB452',
+    textAlign: 'center'
   },
   card3: {
-    backgroundColor: '#789236'
+    backgroundColor: '#789236',
+    textAlign: 'center'
   },
   titleFont: {
     color: 'white',
     fontSize: '24px',
     fontWeight: '600',
-    padding: 8
+    padding: '10% 6px 5%'
   },
   image: {
     maxWidth: '90%'
+  },
+  title: {
+    fontFamily: theme.typography.fontFamily[1],
+    fontSize: '40px',
+    color: '#789236',
+    textAlign: 'center',
+    margin: '0 5px 5px'
   }
 })
 
 const LandingPage = ({classes}) => {
   return (
     <div className={classes.landing}>
+      <Typography component="h1" className={classes.title}>
+        The App that Lets You Run Handwritten JavaScript
+      </Typography>
       <div>
         <PhotoCapture text="Try it now!" />
         <br />
@@ -60,13 +73,11 @@ const LandingPage = ({classes}) => {
             sm={4}
             className={classNames([classes.card, classes.card1])}
           >
-            <div className={classes.card1}>
-              <Typography component="h4" className={classes.titleFont}>
-                Take a picture of your JS function
-              </Typography>
-              <br />
-              <br />
-            </div>
+            <Typography component="h4" className={classes.titleFont}>
+              Take a picture
+            </Typography>
+            <br />
+            <br />
             <div>
               <center>
                 <img
@@ -83,13 +94,11 @@ const LandingPage = ({classes}) => {
             sm={4}
             className={classNames([classes.card, classes.card2])}
           >
-            <div className={classes.card2}>
-              <Typography component="h4" className={classes.titleFont}>
-                Input your testcases
-              </Typography>
-              <br />
-              <br />
-            </div>
+            <Typography component="h4" className={classes.titleFont}>
+              Input your test cases
+            </Typography>
+            <br />
+            <br />
             <div>
               <center>
                 <img
@@ -106,13 +115,11 @@ const LandingPage = ({classes}) => {
             sm={4}
             className={classNames([classes.card, classes.card3])}
           >
-            <div className={classes.card3}>
-              <Typography component="h4" className={classes.titleFont}>
-                Check your results!
-              </Typography>
-              <br />
-              <br />
-            </div>
+            <Typography component="h4" className={classes.titleFont}>
+              Check your results
+            </Typography>
+            <br />
+            <br />
             <div>
               <center>
                 <img
