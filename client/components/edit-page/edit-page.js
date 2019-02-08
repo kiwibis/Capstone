@@ -69,8 +69,7 @@ const styles = theme => ({
   },
   title: {
     fontFamily: theme.typography.fontFamily[1],
-    fontSize: '40px',
-    color: '#789236'
+    fontSize: '40px'
   },
   smallImage: {
     minHeight: '100vw'
