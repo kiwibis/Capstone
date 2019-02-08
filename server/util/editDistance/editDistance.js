@@ -84,9 +84,10 @@ const closestWordsAndDistance = (givenWord, wordsToCompare) => {
 const replace = (givenWord, wordsToCompare = jsLexicon) => {
   const threshold = 2
   const closestWords = closestWordsAndDistance(givenWord, wordsToCompare)
-  if (closestWords.distance < threshold) {
+  const distance = closestWords.distance
+  if (distance < threshold) {
     console.log(closestWords)
-    return {returnedWord: closestWords.words[0], replaced: true}
+    return {returnedWord: closestWords.words[0], replaced: true, distance}
   }
   return {returnedWord: givenWord, replaced: false}
 }
