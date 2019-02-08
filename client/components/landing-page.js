@@ -41,11 +41,9 @@ const style = theme => ({
     fontSize: '24px',
     fontWeight: '600',
     padding: '10% 6px 5%'
-    // flex: '1 0 100%'
   },
   image: {
     maxWidth: '90%'
-    // flex: '1 0 100%'
   },
   title: {
     fontFamily: theme.typography.fontFamily[1],
@@ -75,13 +73,11 @@ const LandingPage = ({classes}) => {
             sm={4}
             className={classNames([classes.card, classes.card1])}
           >
-            {/* <div className={classes.card1}> */}
             <Typography component="h4" className={classes.titleFont}>
               Take a picture
             </Typography>
             <br />
             <br />
-            {/* </div> */}
             <div>
               <center>
                 <img
@@ -98,13 +94,11 @@ const LandingPage = ({classes}) => {
             sm={4}
             className={classNames([classes.card, classes.card2])}
           >
-            {/* <div className={classes.card2}> */}
             <Typography component="h4" className={classes.titleFont}>
               Input your test cases
             </Typography>
             <br />
             <br />
-            {/* </div> */}
             <div>
               <center>
                 <img
@@ -121,13 +115,11 @@ const LandingPage = ({classes}) => {
             sm={4}
             className={classNames([classes.card, classes.card3])}
           >
-            {/* <div className={classes.card3}> */}
             <Typography component="h4" className={classes.titleFont}>
               Check your results
             </Typography>
             <br />
             <br />
-            {/* </div> */}
             <div>
               <center>
                 <img
