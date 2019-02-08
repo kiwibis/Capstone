@@ -63,10 +63,31 @@ const AuthForm = props => {
           {displayName}
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit} name={name}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
+          {name === 'signup' ? (
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="userName">Your Name</InputLabel>
+              <Input
+                id="userName"
+                name="userName"
+                autoComplete="name"
+                autoFocus
+              />
+            </FormControl>
+          ) : (
+            ''
+          )}
+          {name === 'signup' ? (
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input id="email" name="email" autoComplete="email" />
+            </FormControl>
+          ) : (
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input id="email" name="email" autoComplete="email" autoFocus />
+            </FormControl>
+          )}
+
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input name="password" type="password" id="password" />
@@ -118,8 +139,9 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
+      const userName = evt.target.userName ? evt.target.userName.value : null
 
-      dispatch(auth(email, password, formName))
+      dispatch(auth(email, password, formName, userName))
     }
   }
 }

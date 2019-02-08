@@ -33,7 +33,7 @@ export const UserHome = props => {
     handleChange,
     handleSubmit,
     editedText,
-    email,
+    name,
     classes
   } = props
 
@@ -41,7 +41,7 @@ export const UserHome = props => {
     <div>
       <center>
         <Typography component="h2" className={classes.title}>
-          Welcome, {email}!
+          Welcome, {name}!
         </Typography>
       </center>
       <Carousel editedText={editedText} handleChange={handleChange} />
@@ -63,7 +63,7 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    name: state.user.name
   }
 }
 
