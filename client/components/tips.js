@@ -16,8 +16,7 @@ const style = theme => ({
     fontFamily: theme.typography.fontFamily[1],
     fontSize: '40px',
     textAlign: 'center',
-    padding: '0 6px',
-    color: '#789236'
+    padding: '0 6px'
   },
   image: {
     width: '80%'
