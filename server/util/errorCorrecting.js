@@ -44,8 +44,10 @@ function correctErrors(simplifiedArray) {
           if (correctedArray.length) {
             const previousWord = correctedArray[correctedArray.length - 1]
             const previousWordAsString = convertWordObjectToString(previousWord)
-            const {returnedWord, replaced} = replace(previousWordAsString)
-            if (replaced) {
+            const {returnedWord, replaced, distance} = replace(
+              previousWordAsString
+            )
+            if (replaced && distance === 0) {
               previousWordIsJSWord = true
             }
           }
