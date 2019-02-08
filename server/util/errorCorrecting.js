@@ -44,8 +44,10 @@ function correctErrors(simplifiedArray) {
           if (correctedArray.length) {
             const previousWord = correctedArray[correctedArray.length - 1]
             const previousWordAsString = convertWordObjectToString(previousWord)
-            const {returnedWord, replaced} = replace(previousWordAsString)
-            if (replaced) {
+            const {returnedWord, replaced, distance} = replace(
+              previousWordAsString
+            )
+            if (replaced && distance === 0) {
               previousWordIsJSWord = true
             }
           }
@@ -88,17 +90,44 @@ function correctErrors(simplifiedArray) {
     }
   })
 
-  correctedArray = checkQuotationMarks(correctedArray)
-  return finalCheck(correctedArray)
+  checkQuotationMarks(correctedArray)
+  return correctedArray
 }
 
-function wordCorrector(wordObject, correctedArray) {
-  const wordAsString = convertWordObjectToString(wordObject)
-  const {returnedWord, replaced} = replace(wordAsString)
-  if (returnedWord === wordAsString) {
-    return wordObject
+function wordCorrector(originalWordObject, correctedArray) {
+  const wordAsString = convertWordObjectToString(originalWordObject)
+  // compare low-confidence words to all words in JS dictionary
+  const jsResponse = replace(wordAsString)
+  const closeToJSWord = jsResponse.replaced
+  let closestJSWord
+  let distanceFromJSWord
+  if (closeToJSWord) {
+    closestJSWord = jsResponse.returnedWord
+    distanceFromJSWord = jsResponse.distance
+    if (distanceFromJSWord === 0) {
+      return originalWordObject
+    }
+  }
+  // compare low-confidence words to all words already seen
+  const seenWordsResponse = replace(
+    wordAsString,
+    correctedArray.map(wordObject => convertWordObjectToString(wordObject))
+  )
+  const closeToSeenWord = seenWordsResponse.replaced
+  let closestSeenWord
+  let distanceFromSeenWord
+  if (closeToSeenWord) {
+    closestSeenWord = seenWordsResponse.returnedWord
+    distanceFromSeenWord = seenWordsResponse.distance
+    if (distanceFromSeenWord === 0) {
+      return originalWordObject
+    }
+  }
+  if (!closeToJSWord && !closeToSeenWord) {
+    return originalWordObject
   } else {
-    return convertStringToWordObject(returnedWord)
+    const wordToReplaceOriginal = closestJSWord || closestSeenWord
+    return convertStringToWordObject(wordToReplaceOriginal)
   }
 }
 
@@ -242,27 +271,6 @@ function charCorrector(char, charObject, correctedArray) {
     }
   }
   return charObject
-}
-
-// The final check tries to ensure that argument and variable names are used consistently throughout the code
-const finalCheck = correctedArray => {
-  return correctedArray.map((word, index) => {
-    // Calculate edit distance between word and all previous words; replace with previous word if distance is less than 2
-    if (index > 0 && word.symbols.length > 1) {
-      const wordAsString = convertWordObjectToString(word)
-      const previousWordsAsStrings = correctedArray
-        .slice(0, index)
-        .map(wordObject => convertWordObjectToString(wordObject))
-      const {returnedWord, replaced} = replace(
-        wordAsString,
-        previousWordsAsStrings
-      )
-      if (replaced) {
-        return convertStringToWordObject(returnedWord)
-      }
-    }
-    return word
-  })
 }
 
 //Smaller utils
