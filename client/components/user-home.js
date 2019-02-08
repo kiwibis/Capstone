@@ -15,14 +15,9 @@ const styles = theme => ({
     justify: 'center',
     spacing: 40
   },
-  date: {
-    fontSize: '16px',
-    padding: '10px'
-  },
   title: {
     fontFamily: theme.typography.fontFamily[1],
-    fontSize: '40px',
-    color: '#789236',
+    fontSize: '20px',
     padding: '10px'
   }
 })
@@ -38,7 +33,7 @@ export const UserHome = props => {
     handleChange,
     handleSubmit,
     editedText,
-    email,
+    name,
     classes
   } = props
 
@@ -46,7 +41,7 @@ export const UserHome = props => {
     <div>
       <center>
         <Typography component="h2" className={classes.title}>
-          Welcome, {email}!
+          Welcome, {name}!
         </Typography>
       </center>
       <Carousel editedText={editedText} handleChange={handleChange} />
@@ -68,7 +63,7 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    name: state.user.name
   }
 }
 

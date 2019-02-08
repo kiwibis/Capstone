@@ -4,6 +4,10 @@ const db = require('../db')
 const TrainingData = require('./trainingData')
 
 const User = db.define('user', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,

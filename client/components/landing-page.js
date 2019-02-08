@@ -9,7 +9,7 @@ const style = theme => ({
   landing: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justify: 'center',
     alignItems: 'center'
   },
   grid: {
@@ -20,21 +20,18 @@ const style = theme => ({
     flexDirection: 'column',
     minWidth: '30vw',
     height: '60vh',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'nowrap'
   },
   card1: {
-    backgroundColor: '#D9DB9F',
-    textAlign: 'center'
+    backgroundColor: '#D9DB9F'
   },
   card2: {
-    backgroundColor: '#9AB452',
-    textAlign: 'center'
+    backgroundColor: '#9AB452'
   },
   card3: {
-    backgroundColor: '#789236',
-    textAlign: 'center'
+    backgroundColor: '#789236'
   },
   titleFont: {
     color: 'white',
@@ -57,9 +54,6 @@ const style = theme => ({
 const LandingPage = ({classes}) => {
   return (
     <div className={classes.landing}>
-      <Typography component="h1" className={classes.title}>
-        The App that Lets You Run Handwritten JavaScript
-      </Typography>
       <div>
         <PhotoCapture text="Try it now!" />
         <br />
