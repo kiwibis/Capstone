@@ -105,7 +105,7 @@ class CodeList extends React.Component {
                   title={new Date(func.updatedAt).toUTCString()}
                   classes={{
                     root: classes.titleBar,
-                    title: classes.date
+                    title: classes.title
                   }}
                   onClick={() => this.handleSelect(index)}
                 />
@@ -113,7 +113,7 @@ class CodeList extends React.Component {
                 <GridListTileBar
                   title={new Date(func.updatedAt).toUTCString()}
                   classes={{
-                    title: classes.date
+                    title: classes.title
                   }}
                   onClick={() => this.handleSelect(index)}
                 />

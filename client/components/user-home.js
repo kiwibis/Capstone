@@ -15,14 +15,9 @@ const styles = theme => ({
     justify: 'center',
     spacing: 40
   },
-  date: {
-    fontSize: '16px',
-    padding: '10px'
-  },
   title: {
     fontFamily: theme.typography.fontFamily[1],
-    fontSize: '40px',
-    color: '#789236',
+    fontSize: '20px',
     padding: '10px'
   }
 })
