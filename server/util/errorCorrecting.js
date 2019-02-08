@@ -8,7 +8,7 @@ function correctErrors(simplifiedArray) {
   //Characters that need to be checked regardless of google vision confidence level
   const troubleChars = [')', '>', '+', '=', '-']
 
-  const correctedArray = []
+  let correctedArray = []
 
   simplifiedArray.forEach(originalWord => {
     //copy word object
@@ -132,77 +132,143 @@ function wordCorrector(originalWordObject, correctedArray) {
 }
 
 function checkQuotationMarks(correctedArray) {
+  console.log('*** Checking quote ***')
+  const correctedArrayCopy = [...correctedArray]
   let singleQuotes = []
   let doubleQuotes = []
 
   //tracks the location of each quotation mark in code
-  correctedArray.forEach((word, wordIndex) => {
+  correctedArrayCopy.forEach((word, wordIndex) => {
     word.symbols.forEach((char, charIndex) => {
       char.character === "'" && singleQuotes.push({wordIndex, charIndex})
       char.character === '"' && doubleQuotes.push({wordIndex, charIndex})
     })
   })
 
-  //if there are only two total quotation marks, changes both to be double quotation marks
-  if (singleQuotes.length + doubleQuotes.length === 2) {
-    singleQuotes.forEach(quote => {
-      correctedArray[quote.wordIndex].symbols[quote.charIndex].character = '"'
-    })
-    const bothQuotes = singleQuotes.concat(doubleQuotes)
-    let firstIndex
-    let secondIndex
-    if (bothQuotes[0].wordIndex < bothQuotes[1].wordIndex) {
-      firstIndex = 0
-      secondIndex = 1
-    } else {
-      firstIndex = 1
-      secondIndex = 0
+  if (singleQuotes.length + doubleQuotes.length === 2 && singleQuotes.length) {
+    correctedArrayCopy[singleQuotes[0].wordIndex].symbols[
+      singleQuotes[0].charIndex
+    ].character = '"'
+
+    doubleQuotes.push(singleQuotes[0])
+
+    if (singleQuotes[1]) {
+      correctedArrayCopy[singleQuotes[1].wordIndex].symbols[
+        singleQuotes[1].charIndex
+      ].character = '"'
+
+      doubleQuotes.push(singleQuotes[1])
     }
+  }
 
-    correctedArray[bothQuotes[firstIndex].wordIndex + 1].symbols.unshift({
-      character: '"',
-      confidence: 1
+  if (!(singleQuotes % 2)) {
+    concatQuotes(singleQuotes, correctedArrayCopy)
+  }
+
+  if (!(doubleQuotes % 2)) {
+    concatQuotes(doubleQuotes, correctedArrayCopy)
+  }
+
+  if (!(singleQuotes % 2) && !(doubleQuotes % 2)) {
+    spliceQuotes(singleQuotes, doubleQuotes, correctedArrayCopy)
+  } else if (!(singleQuotes % 2) && doubleQuotes % 2) {
+    spliceQuotes(singleQuotes, 0, correctedArrayCopy)
+  } else if (singleQuotes % 2 && !(doubleQuotes % 2)) {
+    spliceQuotes(0, doubleQuotes, correctedArrayCopy)
+  }
+
+  return correctedArrayCopy
+}
+
+function concatQuotes(quoteArray, correctedArrayCopy) {
+  console.log('*** Concat quotes ***')
+  if (quoteArray.length) {
+    let concatForward = true
+    quoteArray.forEach(quote => {
+      if (concatForward) {
+        if (correctedArrayCopy[quote.wordIndex + 1]) {
+          correctedArrayCopy[quote.wordIndex + 1].symbols.unshift({
+            character: `${
+              correctedArrayCopy[quote.wordIndex].symbols[0].character
+            }`,
+            confidence: 1
+          })
+        }
+      } else {
+        correctedArrayCopy[quote.wordIndex - 1].symbols.push({
+          character: `${
+            correctedArrayCopy[quote.wordIndex].symbols[0].character
+          }`,
+          confidence: 1
+        })
+      }
+      concatForward = !concatForward
+    })
+  }
+}
+
+function spliceQuotes(singleQuotes, doubleQuotes, correctedArrayCopy) {
+  console.log('*** splice quotes ***')
+  let indexAdjustment = 0
+  let allQuotes
+
+  if (singleQuotes && doubleQuotes) {
+    allQuotes = [...singleQuotes, ...doubleQuotes]
+  } else if (singleQuotes) {
+    allQuotes = [...singleQuotes]
+  } else if (doubleQuotes) {
+    allQuotes = [...doubleQuotes]
+  }
+
+  if (allQuotes.length) {
+    allQuotes.sort((a, b) => {
+      const keyA = a.wordIndex
+      const keyB = b.wordIndex
+      if (keyA < keyB) return -1
+      if (keyA > keyB) return 1
+      return 0
     })
 
-    correctedArray[bothQuotes[secondIndex].wordIndex - 1].symbols.push({
-      character: '"',
-      confidence: 1
+    allQuotes.forEach(quote => {
+      correctedArrayCopy.splice([quote.wordIndex - indexAdjustment], 1)
+      indexAdjustment += 1
     })
-
-    correctedArray.splice([bothQuotes[firstIndex].wordIndex], 1)
-    correctedArray.splice([bothQuotes[secondIndex].wordIndex - 1], 1)
   }
 }
 
 function charCorrector(char, charObject, correctedArray) {
-  const previousCharObject =
-    correctedArray[correctedArray.length - 1].symbols[0]
+  if (correctedArray[correctedArray.length - 1]) {
+    const previousCharObject =
+      correctedArray[correctedArray.length - 1].symbols[0]
 
-  if (char === ')') {
-    if (previousCharObject.character === '=') {
-      previousCharObject.character = previousCharObject.character.concat('>')
-      char = ''
-      charObject = {...charObject, character: char}
-    }
-  }
-  if (char === '>') {
-    if (previousCharObject.character === '=') {
-      previousCharObject.character = previousCharObject.character.concat('>')
-      char = ''
-      charObject = {...charObject, character: char}
-    }
-  }
-  if (['+', '-', '='].includes(char)) {
-    if (correctedArray.length) {
-      if (['+', '-', '=', '=='].includes(previousCharObject.character)) {
-        previousCharObject.character = previousCharObject.character.concat(char)
+    if (char === ')') {
+      if (previousCharObject.character === '=') {
+        previousCharObject.character = previousCharObject.character.concat('>')
         char = ''
         charObject = {...charObject, character: char}
       }
     }
-  }
-  if (char === 'Ş') {
-    charObject.character = '{'
+    if (char === '>') {
+      if (previousCharObject.character === '=') {
+        previousCharObject.character = previousCharObject.character.concat('>')
+        char = ''
+        charObject = {...charObject, character: char}
+      }
+    }
+    if (['+', '-', '='].includes(char)) {
+      if (correctedArray.length) {
+        if (['+', '-', '=', '=='].includes(previousCharObject.character)) {
+          previousCharObject.character = previousCharObject.character.concat(
+            char
+          )
+          char = ''
+          charObject = {...charObject, character: char}
+        }
+      }
+    }
+    if (char === 'Ş') {
+      charObject.character = '{'
+    }
   }
   return charObject
 }

@@ -15,10 +15,9 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
-const getUser = (user, info) => ({
+const getUser = user => ({
   type: GET_USER,
-  user,
-  info
+  user
 })
 const removeUser = () => ({type: REMOVE_USER})
 
@@ -28,11 +27,7 @@ const removeUser = () => ({type: REMOVE_USER})
 export const me = () => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me')
-    if (data.user) {
-      dispatch(getUser(data.user, data.info))
-    } else {
-      dispatch(getUser({}, []))
-    }
+    dispatch(getUser(data))
   } catch (err) {
     console.error(err)
   }
@@ -48,7 +43,7 @@ export const auth = (email, password, method) => async dispatch => {
   }
 
   try {
-    dispatch(getUser(res.data.user, res.data.info))
+    dispatch(getUser(res.data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
@@ -69,11 +64,9 @@ export const logout = () => async dispatch => {
  * REDUCER
  */
 export default function(state = defaultUser, action) {
-  let user = action.user
   switch (action.type) {
     case GET_USER:
-      user.functions = action.info
-      return user
+      return action.user
     case REMOVE_USER:
       return defaultUser
     default:

@@ -147,7 +147,7 @@ a:hover {
 .headshots {
   border-radius: 30%;
   height: 150px;
-  max-width: 150px;
+  max-width: 45vw;
 }
 
 .name-and-pic {
@@ -160,6 +160,8 @@ a:hover {
   color: #9ab452;
   font-size: 25px;
   font-family: 'Baloo Thambi', cursive;
+  text-align: center;
+  max-width: 45vw;
 }
 
 #email-us {
@@ -182,5 +184,9 @@ a:hover {
 
 .image-upload img {
   width: 50px;
+  cursor: pointer;
+}
+
+center:hover {
   cursor: pointer;
 }
