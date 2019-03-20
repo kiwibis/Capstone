@@ -1,77 +1,23 @@
 import React from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import {withStyles} from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import BreakpointMedia from 'react-media-material-ui/BreakpointMedia'
 import {Link} from 'react-router-dom'
-import MenuIcon from '@material-ui/icons/Menu'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import {logout} from '../store'
-import {Typography} from '@material-ui/core'
-
-const style = theme => ({
-  appBar: {
-    display: 'flex',
-    flexDirection: 'row',
-    justify: 'space-between',
-    alignItems: 'center',
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarSpacer: {
-    minHeight: '30px'
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 2,
-    height: '100vh',
-    overflow: 'auto'
-  },
-  toolbar: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flexEnd',
-    justify: 'space-around'
-  },
-  button: {
-    margin: theme.spacing.unit
-  },
-  input: {
-    display: 'none'
-  },
-  dropdown: {
-    width: 'auto'
-  },
-  titleLink: {
-    paddingLeft: '20px',
-    flexGrow: 4
-  },
-  title: {
-    fontFamily: theme.typography.fontFamily[1],
-    fontSize: '35px',
-    color: 'white'
-  },
-  logo: {
-    maxHeight: '50px'
-  },
-  logoDiv: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100px',
-    alignContent: 'center'
-  }
-})
+import {
+  AppBar,
+  Toolbar,
+  withStyles,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  SwipeableDrawer,
+  BreakpointMedia,
+  MenuIcon,
+  CssBaseline,
+  Typography
+} from '../util/MUIComponents'
+import styles from '../util/styling'
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -142,7 +88,7 @@ class Navbar extends React.Component {
             <Link to="/" className={classes.titleLink}>
               <div className={classes.logoDiv}>
                 <img src="/kiwi.png" alt="Kiwi" className={classes.logo} />
-                <Typography component="h1" className={classes.title}>
+                <Typography component="h1" className={classes.navTitle}>
                   Kiwi
                 </Typography>
               </div>
@@ -239,4 +185,4 @@ const mapDispatch = dispatch => ({
 export default connect(
   mapState,
   mapDispatch
-)(withStyles(style)(Navbar))
+)(withStyles(styles)(Navbar))

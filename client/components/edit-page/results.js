@@ -1,9 +1,11 @@
 import React from 'react'
-import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
-import TableBody from '@material-ui/core/TableBody'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from '../../util/MUIComponents'
 
 const Results = ({testCases, outputs}) => {
   testCases = testCases ? testCases.trim().split('\n') : ['']

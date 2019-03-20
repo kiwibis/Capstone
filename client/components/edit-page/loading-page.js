@@ -1,28 +1,7 @@
 import React from 'react'
 import {PropagateLoader} from 'react-spinners'
-import Paper from '@material-ui/core/Paper'
-import {withStyles} from '@material-ui/core/styles'
-
-const style = () => ({
-  paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flexStart'
-  },
-  items: {
-    padding: '20px'
-  },
-  image: {
-    maxWidth: '90vw',
-    padding: '30px'
-  },
-  loader: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
+import {Paper, withStyles} from '../../util/MUIComponents'
+import styles from '../../util/styling'
 
 const Loading = props => {
   const tipsArray = [
@@ -57,11 +36,11 @@ const Loading = props => {
           <img
             src={tipsArray[index]}
             alt="Useful Tips"
-            className={classes.image}
+            className={classes.loadingImage}
           />
         </div>
       </Paper>
     </div>
   )
 }
-export default withStyles(style)(Loading)
+export default withStyles(styles)(Loading)

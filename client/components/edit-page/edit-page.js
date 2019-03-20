@@ -4,78 +4,20 @@ import {connect} from 'react-redux'
 import history from '../../history'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
-import jBeautify from 'js-beautify'
-import Evaluator from '../../util/evaluator'
-import Grid from '@material-ui/core/Grid'
-import {withStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import Paper from '@material-ui/core/Paper'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import ErrorPage from './error-page'
 import Loading from './loading-page'
-import {Typography} from '@material-ui/core'
-import BreakpointMedia from 'react-media-material-ui/BreakpointMedia'
 import classnames from 'classnames'
 import editCode from '../edit-code'
-
-const styles = theme => ({
-  bigGrid: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flexStart',
-    justify: 'center',
-    spacing: 40,
-    maxHeight: '100%',
-    maxWidth: '100%',
-    padding: '20px'
-  },
-  littleGrid: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justify: 'center',
-    spacing: 40
-  },
-  image: {
-    padding: 10,
-    maxWidth: '90%',
-    orientation: 'true'
-  },
-  paper: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'flexStart',
-    maxWidth: '95vw'
-  },
-  errorPage: {
-    padding: '0 10vw 0 10vw'
-  },
-  main: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  gridItems: {
-    width: '100%',
-    objectFit: 'cover',
-    padding: 10
-  },
-  bigGridItem: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  title: {
-    fontFamily: theme.typography.fontFamily[1],
-    fontSize: '40px',
-    color: '#789236'
-  },
-  smallImage: {
-    minHeight: '100vw'
-  }
-})
+import {
+  Grid,
+  withStyles,
+  Paper,
+  CssBaseline,
+  Typography,
+  BreakpointMedia
+} from '../../util/MUIComponents'
+import styles from '../../util/styling'
 
 class EditPage extends Component {
   constructor() {
