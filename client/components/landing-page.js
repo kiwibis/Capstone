@@ -1,9 +1,7 @@
 import React from 'react'
 import PhotoCapture from './photo-capture'
-import Grid from '@material-ui/core/Grid'
-import {Typography} from '@material-ui/core'
-import {withStyles} from '@material-ui/core/styles'
 import classNames from 'classnames'
+import {Grid, Typography, withStyles} from './MUIComponents'
 
 const style = theme => ({
   landing: {

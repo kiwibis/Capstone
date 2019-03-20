@@ -1,17 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {withStyles} from '@material-ui/core/styles'
-import GridList from '@material-ui/core/GridList'
-import GridListTile from '@material-ui/core/GridListTile'
-import GridListTileBar from '@material-ui/core/GridListTileBar'
-import IconButton from '@material-ui/core/IconButton'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
 import {connect} from 'react-redux'
 import {fetchFunctions, gotCode} from '../store'
 import CodeMirror from './edit-page/code-mirror'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import jBeautify from 'js-beautify'
-import withWidth, {isWidthUp} from '@material-ui/core/withWidth'
+import {
+  withStyles,
+  GridList,
+  GridListTile,
+  GridListTileBar,
+  withWidth,
+  isWidthUp
+} from './MUIComponents'
 
 const styles = theme => ({
   root: {

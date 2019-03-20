@@ -1,7 +1,8 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import {Typography, Paper, CssBaseline} from '../MUIComponents'
+// import Typography from '@material-ui/core/Typography'
+// import Paper from '@material-ui/core/Paper'
+// import CssBaseline from '@material-ui/core/CssBaseline'
 import {Link} from 'react-router-dom'
 
 const ErrorPage = ({classes, error}) => {

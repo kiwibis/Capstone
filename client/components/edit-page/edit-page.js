@@ -4,19 +4,19 @@ import {connect} from 'react-redux'
 import history from '../../history'
 import InputOutputWrapper from './input-output-wrapper'
 import CodeMirror from './code-mirror'
-import jBeautify from 'js-beautify'
-import Evaluator from '../../util/evaluator'
-import Grid from '@material-ui/core/Grid'
-import {withStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import Paper from '@material-ui/core/Paper'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import ErrorPage from './error-page'
 import Loading from './loading-page'
-import {Typography} from '@material-ui/core'
-import BreakpointMedia from 'react-media-material-ui/BreakpointMedia'
 import classnames from 'classnames'
 import editCode from '../edit-code'
+import {
+  Grid,
+  withStyles,
+  Paper,
+  CssBaseline,
+  Typography,
+  BreakpointMedia
+} from '../MUIComponents'
 
 const styles = theme => ({
   bigGrid: {

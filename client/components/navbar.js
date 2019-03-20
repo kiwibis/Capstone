@@ -1,20 +1,22 @@
 import React from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import {withStyles} from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import BreakpointMedia from 'react-media-material-ui/BreakpointMedia'
 import {Link} from 'react-router-dom'
-import MenuIcon from '@material-ui/icons/Menu'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import {logout} from '../store'
-import {Typography} from '@material-ui/core'
+import {
+  AppBar,
+  Toolbar,
+  withStyles,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  SwipeableDrawer,
+  BreakpointMedia,
+  MenuIcon,
+  CssBaseline,
+  Typography
+} from './MUIComponents'
 
 const style = theme => ({
   appBar: {

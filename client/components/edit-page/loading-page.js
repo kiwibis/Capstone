@@ -1,7 +1,6 @@
 import React from 'react'
 import {PropagateLoader} from 'react-spinners'
-import Paper from '@material-ui/core/Paper'
-import {withStyles} from '@material-ui/core/styles'
+import {Paper, withStyles} from '../MUIComponents'
 
 const style = () => ({
   paper: {

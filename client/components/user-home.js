@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import InputOutputWrapper from './edit-page/input-output-wrapper'
 import editCode from './edit-code'
-import {withStyles} from '@material-ui/core/styles'
 import Carousel from './carousel'
-import Typography from '@material-ui/core/Typography'
+import {Typography, withStyles} from './MUIComponents'
 
 const styles = theme => ({
   littleGrid: {

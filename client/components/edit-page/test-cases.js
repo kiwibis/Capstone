@@ -1,6 +1,5 @@
 import React from 'react'
-import {withStyles} from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
+import {withStyles, TextField} from '../MUIComponents'
 
 const styles = theme => ({
   container: {

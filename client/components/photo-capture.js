@@ -2,8 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {sendImage, setLoadingTrue} from '../store'
 import history from '../history'
-import AddAPhotoRounded from '@material-ui/icons/AddAPhotoRounded'
-import {Typography} from '@material-ui/core'
+import {AddAPhotoRounded, Typography} from './MUIComponents'
 
 class PhotoCapture extends React.Component {
   constructor() {

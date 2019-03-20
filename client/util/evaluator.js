@@ -47,6 +47,7 @@ export default class Evaluator {
         window.URL.revokeObjectURL(blobUrl)
 
         worker.onmessage = result => {
+          console.log('worker on message')
           resolve(result.data)
           worker.terminate()
         }

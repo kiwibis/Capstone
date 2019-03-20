@@ -1,6 +1,5 @@
 import React from 'react'
-import {Grid, Typography} from '@material-ui/core'
-import {withStyles} from '@material-ui/core/styles'
+import {Grid, Typography, withStyles} from './MUIComponents'
 
 const style = theme => ({
   landing: {
