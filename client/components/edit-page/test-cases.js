@@ -1,23 +1,6 @@
 import React from 'react'
-import {withStyles, TextField} from '../MUIComponents'
-
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  dense: {
-    marginTop: 16
-  },
-  menu: {
-    width: '80%',
-    height: '80%'
-  }
-})
+import {withStyles, TextField} from '../../util/MUIComponents'
+import styles from '../../util/styling'
 
 const TestCases = ({onChange, testCases, classes}) => {
   return (

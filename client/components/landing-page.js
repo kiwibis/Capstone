@@ -1,61 +1,13 @@
 import React from 'react'
 import PhotoCapture from './photo-capture'
 import classNames from 'classnames'
-import {Grid, Typography, withStyles} from './MUIComponents'
-
-const style = theme => ({
-  landing: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
-  },
-  grid: {
-    spacing: 16
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    minWidth: '30vw',
-    height: '60vh',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    flexWrap: 'nowrap'
-  },
-  card1: {
-    backgroundColor: '#D9DB9F',
-    textAlign: 'center'
-  },
-  card2: {
-    backgroundColor: '#9AB452',
-    textAlign: 'center'
-  },
-  card3: {
-    backgroundColor: '#789236',
-    textAlign: 'center'
-  },
-  titleFont: {
-    color: 'white',
-    fontSize: '24px',
-    fontWeight: '600',
-    padding: '10% 6px 3%'
-  },
-  image: {
-    maxWidth: '90%'
-  },
-  title: {
-    fontFamily: theme.typography.fontFamily[1],
-    fontSize: '40px',
-    color: '#789236',
-    textAlign: 'center',
-    margin: '0 5px 5px'
-  }
-})
+import {Grid, Typography, withStyles} from '../util/MUIComponents'
+import styles from '../util/styling'
 
 const LandingPage = ({classes}) => {
   return (
     <div className={classes.landing}>
-      <Typography component="h1" className={classes.title}>
+      <Typography component="h1" className={classes.landingTitle}>
         The App that Lets You Run Handwritten JavaScript
       </Typography>
       <div>
@@ -64,14 +16,14 @@ const LandingPage = ({classes}) => {
         <br />
       </div>
       <div>
-        <Grid container className={classes.grid}>
+        <Grid container className={classes.landingGrid}>
           <Grid
             item
             xs={12}
             sm={4}
             className={classNames([classes.card, classes.card1])}
           >
-            <Typography component="h4" className={classes.titleFont}>
+            <Typography component="h4" className={classes.landingCardsTitle}>
               Take a picture
             </Typography>
             <br />
@@ -81,7 +33,7 @@ const LandingPage = ({classes}) => {
                 <img
                   src="/whiteboard.png"
                   alt="Code on a whiteboard"
-                  className={classes.image}
+                  className={classes.landingImage}
                 />
               </center>
             </div>
@@ -92,7 +44,7 @@ const LandingPage = ({classes}) => {
             sm={4}
             className={classNames([classes.card, classes.card2])}
           >
-            <Typography component="h4" className={classes.titleFont}>
+            <Typography component="h4" className={classes.landingCardsTitle}>
               Input your test cases
             </Typography>
             <br />
@@ -100,7 +52,7 @@ const LandingPage = ({classes}) => {
             <div>
               <center>
                 <img
-                  className={classes.image}
+                  className={classes.landingImage}
                   src="/inputs.png"
                   alt="User input to run code"
                 />
@@ -113,7 +65,7 @@ const LandingPage = ({classes}) => {
             sm={4}
             className={classNames([classes.card, classes.card3])}
           >
-            <Typography component="h4" className={classes.titleFont}>
+            <Typography component="h4" className={classes.landingCardsTitle}>
               Check your results
             </Typography>
             <br />
@@ -121,7 +73,7 @@ const LandingPage = ({classes}) => {
             <div>
               <center>
                 <img
-                  className={classes.image}
+                  className={classes.landingImage}
                   src="/results.png"
                   alt="Results of your code"
                 />
@@ -134,4 +86,4 @@ const LandingPage = ({classes}) => {
   )
 }
 
-export default withStyles(style)(LandingPage)
+export default withStyles(styles)(LandingPage)

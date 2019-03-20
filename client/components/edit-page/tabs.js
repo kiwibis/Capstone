@@ -4,6 +4,7 @@ import SwipeableViews from 'react-swipeable-views'
 import TestCases from './test-cases'
 import Results from './results'
 import {withStyles, AppBar, Tab, Tabs, Typography} from '../MUIComponents'
+import styles from '../../util/styling'
 
 function TabContainer({children, dir}) {
   return (
@@ -17,13 +18,6 @@ TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
   dir: PropTypes.string.isRequired
 }
-
-const styles = theme => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    width: 500
-  }
-})
 
 class FullWidthTabs extends React.Component {
   state = {

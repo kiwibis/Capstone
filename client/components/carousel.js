@@ -12,32 +12,8 @@ import {
   GridListTileBar,
   withWidth,
   isWidthUp
-} from './MUIComponents'
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper
-  },
-  gridList: {
-    flexWrap: 'noWrap',
-    minWidth: '400px'
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-  },
-  title: {
-    color: theme.palette.primary.light
-  },
-  codeMirror: {
-    height: 'auto',
-    width: '400px'
-  },
-  titleBar: {
-    backgroundColor: theme.palette.primary.light
-  }
-})
+} from '../util/MUIComponents'
+import styles from '../util/styling'
 
 class CodeList extends React.Component {
   constructor(props) {
@@ -86,7 +62,7 @@ class CodeList extends React.Component {
     if (!functions.length) return 'No Functions'
 
     return (
-      <div className={classes.root}>
+      <div className={classes.carouselRoot}>
         <GridList className={classes.gridList} cols={this.getGridListCols()}>
           {functions.map((func, index) => (
             <GridListTile
@@ -106,7 +82,7 @@ class CodeList extends React.Component {
                   title={new Date(func.updatedAt).toUTCString()}
                   classes={{
                     root: classes.titleBar,
-                    title: classes.title
+                    title: classes.carouselTitleFont
                   }}
                   onClick={() => this.handleSelect(index)}
                 />
@@ -114,7 +90,7 @@ class CodeList extends React.Component {
                 <GridListTileBar
                   title={new Date(func.updatedAt).toUTCString()}
                   classes={{
-                    title: classes.title
+                    title: classes.carouselTitleFont
                   }}
                   onClick={() => this.handleSelect(index)}
                 />

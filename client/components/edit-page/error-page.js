@@ -1,5 +1,5 @@
 import React from 'react'
-import {Typography, Paper, CssBaseline} from '../MUIComponents'
+import {Typography, Paper, CssBaseline} from '../../util/MUIComponents'
 // import Typography from '@material-ui/core/Typography'
 // import Paper from '@material-ui/core/Paper'
 // import CssBaseline from '@material-ui/core/CssBaseline'

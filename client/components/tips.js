@@ -1,33 +1,6 @@
 import React from 'react'
-import {Grid, Typography, withStyles} from './MUIComponents'
-
-const style = theme => ({
-  landing: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  },
-  grid: {
-    spacing: 16
-  },
-  title: {
-    fontFamily: theme.typography.fontFamily[1],
-    fontSize: '40px',
-    textAlign: 'center',
-    padding: '0 6px',
-    color: '#789236'
-  },
-  image: {
-    width: '80%'
-  },
-  item: {
-    padding: '5% 0',
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  }
-})
+import {Grid, Typography, withStyles} from '../util/MUIComponents'
+import styles from '../util/styling'
 
 const TipsPage = ({classes}) => {
   const tipsArray = [
@@ -41,11 +14,11 @@ const TipsPage = ({classes}) => {
     '/tip8.png'
   ]
   return (
-    <div className={classes.landing}>
+    <div className={classes.tipsLanding}>
       <Typography component="h1" className={classes.title}>
         Tips for Getting the Most Out of Kiwi
       </Typography>
-      <Grid container className={classes.grid}>
+      <Grid container className={classes.landingGrid}>
         {tipsArray.map((tip, index) => (
           <Grid
             key={index}
@@ -55,9 +28,9 @@ const TipsPage = ({classes}) => {
             md={6}
             lg={6}
             xl={3}
-            className={classes.item}
+            className={classes.tipItem}
           >
-            <img src={tip} alt={`Tip ${index + 1}`} className={classes.image} />
+            <img src={tip} alt={`Tip ${index + 1}`} className={classes.menu} />
           </Grid>
         ))}
       </Grid>
@@ -65,4 +38,4 @@ const TipsPage = ({classes}) => {
   )
 }
 
-export default withStyles(style)(TipsPage)
+export default withStyles(styles)(TipsPage)

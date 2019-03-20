@@ -16,66 +16,8 @@ import {
   CssBaseline,
   Typography,
   BreakpointMedia
-} from '../MUIComponents'
-
-const styles = theme => ({
-  bigGrid: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flexStart',
-    justify: 'center',
-    spacing: 40,
-    maxHeight: '100%',
-    maxWidth: '100%',
-    padding: '20px'
-  },
-  littleGrid: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justify: 'center',
-    spacing: 40
-  },
-  image: {
-    padding: 10,
-    maxWidth: '90%',
-    orientation: 'true'
-  },
-  paper: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'flexStart',
-    maxWidth: '95vw'
-  },
-  errorPage: {
-    padding: '0 10vw 0 10vw'
-  },
-  main: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  gridItems: {
-    width: '100%',
-    objectFit: 'cover',
-    padding: 10
-  },
-  bigGridItem: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  title: {
-    fontFamily: theme.typography.fontFamily[1],
-    fontSize: '40px',
-    color: '#789236'
-  },
-  smallImage: {
-    minHeight: '100vw'
-  }
-})
+} from '../../util/MUIComponents'
+import styles from '../../util/styling'
 
 class EditPage extends Component {
   constructor() {

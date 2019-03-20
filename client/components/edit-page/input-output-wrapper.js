@@ -10,7 +10,7 @@ import {
   Tabs,
   Typography,
   NoSsr
-} from '../MUIComponents'
+} from '../../util/MUIComponents'
 
 function TabContainer(props) {
   return (

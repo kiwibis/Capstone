@@ -5,7 +5,7 @@ import {
   TableCell,
   TableHead,
   TableRow
-} from '../MUIComponents'
+} from '../../util/MUIComponents'
 
 const Results = ({testCases, outputs}) => {
   testCases = testCases ? testCases.trim().split('\n') : ['']

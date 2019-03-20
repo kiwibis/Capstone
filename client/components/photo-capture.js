@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {sendImage, setLoadingTrue} from '../store'
 import history from '../history'
-import {AddAPhotoRounded, Typography} from './MUIComponents'
+import {AddAPhotoRounded, Typography} from '../util/MUIComponents'
 
 class PhotoCapture extends React.Component {
   constructor() {
